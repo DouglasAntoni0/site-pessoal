@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /** 1. INJEÇÃO DINÂMICA (Baseada no projects-data.js) **/
+    
     const projectsContainer = document.getElementById('projects-container');
     const modalsContainer = document.getElementById('modals-container');
 
     projectsData.forEach(p => {
-        // Injeção de Card na Timeline
+        
         const reverseClass = p.reverseBorder ? 'reversed' : '';
         const tagsHtml = p.tags.map(tag => `<span class="min-tag">${tag}</span>`).join('');
         
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </article>
         `;
 
-        // Injeção do Modal
+        
         const toolsHtml = p.tools.map(tool => `<span class="modal-badge"><i class="ph-fill ph-check-circle"></i> ${tool}</span>`).join('');
         
         modalsContainer.innerHTML += `
@@ -47,18 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     });
 
-    /** 2. INICIALIZAÇÃO DE BIBLIOTECAS (PÓS-INJEÇÃO) **/
     
-    // Highlight.js
+    
+    
     hljs.highlightAll();
 
-    // Vanilla Tilt Reiniciar nos novos inputs
+    
     VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
 
-    /** 3. ENGINE AURORA BOREAL FÍSICA **/
     
-    // Para não quebrar caso GSAP altere transforms originais, setamos via var CSS ou passamos positions absolutos
-    // Usaremos as propriedades X/Y simples nativas para evitar lag de memória
+    
+    
+    
     const orbs = document.querySelectorAll('.aurora-orb');
     let orbTweenEnabled = true;
     
@@ -72,15 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const moveX = (x * speed) - (speed / 2);
             const moveY = (y * speed) - (speed / 2);
             
-            // GSAP é hiper otimizado comparado à style.transform manual
+            
             gsap.to(orb, { x: moveX, y: moveY, duration: 2, ease: "power2.out" });
         });
     });
 
-    /** 4. GSAP & SCROLLTRIGGER INITIALIZATION **/
+    
     gsap.registerPlugin(ScrollTrigger);
 
-    /* --- SplitText Manual Agresivo --- */
+    
     try {
         const splitTexts = document.querySelectorAll('.split-text');
         splitTexts.forEach(el => {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ).join(' ');
         });
 
-        // Garantir que todos os outros elementos do Hero comecem com opacidade 0 pra GSAP
+        
         gsap.set('.hero-subtitle, .hero-paragraph, .hero-actions', { opacity: 0, y: 30 });
 
         const tlHero = gsap.timeline({ delay: 0.1 });
@@ -124,9 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Global Scroll Reveals (Elements GS-REVEAL)
+    
     document.querySelectorAll('.gs-reveal, .gs-animate-up').forEach((elem) => {
-        // Ignora elementos que já fomos animar antes ou separadamente (como herdados)
+        
         if (elem.closest('.hero-section')) return; 
         
         gsap.fromTo(elem, 
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 
-    /** 5. MAGNETIC PHYSICS BUTTONS E BLOCOS **/
+    
     document.querySelectorAll('.magnetic-btn, .magnetic-menu').forEach(elem => {
         elem.addEventListener('mousemove', (e) => {
             const rect = elem.getBoundingClientRect();
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /** 6. MODAL GLASSMORPHISM LÓGICA & STAGGER **/
+    
     const modalOverlay = document.getElementById('modal-overlay');
     const body = document.body;
 
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.remove('modal-open');
     }
 
-    // Bind dinamico pois botoes foram injetados pós-DOM!
+    
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.trigger-modal');
         if(btn) {

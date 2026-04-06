@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Initialize Syntax Highlighting
+    
     hljs.highlightAll();
 
-    // 2. Aurora Boreal Mouse Interactivity (Parallax)
+    
     const orbs = document.querySelectorAll('.aurora-orb');
     
     document.addEventListener('mousemove', (e) => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = e.clientY / window.innerHeight;
 
         orbs.forEach((orb, index) => {
-            const speed = (index + 1) * 35; // Incrementada volatilidade
+            const speed = (index + 1) * 35; 
             const moveX = (x * speed) - (speed / 2);
             const moveY = (y * speed) - (speed / 2);
             
@@ -19,15 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. GSAP & ScrollTrigger Initialization
+    
     gsap.registerPlugin(ScrollTrigger);
 
-    /* --- Aggressive Text Reveal (SplitText Manual) --- */
+    
     const splitTexts = document.querySelectorAll('.split-text');
-    let delayReveal = 0.2; // Delay inicial do Hero
+    let delayReveal = 0.2; 
 
     splitTexts.forEach(el => {
-        // Separação agressiva palavra por palavra ou letra por letra
+        
         const words = el.innerText.split(' ');
         el.innerHTML = words.map(w => 
             `<span style="display:inline-block; overflow:hidden; vertical-align: bottom;">
@@ -35,18 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>`
         ).join(' ');
 
-        // Animação das palavras explodindo de baixo pra cima
+        
         gsap.to(el.querySelectorAll('.word'), {
             y: "0%",
             opacity: 1,
             duration: 1,
-            stagger: 0.1, // O segredo da agressividade
-            ease: "back.out(1.7)", // Back ease causa o rebote agressivo
+            stagger: 0.1, 
+            ease: "back.out(1.7)", 
             delay: delayReveal
         });
     });
 
-    // Hero Other Elements Reveal
+    
     const heroBadge = document.querySelector('.hero-badge');
     const heroPara = document.querySelector('.hero-paragraph');
     const heroBtns = document.querySelector('.hero-actions');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .fromTo(heroPara, 
         { y: 30, opacity: 0 }, 
         { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 
-        "+=1.0" // Espera a cascata de texto acabar +-
+        "+=1.0" 
     )
     .fromTo(heroBtns, 
         { y: 20, opacity: 0 }, 
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "-=0.6"
     );
 
-    // Global Scroll Reveals (Todos os Elementos gs-reveal)
+    
     const revealElements = document.querySelectorAll('.gs-reveal');
     revealElements.forEach((elem) => {
         gsap.fromTo(elem, 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 
-    // 4. Magnetic Element Logic Aprimorado
+    
     const magneticElements = document.querySelectorAll('.magnetic-btn, .magnetic-menu');
     
     magneticElements.forEach(elem => {
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Modal Logic com Animação Stagger Agressiva
+    
     const modalTriggers = document.querySelectorAll('.trigger-modal');
     const closeBtns = document.querySelectorAll('.close-modal');
     const modalOverlay = document.getElementById('modal-overlay');
@@ -136,26 +136,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
         
-        // Exibe overlay e modal wrapper
+        
         modalOverlay.classList.add('active');
         modal.classList.add('active');
         body.classList.add('modal-open');
 
-        // Seleciona todos os stagger-el dentro Deste modal e aplica o cascata
+        
         const staggerEls = modal.querySelectorAll('.stagger-el');
         
-        // Reseta os elementos antes para garantir sempre o trigger do stagger
+        
         gsap.set(staggerEls, { y: 40, opacity: 0, scale: 0.98 });
         
-        // Roda a animação de cascata
+        
         gsap.to(staggerEls, {
             y: 0,
             opacity: 1,
             scale: 1,
             duration: 0.7,
-            stagger: 0.15, // Cascata element por element
+            stagger: 0.15, 
             ease: "back.out(1.5)",
-            delay: 0.1 // atraso leve pra esperar o vidro renderizar
+            delay: 0.1 
         });
     }
 
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalOverlay.addEventListener('click', closeAllModals);
     
-    // Close on Escape key
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeAllModals();
     });

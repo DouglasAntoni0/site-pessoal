@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #040914; /* Ainda mais deep dark mode */
+    --bg-color: #040914; 
     --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
     --aurora-blue: #2563EB;
@@ -35,7 +35,7 @@ body.modal-open {
     overflow: hidden;
 }
 
-/* ================= Aurora Background ================= */
+
 .aurora-wrapper {
     position: fixed;
     top: 0;
@@ -100,7 +100,7 @@ body.modal-open {
     100% { transform: scale(1) translate(0, -5%) rotate(0deg); }
 }
 
-/* ================= Typography & Utilites ================= */
+
 h1, h2, h3, h4, .logo {
     font-family: var(--font-heading);
 }
@@ -127,7 +127,7 @@ h1, h2, h3, h4, .logo {
     border-radius: 24px;
 }
 
-/* ================= Header ================= */
+
 .glass-header {
     position: fixed;
     top: 0;
@@ -188,7 +188,7 @@ nav a:hover {
     color: var(--aurora-emerald);
 }
 
-/* ================= Hero ================= */
+
 .hero-section {
     min-height: 100vh;
     display: flex;
@@ -224,12 +224,12 @@ nav a:hover {
 }
 
 .hero-title {
-    font-size: clamp(3rem, 5.5vw, 5.5rem); /* Maior intensidade */
+    font-size: clamp(3rem, 5.5vw, 5.5rem); 
     line-height: 1.05;
     font-weight: 800;
     margin-bottom: 24px;
     letter-spacing: -0.02em;
-    /* Removemos a opacidade aqui pois o script cuida das palavras separadas */
+    
 }
 
 .hero-paragraph {
@@ -240,20 +240,20 @@ nav a:hover {
     line-height: 1.8;
 }
 
-/* ================= Animações Agressivas CSS ================= */
+
 .tilt-glow {
     transition: box-shadow 0.5s ease, border-color 0.5s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
 .project-row:hover .tilt-glow {
-    transform: scale(1.03) translateZ(10px); /* Aumento forte */
+    transform: scale(1.03) translateZ(10px); 
 }
 
-/* Glow insano nas bordas dos cards */
+
 .project-content::before {
     content: '';
     position: absolute;
-    inset: -2px; /* Maior espessura */
+    inset: -2px; 
     border-radius: inherit;
     padding: 2px;
     background: linear-gradient(45deg, transparent, rgba(52, 211, 153, 0), transparent);
@@ -273,7 +273,7 @@ nav a:hover {
     animation: gradientFlowBtn 2s linear infinite;
 }
 
-/* Modificações dramáticas nos botões */
+
 .btn {
     position: relative;
     padding: 18px 36px;
@@ -301,8 +301,8 @@ nav a:hover {
 }
 
 .btn-primary:hover {
-    transform: scale(1.05); /* Drama scale! */
-    box-shadow: 0 15px 40px -10px var(--aurora-emerald), 0 0 20px rgba(37, 99, 235, 0.5); /* Glow extremo */
+    transform: scale(1.05); 
+    box-shadow: 0 15px 40px -10px var(--aurora-emerald), 0 0 20px rgba(37, 99, 235, 0.5); 
 }
 
 .btn-primary::before {
@@ -338,7 +338,7 @@ nav a:hover {
     100% { background-position: 200% center; }
 }
 
-/* ================= Visão & Tech ================= */
+
 .vision-section {
     padding: 120px 0;
 }
@@ -410,7 +410,7 @@ nav a:hover {
     z-index: 10;
 }
 
-/* ================= Arsenal de Projetos ================= */
+
 .projects-section {
     padding: 120px 0;
 }
@@ -535,7 +535,7 @@ nav a:hover {
     overflow: hidden;
 }
 
-/* Fundo Animado com Gradientes Complexos nos Cards Main */
+
 .animated-gradient-overlay {
     position: absolute;
     inset: -50%;
@@ -565,7 +565,7 @@ nav a:hover {
 .playwright-visual { background: linear-gradient(135deg, #020617, #4c1d95); }
 
 
-/* ================= Glass Modal ================= */
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -593,7 +593,7 @@ nav a:hover {
     transform: translate(-50%, -45%) scale(0.95);
     width: 90%;
     max-width: 850px;
-    background: rgba(11, 15, 25, 0.85); /* Fundo um pouco mais opaco para leitura de textos longos */
+    background: rgba(11, 15, 25, 0.85); 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border: 1px solid var(--glass-border);
@@ -647,7 +647,7 @@ nav a:hover {
 .modal-body::-webkit-scrollbar { width: 6px; }
 .modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
-/* Iniciaremos todos os elementos do modal invisiveis para o stagger via JS */
+
 .stagger-el {
     opacity: 0;
     transform: translateY(20px);
@@ -723,7 +723,7 @@ code.hljs { background: transparent !important; padding: 0 !important; }
     gap: 12px;
 }
 
-/* ================= Contacts e Footer Seculares ================= */
+
 .contact-section {
     padding: 120px 0 60px 0;
 }

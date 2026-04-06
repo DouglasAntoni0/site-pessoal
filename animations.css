@@ -1,4 +1,4 @@
-/* ================= Aurora Background Physics ================= */
+
 .aurora-wrapper {
     position: fixed;
     top: 0; left: 0;
@@ -39,9 +39,9 @@
     50% { opacity: 0.4; transform: scale(0.8); }
 }
 
-/* ================= Interações e Hovers ================= */
 
-/* Botões Glowing Transition */
+
+
 .btn { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; }
 .btn-primary:hover { transform: scale(1.05); box-shadow: 0 15px 40px -10px #10B981, 0 0 20px rgba(37, 99, 235, 0.5); }
 .btn-primary::before {
@@ -61,7 +61,7 @@
 .btn-text-link { transition: gap 0.3s; }
 .btn-text-link:hover { gap: 16px; }
 
-/* Contact Cars */
+
 .contact-link { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .contact-link::before {
     content: ''; position: absolute; inset: 0;
@@ -80,7 +80,7 @@
 .github-card:hover .contact-icon { color: #fff; }
 .contact-icon { transition: color 0.4s; }
 
-/* Cards Glow Extremo */
+
 .tilt-glow { transition: box-shadow 0.5s ease, border-color 0.5s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; }
 .project-row:hover .tilt-glow { transform: scale(1.03) translateZ(10px); }
 .project-content::before {
