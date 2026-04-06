@@ -1,0 +1,222 @@
+:root {
+    --bg-color: #040914;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --aurora-blue: #2563EB;
+    --aurora-emerald: #10B981;
+    --aurora-purple: #8B5CF6;
+    
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+body.modal-open { overflow: hidden; }
+
+/* Tipografia e Globais */
+h1, h2, h3, h4, .logo { font-family: var(--font-heading); }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+.gradient-text {
+    background: linear-gradient(100deg, #60A5FA, #34D399, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+}
+
+/* ================= Header ================= */
+.glass-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 100;
+    background: rgba(4, 9, 20, 0.5);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 20px 0;
+}
+
+.header-container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
+nav ul { list-style: none; display: flex; gap: 32px; }
+nav a { color: var(--text-primary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s; display: inline-block; }
+nav a:hover { color: var(--aurora-emerald); }
+
+/* ================= Hero ================= */
+.hero-section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 100px; }
+.hero-content { max-width: 900px; width: 100%; text-align: center; }
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 32px;
+}
+.badge-glow {
+    width: 10px; height: 10px;
+    background: var(--aurora-emerald);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--aurora-emerald);
+}
+
+/* CRITICAL FIX: The Exact Typography constraints */
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #2563EB 20%, #10B981 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 24px;
+}
+
+/* Ensure the JS-generated spans inherit the transparency correctly so gradient flows nicely */
+.hero-title .word {
+    color: inherit;
+    -webkit-text-fill-color: inherit; 
+}
+
+.hero-paragraph {
+    font-size: 1.15rem; color: var(--text-secondary);
+    max-width: 700px; margin-bottom: 48px; line-height: 1.8;
+}
+
+/* ================= Botões ================= */
+.hero-actions { display: flex; gap: 20px; flex-wrap: wrap; }
+.btn {
+    position: relative;
+    padding: 18px 36px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+}
+.btn .btn-text { position: relative; z-index: 2; pointer-events: none; }
+.btn-primary { background: #ffffff; color: #000000; }
+.btn-secondary { background: var(--glass-bg); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+
+/* ================= Visão & Tech ================= */
+.vision-section { padding: 120px 0; }
+.vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; margin-bottom: 64px; }
+.vision-card { padding: 40px; position: relative; }
+.vision-icon { font-size: 3rem; color: var(--aurora-emerald); margin-bottom: 24px; }
+.vision-card h3 { font-size: 1.75rem; margin-bottom: 16px; }
+.vision-card p { color: var(--text-secondary); }
+
+.tech-stack { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+.tech-tag {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px; border-radius: 100px;
+    font-size: 0.9rem; font-weight: 500; cursor: default;
+}
+
+/* ================= Arsenal de Projetos ================= */
+.projects-section { padding: 120px 0; }
+.section-title { font-size: 3.5rem; text-align: center; margin-bottom: 40px; line-height: 1.1; }
+.disclaimer { max-width: 800px; margin: 0 auto 80px; padding: 24px; display: flex; gap: 16px; align-items: center; border-left: 4px solid var(--aurora-blue); }
+.disclaimer p { color: var(--text-secondary); font-size: 0.95rem; }
+.projects-timeline { display: flex; flex-direction: column; gap: 120px; }
+.project-row { transform-style: preserve-3d; }
+.project-content { display: flex; gap: 40px; padding: 40px; align-items: center; border: 1px solid var(--glass-border); }
+.project-row.reversed .project-content { flex-direction: row-reverse; }
+
+.project-info { flex: 1; transform: translateZ(40px); }
+.project-info h3 { font-size: 2rem; margin-bottom: 16px; }
+.project-info p { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 32px; }
+
+.card-tags { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.min-tag { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; padding: 4px 12px; border-radius: 100px; color: #cbd5e1; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.btn-text-link { background: none; border: none; color: var(--aurora-emerald); font-size: 1.1rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+.project-visual {
+    flex: 1; aspect-ratio: 16/9; border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 6rem; color: rgba(255,255,255,0.1);
+    transform: translateZ(60px); position: relative; overflow: hidden;
+}
+.k6-visual { background: linear-gradient(135deg, #020617, #082f49); }
+.cypress-visual { background: linear-gradient(135deg, #020617, #064e3b); }
+.playwright-visual { background: linear-gradient(135deg, #020617, #4c1d95); }
+
+/* ================= Modals ================= */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.4s ease; }
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.glass-modal {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.95);
+    width: 90%; max-width: 850px; background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(30px); border: 1px solid var(--glass-border);
+    border-radius: 24px; z-index: 1000; opacity: 0; visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+}
+.glass-modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+.close-modal { position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.3rem; z-index: 10; }
+.modal-body { padding: 56px; display: flex; flex-direction: column; gap: 24px; max-height: 90vh; overflow-y: auto; }
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+.stagger-el { opacity: 0; transform: translateY(20px); }
+.modal-body h2 { font-size: 2.2rem; padding-right: 40px; background: linear-gradient(135deg, #fff, var(--aurora-emerald)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.modal-tech { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.modal-badge { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34D399; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.modal-desc { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; }
+
+code.hljs { background: transparent !important; padding: 0 !important; }
+.code-container { background: #0d1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
+.code-container pre { margin: 0; max-height: 250px; overflow-y: auto; overflow-x: auto; padding: 24px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; line-height: 1.6; }
+.btn-modal { margin-top: 16px; width: 100%; font-size: 1.1rem; padding: 20px; }
+
+/* ================= Contatos ================= */
+.contact-section { padding: 120px 0 60px 0; }
+.contact-box { padding: 80px 40px; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.4)); }
+.contact-header { text-align: center; margin-bottom: 64px; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.contact-link { display: flex; align-items: center; gap: 20px; padding: 32px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); text-decoration: none; color: #fff; position: relative; overflow: hidden; }
+.contact-icon { font-size: 3.5rem; color: var(--text-secondary); z-index: 1; }
+.contact-info { display: flex; flex-direction: column; z-index: 1; }
+.contact-info .label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; }
+.contact-info .value { font-size: 1.5rem; font-weight: 700; font-family: var(--font-heading); }
+footer { text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+
+@media (max-width: 900px) { .project-content, .project-row.reversed .project-content { flex-direction: column; } .project-visual { width: 100%; } }
+@media (max-width: 600px) { .modal-body { padding: 40px 24px; } .hero-title { font-size: 2.2rem; } }
