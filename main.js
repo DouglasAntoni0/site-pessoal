@@ -133,7 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.split-text').forEach(splitTextIntoWords);
             gsap.set('.hero-subtitle, .hero-paragraph, .hero-actions', { opacity: 0, y: 30 });
 
-            gsap.timeline({ delay: 0.1 })
+            gsap.timeline({ 
+                delay: 0.1,
+                onComplete: () => {
+                    document.querySelectorAll('.hero-title span').forEach(span => {
+                        span.style.overflow = 'visible';
+                    });
+                }
+            })
                 .to('.hero-title .word', {
                     y: 0,
                     opacity: 1,

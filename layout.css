@@ -142,6 +142,8 @@ nav a:hover { color: var(--aurora-emerald); }
     margin-bottom: 24px;
     text-wrap: balance;
     max-width: 100%;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 
