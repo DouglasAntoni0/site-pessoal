@@ -2,76 +2,76 @@ const projectsData = [
     {
         id: "modal-1",
         number: "01",
+        category: "main",
         title: "Automação de Performance com K6",
         summary: "Testes de carga, stress e spike para resiliência de APIs.",
         tags: ["K6", "Performance", "Stress Test"],
         tools: ["K6 (JavaScript)", "Grafana/InfluxDB", "CLI Automation"],
-        desc: `Implementação de arquitetura de performance voltada diretamente à resiliência e estabilidade da infraestrutura. A aplicação dos testes engloba não apenas disparo cego de requisições, mas cenários hiper-realistas utilizando Load, Soak, Spike e Stress testing.<br><br>Foram desenvolvidos <em>thresholds</em> rígidos de validação para forçar o failover caso a latência p95 ultrapassasse os limites de SLA aceitáveis (500ms) ou a taxa de erros de chamadas superasse 1%. Essa arquitetura atua como a primeira barreira contra gargalos de produção.`,
-        code: `import http from 'k6/http';
-import { check, sleep } from 'k6';
-
-export const options = {
-  stages: [
-    { duration: '2m', target: 2000 },
-    { duration: '5m', target: 2000 },
-    { duration: '2m', target: 0 },
-  ],
-  thresholds: {
-    http_req_duration: ['p(95)<500'],
-    http_req_failed: ['rate<0.01'],
-  },
-};`,
+        desc: "Implementação de arquitetura de performance voltada diretamente à resiliência e estabilidade da infraestrutura. A aplicação dos testes engloba não apenas disparo cego de requisições, mas cenários hiper-realistas utilizando Load, Soak, Spike e Stress testing.<br><br>Foram desenvolvidos thresholds rígidos de validação para forçar o failover caso a latência p95 ultrapassasse os limites de SLA aceitáveis (500ms) ou a taxa de erros de chamadas superasse 1%. Essa arquitetura atua como a primeira barreira contra gargalos de produção.",
+        code: `import http from 'k6/http';\nimport { check, sleep } from 'k6';\n\nexport const options = {\n  stages: [\n    { duration: '2m', target: 2000 },\n    { duration: '5m', target: 2000 },\n    { duration: '2m', target: 0 },\n  ],\n  thresholds: {\n    http_req_duration: ['p(95)<500'],\n    http_req_failed: ['rate<0.01'],\n  },\n};`,
         repo: "https://github.com/DouglasAntoni0/projeto-completo-k6",
-        visualClass: "k6-visual",
+        visualClass: "k6-bg",
         iconClass: "ph-gauge",
         reverseBorder: false
     },
     {
         id: "modal-2",
         number: "02",
-        title: "Web Testing E2E com Cypress (NinjaDoCypress)",
+        category: "main",
+        title: "Web Testing E2E com Cypress",
         summary: "Framework ponta a ponta focado em robustez e CI/CD.",
-        tags: ["Cypress", "E2E", "Mock/Stub"],
-        tools: ["Cypress.io", "JavaScript/Node.js", "API Interception"],
-        desc: `Projeto complexo e escalável que atesta a saúde das aplicações front-end integrando UI, manipulação de banco de dados e chamadas de API, de forma unificada. Evitei o uso abusivo da interface para ações de setup e foquei na perfomance através de rotas customizadas de injeção de tokens.<br><br>Criação de comandos customizados incrivelmente robustos para otimizar drasticamente o tempo de execução (setup dinâmico de massa de dados na camada de rede em vez da camada de UI).`,
-        code: `Cypress.Commands.add('loginE2E', (email, password) => {
-  cy.session([email, password], () => {
-    cy.request('POST', '/api/auth', { email, password }).then((resp) => {
-      window.localStorage.setItem('token', resp.body.token);
-    });
-    cy.visit('/dashboard');
-    cy.get('[data-cy="user-menu"]').should('be.visible');
-  });
-});`,
+        tags: ["Cypress", "E2E", "JavaScript"],
+        tools: ["Cypress", "JavaScript", "GitHub Actions"],
+        desc: "Projeto complexo integrando chamadas de API, banco de dados e UI. Criação de comandos customizados robustos para otimizar o tempo de execução e setup de massa de dados.",
+        code: `Cypress.Commands.add('loginE2E', (email, password) => {\n  cy.session([email, password], () => {\n    cy.request('POST', '/api/auth', { email, password }).then((resp) => {\n      window.localStorage.setItem('token', resp.body.token);\n    });\n    cy.visit('/dashboard');\n    cy.get('[data-cy="user-menu"]').should('be.visible');\n  });\n});`,
         repo: "https://github.com/DouglasAntoni0/ninjadocypress",
-        visualClass: "cypress-visual",
-        iconClass: "ph-terminal-window",
+        visualClass: "cypress-bg",
+        iconClass: "ph-check-circle",
         reverseBorder: true
     },
     {
         id: "modal-3",
         number: "03",
+        category: "main",
         title: "Playwright Avançado & CI/CD",
         summary: "Automação cross-browser paralela com Page Object Model.",
         tags: ["Playwright", "CI/CD", "POM"],
         tools: ["Playwright Test", "Page Object Model", "GitHub Actions"],
-        desc: `Automação cross-browser configurada para paralelismo extremo usando o poder do motor do ecossistema Playwright. O projeto adota estritamente o paradigma Page Object Model (POM) garantindo manutenção isolada e clara.<br><br>Foram desenhadas asserções dinâmicas de alta confiabilidade (auto-waiting e expect patterns), em conjunto com a interceptação de chamadas de rede mockadas garantindo previsibilidade. Toda a esteira está configurada com GitHub Actions (CI/CD).`,
-        code: `import { test, expect } from '@playwright/test';
-import { MoviesPage } from '../pages/MoviesPage';
-
-test.describe('Validação de Cadastro', () => {
-  test('Deve cadastrar e validar no banco', async ({ page, request }) => {
-    const moviesPage = new MoviesPage(page);
-    await moviesPage.navigate();
-    await moviesPage.submitMovie('O Farofeiro 2', 'Comédia', '2026');
-    
-    const response = await page.waitForResponse('**/api/movies');
-    expect(response.status()).toBe(201);
-  });
-});`,
+        desc: "Automação cross-browser configurada para paralelismo extremo usando o poder do motor do ecossistema Playwright. O projeto adota estritamente o paradigma Page Object Model (POM) garantindo manutenção isolada e clara.<br><br>Foram desenhadas asserções dinâmicas de alta confiabilidade (auto-waiting e expect patterns), em conjunto com a interceptação de chamadas de rede mockadas garantindo previsibilidade. Toda a esteira está configurada com GitHub Actions (CI/CD).",
+        code: `import { test, expect } from '@playwright/test';\nimport { MoviesPage } from '../pages/MoviesPage';\n\ntest.describe('Validação de Cadastro', () => {\n  test('Deve cadastrar e validar no banco', async ({ page, request }) => {\n    const moviesPage = new MoviesPage(page);\n    await moviesPage.navigate();\n    await moviesPage.submitMovie('O Farofeiro 2', 'Comédia', '2026');\n    \n    const response = await page.waitForResponse('**/api/movies');\n    expect(response.status()).toBe(201);\n  });\n});`,
         repo: "https://github.com/DouglasAntoni0/playwrightcomplete",
-        visualClass: "playwright-visual",
+        visualClass: "playwright-bg",
         iconClass: "ph-browsers",
+        reverseBorder: false
+    },
+    {
+        id: "modal-4",
+        number: "04",
+        category: "main",
+        title: "QAx-Mobile: Automação Android",
+        summary: "Framework de testes automatizados para aplicações Mobile usando Appium.",
+        tags: ["Appium", "WebdriverIO", "Robot Framework", "Mobile"],
+        tools: ["Appium", "WebdriverIO", "Robot Framework", "MongoDB", "Android Studio"],
+        desc: "Projeto completo de automação mobile para testes ponta a ponta (E2E) em aplicativos Android nativos (Yodapp e MarkX).<br><br>A arquitetura foi desenvolvida explorando duas frentes: uma com <strong>WebdriverIO (JavaScript)</strong> e outra com <strong>Robot Framework (Python)</strong>. O framework lida com interações nativas complexas (swipes, taps, manipulação de UI) e integra scripts em Python para limpar e popular a base de dados no MongoDB antes das execuções, garantindo a idoneidade da massa de testes.",
+        code: `describe('Tarefas', () => {\n  it('deve cadastrar uma nova tarefa', async () => {\n    await loginScreen.doLogin('admin', 'qaninja')\n    await tasksScreen.create('Estudar Appium e Maestro')\n    await expect(await tasksScreen.taskName('Estudar Appium')).toBeDisplayed()\n  })\n})`,
+        repo: "https://github.com/DouglasAntoni0/QAx-Mobile",
+        visualClass: "mobile-bg",
+        iconClass: "ph-device-mobile",
+        reverseBorder: true
+    },
+    {
+        id: "modal-5",
+        number: "05",
+        category: "volunteer",
+        title: "SouJunior: Automação Open Source",
+        summary: "Testes E2E garantindo a qualidade da plataforma da ONG SouJunior.",
+        tags: ["Playwright", "Cypress", "Voluntariado", "Open Source"],
+        tools: ["Playwright", "Cypress", "GitHub Actions", "QA Social"],
+        desc: "Atuação direta como Software Quality Engineer voluntário na ONG SouJunior. Este projeto concentra a suíte de testes E2E desenvolvida para garantir a estabilidade e confiabilidade da plataforma utilizada por profissionais de tecnologia.<br><br>A arquitetura de qualidade contempla scripts robustos criados tanto em <strong>Cypress</strong> quanto em <strong>Playwright</strong>, cobrindo fluxos críticos de negócio como cadastro, listagem de iniciativas e depoimentos, rodando de forma contínua em pipelines de CI/CD para assegurar o conceito de 'Zero Falhas' no ambiente de impacto social.",
+        code: `import { test, expect } from '@playwright/test';\n\ntest.describe('Iniciativas - SouJunior', () => {\n  test('Deve carregar a página com sucesso', async ({ page }) => {\n    await page.goto('/iniciativas');\n    \n    const title = page.locator('h1');\n    await expect(title).toContainText('Nossas Iniciativas');\n    \n    const cards = page.locator('.iniciativa-card');\n    await expect(cards.first()).toBeVisible();\n  });\n});`,
+        repo: "https://github.com/DouglasAntoni0/Testes-E2E-SouJunior",
+        visualClass: "volunteer-bg",
+        iconClass: "ph-heart",
         reverseBorder: false
     }
 ];

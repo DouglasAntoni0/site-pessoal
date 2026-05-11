@@ -1,0 +1,21 @@
+{
+  "name": "douglas-qa-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "python -m http.server 4173 --bind 127.0.0.1",
+    "check:js": "node --check main.js && node --check projects-data.js",
+    "test:playwright": "playwright test",
+    "test:cypress": "node tests/support/run-with-server.mjs 4174 cypress run --config baseUrl=http://127.0.0.1:4174",
+    "test:selenium": "node tests/selenium/site.selenium.test.mjs",
+    "test:robot": "node tests/support/run-with-server.mjs 4177 robot --outputdir test-results/robot --variable BASE_URL:http://127.0.0.1:4177 tests/robot/site.robot",
+    "test:all": "npm run check:js && npm run test:playwright && npm run test:cypress && npm run test:selenium && npm run test:robot"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "chromedriver": "^147.0.4",
+    "cypress": "^15.14.2",
+    "selenium-webdriver": "^4.43.0"
+  }
+}
