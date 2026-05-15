@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    const resetInitialScroll = () => {
+        if (!window.location.hash) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
+    };
+
+    const scheduleInitialScrollReset = () => {
+        resetInitialScroll();
+        window.requestAnimationFrame(resetInitialScroll);
+        window.requestAnimationFrame(() => window.requestAnimationFrame(resetInitialScroll));
+        window.setTimeout(resetInitialScroll, 120);
+        window.setTimeout(resetInitialScroll, 360);
+    };
+
+    scheduleInitialScrollReset();
+    window.addEventListener('pageshow', scheduleInitialScrollReset);
+
     const mainProjectsContainer = document.getElementById('projects-container');
     const volunteerContainer = document.getElementById('volunteer-container');
     const modalsContainer = document.getElementById('modals-container');
@@ -10,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasVanillaTilt = typeof VanillaTilt !== 'undefined';
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const isCompactViewport = window.matchMedia('(max-width: 760px)').matches;
     const safeProjectsData = typeof projectsData !== 'undefined' && Array.isArray(projectsData) ? projectsData : [];
     let lastFocusedElement = null;
 
@@ -130,28 +152,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 gsap.registerPlugin(ScrollTrigger);
             }
 
-            document.querySelectorAll('.split-text').forEach(splitTextIntoWords);
+            if (!isCompactViewport) {
+                document.querySelectorAll('.split-text').forEach(splitTextIntoWords);
+            }
             gsap.set('.hero-subtitle, .hero-paragraph, .hero-actions', { opacity: 0, y: 30 });
 
-            gsap.timeline({ 
+            if (isCompactViewport) {
+                gsap.fromTo('.hero-title',
+                    { y: 14, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', clearProps: 'transform,opacity' }
+                );
+            }
+
+            const heroTimeline = gsap.timeline({ 
                 delay: 0.1,
                 onComplete: () => {
                     document.querySelectorAll('.hero-title span').forEach(span => {
                         span.style.overflow = 'visible';
                     });
                 }
-            })
-                .to('.hero-title .word', {
+            });
+
+            if (!isCompactViewport) {
+                heroTimeline.to('.hero-title .word', {
                     y: 0,
                     opacity: 1,
                     duration: 0.8,
                     stagger: 0.05,
                     ease: 'back.out(1.5)',
                     clearProps: 'transform,opacity'
-                })
+                });
+            }
+
+            heroTimeline
                 .to('.hero-subtitle',
                     { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity' },
-                    '-=0.5'
+                    isCompactViewport ? 0.15 : '-=0.5'
                 )
                 .to('.hero-paragraph',
                     { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity' },
@@ -301,13 +337,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initModalEvents() {
-        document.addEventListener('click', (event) => {
+        let lastPointerModalOpen = 0;
+
+        const handleModalTrigger = (event) => {
             const trigger = event.target.closest('.trigger-modal');
-            if (trigger) {
+            if (!trigger) return false;
+
+            const now = Date.now();
+            if (event.type === 'click' && now - lastPointerModalOpen < 350) {
                 event.preventDefault();
-                openModal(trigger.getAttribute('data-modal'));
-                return;
+                return true;
             }
+
+            if (event.type === 'pointerup') {
+                lastPointerModalOpen = now;
+            }
+
+            event.preventDefault();
+            openModal(trigger.getAttribute('data-modal'));
+            return true;
+        };
+
+        document.addEventListener('pointerup', handleModalTrigger);
+
+        document.addEventListener('click', (event) => {
+            if (handleModalTrigger(event)) return;
 
             if (event.target.closest('.close-modal')) {
                 closeAllModals();

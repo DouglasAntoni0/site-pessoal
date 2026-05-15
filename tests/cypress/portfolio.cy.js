@@ -36,6 +36,8 @@ describe('Portfolio Douglas QA', () => {
   it('navega pelas seções principais', () => {
     cy.contains('a', 'Visão & Tech').click();
     cy.contains('Shift-Left & Operações').should('be.visible');
+    cy.contains('a', 'Atuação').click();
+    cy.contains('Da estratégia de teste').should('be.visible');
     cy.contains('a', 'Projetos').click();
     cy.contains('Arsenal de').should('be.visible');
     cy.contains('a', 'Open Source').click();
@@ -54,6 +56,7 @@ describe('Portfolio Douglas QA', () => {
     cy.viewport(390, 844);
     cy.reload();
     cy.contains('a', 'Open Source').should('be.visible');
+    cy.contains('a', 'Currículo').should('have.attr', 'href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
     cy.get('h1').should('be.visible');
     expectNoHorizontalOverflow();
   });

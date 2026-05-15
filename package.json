@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "serve": "python -m http.server 4173 --bind 127.0.0.1",
+    "build": "node scripts/build-static.mjs",
     "check:js": "node --check main.js && node --check projects-data.js",
     "test:playwright": "playwright test",
     "test:cypress": "node tests/support/run-with-server.mjs 4174 cypress run --config baseUrl=http://127.0.0.1:4174",
@@ -14,7 +15,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "chromedriver": "^147.0.4",
+    "chromedriver": "^148.0.3",
     "cypress": "^15.14.2",
     "selenium-webdriver": "^4.43.0"
   }

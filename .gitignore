@@ -3,4 +3,5 @@ test-results/
 playwright-report/
 cypress/screenshots/
 cypress/videos/
+dist/
 .DS_Store

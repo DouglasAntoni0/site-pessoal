@@ -22,6 +22,22 @@ async function expectNoHorizontalOverflow(page) {
   expect(overflow.bodyOverflow, JSON.stringify(overflow)).toBeLessThanOrEqual(1);
 }
 
+async function expectHeroBelowHeader(page) {
+  const geometry = await page.evaluate(() => {
+    const header = document.querySelector('.glass-header')?.getBoundingClientRect();
+    const title = document.querySelector('.hero-title')?.getBoundingClientRect();
+    return {
+      headerBottom: header?.bottom ?? 0,
+      titleTop: title?.top ?? 0,
+      titleBottom: title?.bottom ?? 0,
+      viewportHeight: window.innerHeight
+    };
+  });
+
+  expect(geometry.titleTop, JSON.stringify(geometry)).toBeGreaterThanOrEqual(geometry.headerBottom + 8);
+  expect(geometry.titleBottom, JSON.stringify(geometry)).toBeLessThan(geometry.viewportHeight);
+}
+
 test.beforeEach(async ({ page }) => {
   const browserErrors = [];
   page.on('pageerror', (error) => browserErrors.push(error.message));
@@ -61,6 +77,7 @@ test('ancoras do menu navegam para seções sem esconder conteúdo crítico', as
 
   const targets = [
     ['Visão & Tech', 'Shift-Left & Operações'],
+    ['Atuação', 'Da estratégia de teste'],
     ['Projetos', 'Arsenal de'],
     ['Open Source', 'Voluntariado'],
     ['Contato', 'Engenharia de nível mundial']
@@ -70,6 +87,17 @@ test('ancoras do menu navegam para seções sem esconder conteúdo crítico', as
     await nav.getByRole('link', { name: linkName, exact: true }).click();
     await expect(page.getByText(headingText, { exact: false }).first()).toBeVisible();
   }
+});
+
+test('seção de atuação e currículo ficam disponíveis', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByRole('heading', { name: /Da estratégia de teste/ })).toBeVisible();
+  await expect(page.getByText('Shift-left e Test Strategy')).toBeVisible();
+  const resume = page.getByRole('link', { name: 'Currículo' });
+  await expect(resume).toHaveAttribute('href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
+  await expect(resume).toHaveAttribute('download', '');
 });
 
 test('renderiza todos os projetos e separa voluntariado corretamente', async ({ page }) => {
@@ -151,6 +179,23 @@ test('layout mobile 390px não cria rolagem horizontal e mostra CTAs', async ({ 
   await expectNoHorizontalOverflow(page);
 });
 
+test('hero mobile não fica tampado por header em alturas comuns de navegador', async ({ page }) => {
+  await blockExternalAssets(page);
+
+  for (const size of [
+    { width: 320, height: 560 },
+    { width: 360, height: 640 },
+    { width: 390, height: 700 },
+    { width: 430, height: 760 }
+  ]) {
+    await page.setViewportSize(size);
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expectHeroBelowHeader(page);
+    await expectNoHorizontalOverflow(page);
+  }
+});
+
 test('layout mobile estreito 320px mantém header e cards dentro da tela', async ({ page }) => {
   await blockExternalAssets(page);
   await page.setViewportSize({ width: 320, height: 740 });
@@ -159,6 +204,35 @@ test('layout mobile estreito 320px mantém header e cards dentro da tela', async
   await expect(page.getByRole('link', { name: 'Open Source' })).toBeVisible();
   await expect(page.locator('#projects-container article').first()).toBeVisible();
   await expectNoHorizontalOverflow(page);
+});
+
+test('todos os modais mobile exibem snippet de código e botão do repositório', async ({ page }) => {
+  test.setTimeout(60_000);
+  await blockExternalAssets(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const buttons = page.getByRole('button', { name: 'Ver Detalhes' });
+  const count = await buttons.count();
+  expect(count).toBe(5);
+
+  for (let index = 0; index < count; index += 1) {
+    const button = buttons.nth(index);
+    await button.scrollIntoViewIfNeeded();
+    await button.click({ force: true });
+
+    const modal = page.locator('.glass-modal.active');
+    await expect.poll(async () => modal.isVisible()).toBe(true);
+    const code = modal.locator('.code-container');
+    await expect(code).toBeVisible();
+    await expect(code.locator('code')).not.toBeEmpty();
+
+    const box = await code.boundingBox();
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(160);
+    await expect(modal.getByRole('link', { name: 'Acessar Repositório' })).toBeVisible();
+    await modal.locator('.close-modal').click();
+    await expect(modal).toBeHidden();
+  }
 });
 
 test('layout tablet mantém projetos empilhados sem cortar visual', async ({ page }) => {
