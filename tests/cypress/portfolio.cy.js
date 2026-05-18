@@ -60,4 +60,50 @@ describe('Portfolio Douglas QA', () => {
     cy.get('h1').should('be.visible');
     expectNoHorizontalOverflow();
   });
+
+  it('todas as 32 tech-tags possuem um ícone', () => {
+    cy.get('.tech-tag').should('have.length', 32);
+    cy.get('.tech-tag').each(($tag) => {
+      cy.wrap($tag).find('i').should('have.length', 1);
+    });
+  });
+
+  it('layout tablet 768px sem overflow horizontal', () => {
+    cy.viewport(768, 1024);
+    cy.reload();
+    cy.get('h1').should('be.visible');
+    cy.contains('a', 'Projetos').should('be.visible');
+    expectNoHorizontalOverflow();
+  });
+
+  it('layout mobile estreito 320px mantém tudo na tela', () => {
+    cy.viewport(320, 740);
+    cy.reload();
+    cy.get('h1').should('be.visible');
+    cy.contains('a', 'Contato').should('be.visible');
+    expectNoHorizontalOverflow();
+  });
+
+  it('cards de contato possuem links corretos e seguros', () => {
+    cy.get('.contact-link').should('have.length', 3);
+    cy.get('a.whatsapp-card').should('have.attr', 'href').and('include', 'wa.me');
+    cy.get('a.linkedin-card').should('have.attr', 'href').and('include', 'linkedin.com');
+    cy.get('a.github-card').should('have.attr', 'href').and('include', 'github.com');
+    cy.get('.contact-link').each(($link) => {
+      cy.wrap($link).should('have.attr', 'rel').and('include', 'noopener');
+    });
+  });
+
+  it('footer está visível com copyright', () => {
+    cy.get('footer').scrollIntoView().should('be.visible');
+    cy.get('footer').should('contain.text', 'Douglas Antonio');
+  });
+
+  it('meta viewport está presente', () => {
+    cy.document().then((doc) => {
+      const viewport = doc.querySelector('meta[name="viewport"]');
+      expect(viewport).to.not.be.null;
+      expect(viewport.getAttribute('content')).to.include('width=device-width');
+    });
+  });
 });

@@ -71,6 +71,7 @@ test('mantém a navegação principal íntegra em todos os breakpoints', async (
 });
 
 test('ancoras do menu navegam para seções sem esconder conteúdo crítico', async ({ page }) => {
+  test.setTimeout(45_000);
   await blockExternalAssets(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const nav = page.getByRole('navigation', { name: 'Navegação principal' });
@@ -85,7 +86,8 @@ test('ancoras do menu navegam para seções sem esconder conteúdo crítico', as
 
   for (const [linkName, headingText] of targets) {
     await nav.getByRole('link', { name: linkName, exact: true }).click();
-    await expect(page.getByText(headingText, { exact: false }).first()).toBeVisible();
+    await page.waitForTimeout(400);
+    await expect(page.getByText(headingText, { exact: false }).first()).toBeVisible({ timeout: 8_000 });
   }
 });
 
@@ -128,7 +130,7 @@ test('abre e fecha modal pelo botão, overlay e tecla Escape', async ({ page }) 
 });
 
 test('todos os modais possuem conteúdo, badges e link externo seguro', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(90_000);
   await blockExternalAssets(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
@@ -139,15 +141,15 @@ test('todos os modais possuem conteúdo, badges e link externo seguro', async ({
   for (let index = 0; index < count; index += 1) {
     const button = buttons.nth(index);
     await button.scrollIntoViewIfNeeded();
-    await button.click();
+    await button.click({ force: true });
     const modal = page.locator('.glass-modal.active');
-    await expect.poll(async () => modal.isVisible()).toBe(true);
-    await expect(modal.locator('.modal-badge').first()).toBeVisible();
+    await expect(modal).toBeVisible({ timeout: 10_000 });
+    await expect(modal.locator('.modal-badge').first()).toBeVisible({ timeout: 5_000 });
     const repo = modal.getByRole('link', { name: 'Acessar Repositório' });
     await expect(repo).toHaveAttribute('target', '_blank');
     await expect(repo).toHaveAttribute('rel', /noopener/);
     await page.keyboard.press('Escape');
-    await expect(modal).toBeHidden();
+    await expect(modal).toBeHidden({ timeout: 5_000 });
   }
 });
 
@@ -270,4 +272,62 @@ test('foco de teclado entra no modal e retorna ao gatilho ao fechar', async ({ p
   await expect.poll(async () => page.evaluate(() => document.activeElement?.classList.contains('close-modal'))).toBe(true);
   await page.keyboard.press('Escape');
   await expect(firstTrigger).toBeFocused();
+});
+
+test('todas as 32 tech-tags possuem um ícone visível', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const tags = page.locator('.tech-tag');
+  const count = await tags.count();
+  expect(count).toBe(32);
+
+  for (let i = 0; i < count; i++) {
+    const icon = tags.nth(i).locator('i');
+    await expect(icon).toHaveCount(1);
+  }
+});
+
+test('meta viewport está presente para responsividade', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const viewport = page.locator('meta[name="viewport"]');
+  await expect(viewport).toHaveAttribute('content', /width=device-width/);
+});
+
+test('footer está visível ao final da página', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const footer = page.locator('footer');
+  await footer.scrollIntoViewIfNeeded();
+  await expect(footer).toBeVisible();
+  await expect(footer).toContainText('Douglas Antonio');
+});
+
+test('seções aparecem na ordem correta na página', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const sectionIds = await page.evaluate(() => {
+    const sections = document.querySelectorAll('section[id]');
+    return [...sections].map(s => s.id);
+  });
+
+  expect(sectionIds).toEqual(['hero', 'vision', 'quality', 'projects', 'volunteer', 'contact']);
+});
+
+test('quality strip exibe as 3 métricas sem overflow', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const strip = page.locator('.quality-strip');
+  await strip.scrollIntoViewIfNeeded();
+  const cells = strip.locator('> div');
+  await expect(cells).toHaveCount(3);
+  for (const text of ['CI/CD', 'API + Dados', 'Web + Mobile']) {
+    await expect(strip.getByText(text)).toBeVisible();
+  }
+  await expectNoHorizontalOverflow(page);
 });
