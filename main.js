@@ -158,43 +158,56 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.set('.hero-subtitle, .hero-paragraph, .hero-actions', { opacity: 0, y: 30 });
 
             if (isCompactViewport) {
-                gsap.fromTo('.hero-title',
-                    { y: 14, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', clearProps: 'transform,opacity' }
-                );
+                gsap.set('.hero-title', { y: 14, opacity: 0 });
             }
 
             const heroTimeline = gsap.timeline({ 
                 delay: 0.1,
                 onComplete: () => {
+                    const heroTitle = document.querySelector('.hero-title');
+                    if (heroTitle) {
+                        heroTitle.style.opacity = '1';
+                        heroTitle.style.transform = 'none';
+                        heroTitle.style.visibility = 'visible';
+                    }
                     document.querySelectorAll('.hero-title span').forEach(span => {
                         span.style.overflow = 'visible';
+                    });
+                    document.querySelectorAll('.hero-subtitle, .hero-paragraph, .hero-actions').forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'none';
                     });
                 }
             });
 
-            if (!isCompactViewport) {
+            if (isCompactViewport) {
+                heroTimeline.to('.hero-title', {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.55,
+                    ease: 'power3.out'
+                });
+            } else {
                 heroTimeline.to('.hero-title .word', {
                     y: 0,
                     opacity: 1,
                     duration: 0.8,
                     stagger: 0.05,
-                    ease: 'back.out(1.5)',
-                    clearProps: 'transform,opacity'
+                    ease: 'back.out(1.5)'
                 });
             }
 
             heroTimeline
                 .to('.hero-subtitle',
-                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity' },
-                    isCompactViewport ? 0.15 : '-=0.5'
+                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+                    isCompactViewport ? '-=0.3' : '-=0.5'
                 )
                 .to('.hero-paragraph',
-                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity' },
+                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
                     '-=0.6'
                 )
                 .to('.hero-actions',
-                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform,opacity' },
+                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
                     '-=0.6'
                 );
 
