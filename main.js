@@ -173,6 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelectorAll('.hero-title span').forEach(span => {
                         span.style.overflow = 'visible';
                     });
+                    document.querySelectorAll('.hero-title .word').forEach(word => {
+                        word.style.transform = 'none';
+                        word.style.opacity = '1';
+                    });
                     document.querySelectorAll('.hero-subtitle, .hero-paragraph, .hero-actions').forEach(el => {
                         el.style.opacity = '1';
                         el.style.transform = 'none';
