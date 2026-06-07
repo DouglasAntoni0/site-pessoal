@@ -60,8 +60,8 @@ const projectsData = [
         reverseBorder: true
     },
     {
-        id: "modal-5",
-        number: "05",
+        id: "modal-7",
+        number: "07",
         category: "volunteer",
         title: "SouJunior: Automação Open Source",
         summary: "Testes E2E garantindo a qualidade da plataforma da ONG SouJunior.",
@@ -73,5 +73,35 @@ const projectsData = [
         visualClass: "volunteer-bg",
         iconClass: "ph-heart",
         reverseBorder: false
+    },
+    {
+        id: "modal-5",
+        number: "05",
+        category: "main",
+        title: "QA Automaton IA: Self-Healing",
+        summary: "Playwright + GPT-4 para Self-Healing e Geração de Dados.",
+        tags: ["Playwright", "OpenAI", "TypeScript"],
+        tools: ["Playwright", "TypeScript", "OpenAI API", "GitHub Actions"],
+        desc: "Projeto experimental de vanguarda unindo Inteligência Artificial a testes E2E. O framework utiliza TypeScript e Playwright integrado à API da OpenAI para duas frentes inovadoras: geração dinâmica de massa de dados sintéticos e um mecanismo de 'Self-Healing'. Quando a automação falha por um locator quebrado na UI, a IA analisa o DOM em tempo real e encontra o novo seletor correspondente, permitindo que o teste continue sem interrupções.",
+        code: `import { test, expect } from '@playwright/test';\nimport { getHealedLocator } from '../support/self-healing/locator';\n\ntest('Deve curar locator quebrado via IA', async ({ page }) => {\n  const brokenLocator = '#old-btn-submit';\n  const targetDesc = 'Botão de confirmar cadastro';\n  \n  // A IA analisa o DOM e retorna o novo locator corrigido\n  const healedLocator = await getHealedLocator(page, brokenLocator, targetDesc);\n  \n  await page.locator(healedLocator).click();\n  await expect(page.locator('.success-msg')).toBeVisible();\n});`,
+        repo: "https://github.com/DouglasAntoni0/automacao-inteligente-qa",
+        visualClass: "ai-bg",
+        iconClass: "ph-brain",
+        reverseBorder: false
+    },
+    {
+        id: "modal-6",
+        number: "06",
+        category: "main",
+        title: "Multi-Framework QA: Dogfooding",
+        summary: "Cobertura de testes do próprio site com 4 frameworks distintos.",
+        tags: ["Cypress", "Playwright", "Robot", "Selenium"],
+        tools: ["Cypress", "Playwright", "Robot Framework", "Selenium", "Node.js", "Python"],
+        desc: "Aplicando o conceito de 'Dogfooding', desenvolvi uma suíte completa de testes E2E para garantir a qualidade visual e funcional deste próprio portfólio. Para demonstrar proficiência nas principais tecnologias do mercado, a automação foi escrita simultaneamente em 4 frameworks diferentes: Cypress, Playwright, Robot Framework e Selenium WebDriver. Os scripts validam a responsividade, o comportamento do Glassmorphism e a lógica de abertura dos modais.",
+        code: `*** Settings ***\nLibrary    SeleniumLibrary\n\n*** Test Cases ***\nValidar Abertura de Modais de Projetos\n    Open Browser    https://douglasqa.netlify.app    chrome\n    Wait Until Element Is Visible    css=.project-row\n    Click Element    css=.trigger-modal[data-modal="modal-1"]\n    Wait Until Element Is Visible    css=.glass-modal.active\n    Sleep    1s\n    Click Element    css=.close-modal\n    Close Browser`,
+        repo: "https://github.com/DouglasAntoni0/site-pessoal",
+        visualClass: "multi-bg",
+        iconClass: "ph-check-square-offset",
+        reverseBorder: true
     }
 ];

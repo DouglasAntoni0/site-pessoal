@@ -75,7 +75,7 @@ try {
       assert.equal(overflow.bodyOverflow <= 1, true, `${name}: body overflow ${JSON.stringify(overflow)}`);
 
       const buttons = await driver.findElements(By.css('.trigger-modal'));
-      assert.equal(buttons.length, 5, `${name}: modal trigger count`);
+      assert.equal(buttons.length, 7, `${name}: modal trigger count`);
 
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', buttons[0]);
       await wait(150);

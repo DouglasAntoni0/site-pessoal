@@ -32,9 +32,9 @@ Projects And Volunteer Cards Render
     ${main_count}=    Get Element Count    css:#projects-container article
     ${volunteer_count}=    Get Element Count    css:#volunteer-container article
     ${trigger_count}=    Get Element Count    css:.trigger-modal
-    Should Be Equal As Integers    ${main_count}    4
+    Should Be Equal As Integers    ${main_count}    6
     Should Be Equal As Integers    ${volunteer_count}    1
-    Should Be Equal As Integers    ${trigger_count}    5
+    Should Be Equal As Integers    ${trigger_count}    7
 
 Project Modal Opens And Closes
     Execute Javascript    document.querySelector('.trigger-modal').scrollIntoView({ block: 'center', inline: 'center' })
