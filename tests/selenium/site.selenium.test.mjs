@@ -9,7 +9,7 @@ import chrome from 'selenium-webdriver/chrome.js';
 const require = createRequire(import.meta.url);
 const chromedriver = require('chromedriver');
 const port = 4176;
-const baseUrl = `http://127.0.0.1:${port}`;
+const baseUrl = process.env.BASE_URL || `http://127.0.0.1:${port}`;
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
 async function waitForServer() {
@@ -43,16 +43,21 @@ async function buildDriver(width, height) {
   return new Builder().forBrowser('chrome').setChromeOptions(options).setChromeService(service).build();
 }
 
-const server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
-  cwd: root,
-  stdio: 'ignore',
-  windowsHide: true
-});
+let server;
+if (!process.env.BASE_URL) {
+  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
+    cwd: root,
+    stdio: 'ignore',
+    windowsHide: true
+  });
+}
 
 const failures = [];
 
 try {
-  await waitForServer();
+  if (!process.env.BASE_URL) {
+    await waitForServer();
+  }
 
   for (const [name, width, height] of [
     ['desktop', 1440, 900],
@@ -95,7 +100,9 @@ try {
     }
   }
 } finally {
-  server.kill();
+  if (server) {
+    server.kill();
+  }
 }
 
 if (failures.length) {

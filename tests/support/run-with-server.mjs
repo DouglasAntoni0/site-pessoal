@@ -9,6 +9,7 @@ const [, , portArg, ...command] = process.argv;
 const port = Number(portArg || 4173);
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const url = `http://127.0.0.1:${port}`;
+const externalUrl = process.env.BASE_URL;
 
 if (!command.length) {
   console.error('Missing command to run with static server.');
@@ -28,21 +29,28 @@ async function waitForServer() {
   throw new Error(`Static server did not start at ${url}`);
 }
 
-const server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
-  cwd: root,
-  stdio: 'ignore',
-  windowsHide: true
-});
+let server;
+if (!externalUrl) {
+  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
+    cwd: root,
+    stdio: 'ignore',
+    windowsHide: true
+  });
+}
 
 try {
-  await waitForServer();
+  if (!externalUrl) {
+    await waitForServer();
+  }
 
-  const executable = command[0] === 'cypress'
+  const finalCommand = command.map(arg => arg.replace(`http://127.0.0.1:${port}`, externalUrl || url));
+
+  const executable = finalCommand[0] === 'cypress'
     ? process.execPath
-    : command[0];
-  const args = command[0] === 'cypress'
-    ? [path.join(root, 'node_modules', 'cypress', 'bin', 'cypress'), ...command.slice(1)]
-    : command.slice(1);
+    : finalCommand[0];
+  const args = finalCommand[0] === 'cypress'
+    ? [path.join(root, 'node_modules', 'cypress', 'bin', 'cypress'), ...finalCommand.slice(1)]
+    : finalCommand.slice(1);
   const chromedriverDir = path.join(root, 'node_modules', 'chromedriver', 'lib', 'chromedriver');
   const env = fs.existsSync(chromedriverDir)
     ? { ...process.env, PATH: `${chromedriverDir}${path.delimiter}${process.env.PATH || ''}` }
@@ -61,5 +69,7 @@ try {
   console.error(error);
   process.exitCode = 1;
 } finally {
-  server.kill();
+  if (server) {
+    server.kill();
+  }
 }
