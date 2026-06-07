@@ -7,7 +7,7 @@ const externalHosts = [
 
 function blockExternalAssets() {
   externalHosts.forEach((host) => {
-    cy.intercept(host, { forceNetworkError: true });
+    cy.intercept(host, { statusCode: 200, body: '' });
   });
 }
 
