@@ -11,7 +11,7 @@ O site atua como um hub central para exibir minhas habilidades técnicas, projet
 
 A estrutura foi projetada para ter um padrão de design de nível elevado, utilizando alto desempenho, acessibilidade e micro-interações fluidas orientadas à experiência do usuário, transmitindo clareza e credibilidade técnica.
 
-## Stack & Tecnologias Utilizadas
+## Stack & Tecnologias Utilizadas.
 
 A aplicação foi construída visando um ecossistema leve sem dependências pesadas, pautada em:
 
