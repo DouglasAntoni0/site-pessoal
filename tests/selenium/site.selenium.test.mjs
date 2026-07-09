@@ -79,6 +79,16 @@ try {
       assert.match(await certificationNav.getText(), /Certificações/, `${name}: certifications nav label`);
       const certificationCards = await driver.findElements(By.css('#certifications .certification-card'));
       assert.equal(certificationCards.length, 11, `${name}: certification card count`);
+      const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
+      assert.equal(certificationViewButtons.length, 11, `${name}: certification view button count`);
+      await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', certificationViewButtons[0]);
+      await wait(150);
+      await driver.executeScript('arguments[0].click();', certificationViewButtons[0]);
+      const certificateModal = await driver.wait(until.elementLocated(By.css('#certificate-viewer-modal.active')), 8000);
+      const certificateImage = await certificateModal.findElement(By.css('#certificate-modal-image'));
+      assert.match(await certificateImage.getAttribute('src'), /assets\/certificates\/ebac-engenheiro-qualidade-software\.png/, `${name}: certification image src`);
+      await driver.actions().sendKeys(Key.ESCAPE).perform();
+      await driver.wait(until.elementIsNotVisible(certificateModal), 8000);
       const certificationCta = await driver.findElement(By.css('#certifications .certifications-cta'));
       assert.equal(await certificationCta.getAttribute('href'), 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/', `${name}: certifications CTA href`);
       assert.equal(await certificationCta.getAttribute('target'), '_blank', `${name}: certifications CTA target`);

@@ -471,6 +471,38 @@ nav a:hover { color: var(--aurora-emerald); }
     line-height: 1.35;
     padding: 7px 11px;
 }
+.certification-view-btn {
+    align-items: center;
+    align-self: stretch;
+    background: rgba(16, 185, 129, 0.11);
+    border: 1px solid rgba(16, 185, 129, 0.32);
+    border-radius: 8px;
+    color: #D1FAE5;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 800;
+    gap: 10px;
+    justify-content: center;
+    line-height: 1.25;
+    margin-top: 22px;
+    min-height: 44px;
+    padding: 12px 14px;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.certification-view-btn:hover,
+.certification-view-btn:focus-visible {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(52, 211, 153, 0.55);
+    transform: translateY(-1px);
+}
+
+.certification-view-btn i {
+    flex: 0 0 auto;
+    font-size: 1.15rem;
+}
 .projects-section { padding: clamp(72px, 12vw, 120px) 0; }
 .volunteer-section { padding-top: 20px; }
 .section-title { font-size: clamp(2rem, 5vw, 3.25rem); text-align: center; margin-bottom: 40px; line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
@@ -551,6 +583,45 @@ code.hljs { background: transparent !important; padding: 0 !important; }
 }
 .code-container pre { margin: 0; max-height: 280px; min-height: 190px; overflow-y: auto; overflow-x: auto; padding: 24px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; line-height: 1.6; }
 .btn-modal { flex: 0 0 auto; margin-top: 16px; width: 100%; font-size: 1.1rem; padding: 20px; }
+.certificate-modal {
+    max-width: 1120px;
+    width: min(96vw, 1120px);
+}
+
+.certificate-modal-body {
+    gap: 18px;
+    padding: 44px;
+}
+
+.certificate-modal-school {
+    align-self: flex-start;
+}
+
+.certificate-viewer {
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    min-height: 240px;
+    overflow: hidden;
+    padding: 12px;
+}
+
+.certificate-viewer img {
+    background: #fff;
+    border-radius: 6px;
+    display: block;
+    max-height: min(68dvh, 760px);
+    object-fit: contain;
+    width: 100%;
+}
+
+#certificate-modal-open {
+    margin-top: 0;
+}
 
 
 .contact-section { padding: clamp(72px, 12vw, 120px) 0 60px 0; }
@@ -621,6 +692,9 @@ footer { text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255
     .hero-actions .btn { flex: 1 1 150px; padding: 16px 20px; }
     .glass-modal { width: min(92vw, 680px); max-height: calc(100dvh - 24px); }
     .modal-body { gap: 20px; max-height: calc(100dvh - 24px); padding: 40px 22px 28px; }
+    .certificate-modal-body { gap: 16px; padding: 40px 14px 20px; }
+    .certificate-viewer { min-height: 180px; padding: 8px; }
+    .certificate-viewer img { max-height: 58dvh; }
     .close-modal { top: 16px; right: 16px; }
     .modal-body h2 { padding-right: 52px; }
     .code-container { min-height: 170px; }

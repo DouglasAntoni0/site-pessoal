@@ -111,12 +111,22 @@ test('seção de certificações renderiza cards e CTA seguro do LinkedIn', asyn
   const section = page.locator('#certifications');
   await expect(section.getByRole('heading', { name: /Certificações que sustentam/ })).toBeVisible();
   await expect(section.locator('.certification-card')).toHaveCount(11);
+  await expect(section.locator('.certification-view-btn')).toHaveCount(11);
   await expect(section.getByText('Profissão: Engenheiro de Qualidade de Software')).toBeVisible();
   await expect(section.getByText('Playwright Zombie Edition')).toBeVisible();
   const linkedin = section.getByRole('link', { name: /Ver certificações no LinkedIn/ });
   await expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/');
   await expect(linkedin).toHaveAttribute('target', '_blank');
   await expect(linkedin).toHaveAttribute('rel', /noopener/);
+
+  await section.locator('.certification-view-btn').first().click();
+  const certificateModal = page.locator('#certificate-viewer-modal');
+  await expect(certificateModal).toBeVisible();
+  await expect(certificateModal.getByRole('heading', { name: 'Profissão: Engenheiro de Qualidade de Software' })).toBeVisible();
+  await expect(certificateModal.locator('#certificate-modal-image')).toHaveAttribute('src', /assets\/certificates\/ebac-engenheiro-qualidade-software\.png/);
+  await expect(certificateModal.getByRole('link', { name: /Abrir imagem/ })).toHaveAttribute('href', /assets\/certificates\/ebac-engenheiro-qualidade-software\.png/);
+  await page.keyboard.press('Escape');
+  await expect(certificateModal).toBeHidden();
   await expectNoHorizontalOverflow(page);
 });
 test('renderiza todos os projetos e separa voluntariado corretamente', async ({ page }) => {

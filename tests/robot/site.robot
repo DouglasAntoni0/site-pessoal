@@ -49,6 +49,14 @@ Certifications Section Renders
     Page Should Contain    Certificações que sustentam
     ${cert_count}=    Get Element Count    css:#certifications .certification-card
     Should Be Equal As Integers    ${cert_count}    11
+    ${cert_button_count}=    Get Element Count    css:#certifications .certification-view-btn
+    Should Be Equal As Integers    ${cert_button_count}    11
+    Execute Javascript    document.querySelector('#certifications .certification-view-btn').click()
+    Wait Until Element Is Visible    css:#certificate-viewer-modal.active
+    ${certificate_src}=    Get Element Attribute    css:#certificate-modal-image    src
+    Should Contain    ${certificate_src}    assets/certificates/ebac-engenheiro-qualidade-software.png
+    Press Keys    None    ESC
+    Wait Until Element Is Not Visible    css:#certificate-viewer-modal.active
     Page Should Contain    Playwright Zombie Edition
     ${href}=    Get Element Attribute    css:#certifications .certifications-cta    href
     Should Contain    ${href}    linkedin.com/in/douglas-antonio-qa/details/certifications

@@ -68,6 +68,7 @@ describe('Portfolio Douglas QA', () => {
     cy.get('#certifications').scrollIntoView().within(() => {
       cy.contains('Certificações que sustentam').should('be.visible');
       cy.get('.certification-card').should('have.length', 11);
+      cy.get('.certification-view-btn').should('have.length', 11);
       cy.contains('Ninja do Cypress').should('be.visible');
       cy.contains('Playwright Zombie Edition').should('be.visible');
       cy.get('.certifications-cta')
@@ -76,6 +77,15 @@ describe('Portfolio Douglas QA', () => {
         .and('have.attr', 'rel')
         .and('include', 'noopener');
     });
+
+    cy.get('#certifications .certification-view-btn').first().click();
+    cy.get('#certificate-viewer-modal').should('have.class', 'active');
+    cy.get('#certificate-modal-title').should('contain.text', 'Profissão: Engenheiro de Qualidade de Software');
+    cy.get('#certificate-modal-image')
+      .should('have.attr', 'src')
+      .and('include', 'assets/certificates/ebac-engenheiro-qualidade-software.png');
+    cy.get('#certificate-viewer-modal .close-modal').click();
+    cy.get('#certificate-viewer-modal').should('not.have.class', 'active');
     expectNoHorizontalOverflow();
   });
   it('todas as 32 tech-tags possuem um ícone', () => {

@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const volunteerContainer = document.getElementById('volunteer-container');
     const modalsContainer = document.getElementById('modals-container');
     const modalOverlay = document.getElementById('modal-overlay');
+    const certificateModalTitle = document.getElementById('certificate-modal-title');
+    const certificateModalSchool = document.getElementById('certificate-modal-school');
+    const certificateModalImage = document.getElementById('certificate-modal-image');
+    const certificateModalOpen = document.getElementById('certificate-modal-open');
     const body = document.body;
     const hasGsap = typeof gsap !== 'undefined';
     const hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
@@ -353,6 +357,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function openCertificateModal(trigger) {
+        const image = trigger.getAttribute('data-certificate-image');
+        const title = trigger.getAttribute('data-certificate-title') || 'Certificado';
+        const school = trigger.getAttribute('data-certificate-school') || 'Certificado';
+
+        if (!image || !certificateModalImage) return;
+
+        if (certificateModalTitle) certificateModalTitle.textContent = title;
+        if (certificateModalSchool) certificateModalSchool.textContent = school;
+        certificateModalImage.src = image;
+        certificateModalImage.alt = `Certificado ${title} - ${school}`;
+        if (certificateModalOpen) certificateModalOpen.href = image;
+
+        openModal('certificate-viewer-modal');
+    }
+
     function initModalEvents() {
         let lastPointerModalOpen = 0;
 
@@ -379,6 +399,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.addEventListener('click', (event) => {
             if (handleModalTrigger(event)) return;
+
+            const certificateTrigger = event.target.closest('.certification-view-btn');
+            if (certificateTrigger) {
+                event.preventDefault();
+                openCertificateModal(certificateTrigger);
+                return;
+            }
 
             if (event.target.closest('.close-modal')) {
                 closeAllModals();
