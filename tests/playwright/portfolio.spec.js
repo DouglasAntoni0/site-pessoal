@@ -117,8 +117,8 @@ test('seção de certificações renderiza cards e CTA seguro do LinkedIn', asyn
   await expect(section.getByText('Playwright Zombie Edition')).toBeVisible();
   await expect(section.getByText('Segurança em Tecnologia da Informação')).toBeVisible();
   await expect(section.getByText('Projetos de Sistemas de TI')).toBeVisible();
-  await expect(section.getByText('Inglês - Avançado')).toBeVisible();
-  await expect(section.getByText('Informática')).toBeVisible();
+  await expect(section.getByRole('heading', { name: 'Inglês - Avançado' })).toBeVisible();
+  await expect(section.getByRole('heading', { name: 'Informática' })).toBeVisible();
   const linkedin = section.getByRole('link', { name: /Ver certificações no LinkedIn/ });
   await expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/');
   await expect(linkedin).toHaveAttribute('target', '_blank');
