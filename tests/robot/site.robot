@@ -48,9 +48,11 @@ Certifications Section Renders
     Execute Javascript    document.querySelector('#certifications').scrollIntoView({ block: 'center', inline: 'center' })
     Page Should Contain    Certificações que sustentam
     ${cert_count}=    Get Element Count    css:#certifications .certification-card
-    Should Be Equal As Integers    ${cert_count}    11
+    Should Be Equal As Integers    ${cert_count}    13
     ${cert_button_count}=    Get Element Count    css:#certifications .certification-view-btn
-    Should Be Equal As Integers    ${cert_button_count}    11
+    Should Be Equal As Integers    ${cert_button_count}    13
+    Page Should Contain    Segurança em Tecnologia da Informação
+    Page Should Contain    Projetos de Sistemas de TI
     Execute Javascript    document.querySelector('#certifications .certification-view-btn').click()
     Wait Until Element Is Visible    css:#certificate-viewer-modal.active
     ${certificate_src}=    Get Element Attribute    css:#certificate-modal-image    src

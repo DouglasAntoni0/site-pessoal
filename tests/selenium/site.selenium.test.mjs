@@ -78,9 +78,12 @@ try {
       const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
       assert.match(await certificationNav.getText(), /Certificações/, `${name}: certifications nav label`);
       const certificationCards = await driver.findElements(By.css('#certifications .certification-card'));
-      assert.equal(certificationCards.length, 11, `${name}: certification card count`);
+      assert.equal(certificationCards.length, 13, `${name}: certification card count`);
       const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
-      assert.equal(certificationViewButtons.length, 11, `${name}: certification view button count`);
+      assert.equal(certificationViewButtons.length, 13, `${name}: certification view button count`);
+      const certificationsText = await driver.findElement(By.css('#certifications')).getText();
+      assert.match(certificationsText, /Segurança em Tecnologia da Informação/, `${name}: security certificate title`);
+      assert.match(certificationsText, /Projetos de Sistemas de TI/, `${name}: systems projects certificate title`);
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', certificationViewButtons[0]);
       await wait(150);
       await driver.executeScript('arguments[0].click();', certificationViewButtons[0]);
