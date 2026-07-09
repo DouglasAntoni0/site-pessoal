@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "chromedriver": "^148.0.3",
     "cypress": "^15.14.2",
     "selenium-webdriver": "^4.43.0"
   }

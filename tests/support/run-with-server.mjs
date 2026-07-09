@@ -1,6 +1,5 @@
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
-import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as wait } from 'node:timers/promises';
@@ -51,14 +50,9 @@ try {
   const args = finalCommand[0] === 'cypress'
     ? [path.join(root, 'node_modules', 'cypress', 'bin', 'cypress'), ...finalCommand.slice(1)]
     : finalCommand.slice(1);
-  const chromedriverDir = path.join(root, 'node_modules', 'chromedriver', 'lib', 'chromedriver');
-  const env = fs.existsSync(chromedriverDir)
-    ? { ...process.env, PATH: `${chromedriverDir}${path.delimiter}${process.env.PATH || ''}` }
-    : process.env;
-
   const child = spawn(executable, args, {
     cwd: root,
-    env,
+    env: process.env,
     stdio: 'inherit',
     windowsHide: true
   });

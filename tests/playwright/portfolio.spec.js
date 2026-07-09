@@ -181,7 +181,7 @@ test('cards de contato têm destinos corretos e seguros', async ({ page }) => {
   ];
 
   for (const [name, href] of expectedLinks) {
-    const link = page.getByRole('link', { name: new RegExp(name) });
+    const link = page.locator('#contact').getByRole('link', { name: new RegExp(name) });
     await expect(link).toHaveAttribute('href', href);
     await expect(link).toHaveAttribute('rel', /noopener/);
   }

@@ -1,13 +1,10 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { createRequire } from 'node:module';
 import { setTimeout as wait } from 'node:timers/promises';
 import { fileURLToPath } from 'node:url';
 import { Builder, By, Key, until } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome.js';
 
-const require = createRequire(import.meta.url);
-const chromedriver = require('chromedriver');
 const port = 4176;
 const baseUrl = process.env.BASE_URL || `http://127.0.0.1:${port}`;
 const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -38,9 +35,8 @@ async function buildDriver(width, height) {
     .addArguments('--disable-gpu')
     .addArguments('--no-sandbox')
     .addArguments(`--window-size=${width},${height}`);
-  const service = new chrome.ServiceBuilder(chromedriver.path);
 
-  return new Builder().forBrowser('chrome').setChromeOptions(options).setChromeService(service).build();
+  return new Builder().forBrowser('chrome').setChromeOptions(options).build();
 }
 
 let server;
