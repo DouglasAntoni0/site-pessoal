@@ -101,7 +101,11 @@ try {
       assert.equal(await certificationCta.getAttribute('target'), '_blank', `${name}: certifications CTA target`);
       assert.match(await certificationCta.getAttribute('rel'), /noopener/, `${name}: certifications CTA rel`);
       const buttons = await driver.findElements(By.css('.trigger-modal'));
-      assert.equal(buttons.length, 7, `${name}: modal trigger count`);
+      assert.equal(buttons.length, 10, `${name}: modal trigger count`);
+      const projectsText = await driver.executeScript('return document.querySelector("main").textContent;');
+      assert.match(projectsText, /Pytest: Gerenciador de Tarefas/, `${name}: pytest project title`);
+      assert.match(projectsText, /Selenium JS Toolshop QA/, `${name}: selenium project title`);
+      assert.match(projectsText, /BDD com Cucumber/, `${name}: cucumber project title`);
 
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', buttons[0]);
       await wait(150);

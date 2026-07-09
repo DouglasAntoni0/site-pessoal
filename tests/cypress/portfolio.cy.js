@@ -29,7 +29,10 @@ describe('Portfolio Douglas QA', () => {
   it('carrega hero, navegação e projetos sem erros críticos', () => {
     cy.title().should('eq', 'Douglas Antonio | Software Quality Engineer');
     cy.get('h1').should('contain.text', 'Engenharia de Qualidade Escalável');
-    cy.get('.trigger-modal').should('have.length', 7);
+    cy.get('.trigger-modal').should('have.length', 10);
+    cy.contains('Pytest: Gerenciador de Tarefas').should('be.visible');
+    cy.contains('Selenium JS Toolshop QA').should('be.visible');
+    cy.contains('BDD com Cucumber').should('be.visible');
     expectNoHorizontalOverflow();
   });
 

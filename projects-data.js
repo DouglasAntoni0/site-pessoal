@@ -60,21 +60,6 @@ const projectsData = [
         reverseBorder: true
     },
     {
-        id: "modal-7",
-        number: "07",
-        category: "volunteer",
-        title: "SouJunior: Automação Open Source",
-        summary: "Testes E2E garantindo a qualidade da plataforma da ONG SouJunior.",
-        tags: ["Playwright", "Cypress", "Voluntariado", "Open Source"],
-        tools: ["Playwright", "Cypress", "GitHub Actions", "QA Social"],
-        desc: "Atuação direta como Software Quality Engineer voluntário na ONG SouJunior. Este projeto concentra a suíte de testes E2E desenvolvida para garantir a estabilidade e confiabilidade da plataforma utilizada por profissionais de tecnologia.<br><br>A arquitetura de qualidade contempla scripts robustos criados tanto em <strong>Cypress</strong> quanto em <strong>Playwright</strong>, cobrindo fluxos críticos de negócio como cadastro, listagem de iniciativas e depoimentos, rodando de forma contínua em pipelines de CI/CD para assegurar o conceito de 'Zero Falhas' no ambiente de impacto social.",
-        code: `import { test, expect } from '@playwright/test';\n\ntest.describe('Iniciativas - SouJunior', () => {\n  test('Deve carregar a página com sucesso', async ({ page }) => {\n    await page.goto('/iniciativas');\n    \n    const title = page.locator('h1');\n    await expect(title).toContainText('Nossas Iniciativas');\n    \n    const cards = page.locator('.iniciativa-card');\n    await expect(cards.first()).toBeVisible();\n  });\n});`,
-        repo: "https://github.com/DouglasAntoni0/Testes-E2E-SouJunior",
-        visualClass: "volunteer-bg",
-        iconClass: "ph-heart",
-        reverseBorder: false
-    },
-    {
         id: "modal-5",
         number: "05",
         category: "main",
@@ -102,6 +87,66 @@ const projectsData = [
         repo: "https://github.com/DouglasAntoni0/site-pessoal",
         visualClass: "multi-bg",
         iconClass: "ph-check-square-offset",
+        reverseBorder: true
+    },
+    {
+        id: "modal-7",
+        number: "07",
+        category: "main",
+        title: "Pytest: Gerenciador de Tarefas",
+        summary: "Suíte completa de testes para aplicação Python/Flask.",
+        tags: ["Pytest", "Python", "Flask"],
+        tools: ["Pytest", "Flask", "Playwright", "GitHub Actions"],
+        desc: "Suíte profissional de testes para um gerenciador de tarefas em Python, cobrindo desde a regra de domínio até fluxos de ponta a ponta. A arquitetura combina fixtures em camadas, testes parametrizados e validações de CRUD, regras de negócio, serialização e persistência JSON.<br><br>O projeto também valida uma API Flask com test client, exercita páginas HTML com Playwright em navegador real e mantém a execução em GitHub Actions. O foco é demonstrar cobertura ampla, clareza de cenários, tratamento de casos extremos e confiança para evoluir a aplicação sem regressões.",
+        code: `import pytest\nfrom task_manager.models import Tarefa, Status\n\n@pytest.mark.parametrize('status_destino', [\n    Status.EM_ANDAMENTO,\n    Status.CONCLUIDA,\n    Status.ARQUIVADA,\n])\ndef test_transicao_de_status_valida(status_destino):\n    tarefa = Tarefa(titulo='Validar fluxo crítico')\n\n    tarefa.alterar_status(status_destino)\n\n    assert tarefa.status == status_destino`,
+        repo: "https://github.com/DouglasAntoni0/pytest",
+        visualClass: "pytest-bg",
+        iconClass: "ph-check-square-offset",
+        reverseBorder: false
+    },
+    {
+        id: "modal-8",
+        number: "08",
+        category: "main",
+        title: "Selenium JS Toolshop QA",
+        summary: "Automação web E2E com Selenium puro em JavaScript.",
+        tags: ["Selenium", "JavaScript", "Mocha"],
+        tools: ["Selenium WebDriver", "Mocha", "Chai", "Faker", "Mochawesome"],
+        desc: "Projeto de automação web criado do zero com Selenium WebDriver puro em JavaScript para a plataforma Practice Software Testing Toolshop. A suíte cobre fluxos realistas de e-commerce, incluindo login, cadastro, busca, carrinho, checkout, pagamento e contato.<br><br>A arquitetura usa Page Object Model, seletores centralizados, massa dinâmica com Faker e apoio de API pública para preparar dados antes da execução. As esperas são explícitas e orientadas a sinais reais da interface, com relatórios Mochawesome e pipeline em GitHub Actions para manter execução reproduzível.",
+        code: `describe('Checkout como convidado', () => {\n  it('deve finalizar compra com valor correto', async () => {\n    await catalogPage.searchProduct('hammer');\n    await productPage.addToCart();\n    await cartPage.updateQuantity(2);\n\n    expect(await cartPage.total()).to.equal(expectedTotal);\n    await checkoutPage.finishAsGuest(testData.customer);\n    expect(await orderPage.successMessage()).to.contain('Payment was successful');\n  });\n});`,
+        repo: "https://github.com/DouglasAntoni0/selenium",
+        visualClass: "selenium-bg",
+        iconClass: "ph-browsers",
+        reverseBorder: true
+    },
+    {
+        id: "modal-9",
+        number: "09",
+        category: "main",
+        title: "BDD com Cucumber | Starbugs Coffee",
+        summary: "Cenários BDD em português para jornada de compra.",
+        tags: ["Cucumber", "Ruby", "BDD"],
+        tools: ["Ruby", "Cucumber", "Capybara", "Selenium", "GitHub Actions"],
+        desc: "Projeto de automação E2E para a aplicação Starbugs Coffee, construído com Ruby, Cucumber, Capybara e Selenium WebDriver. Os cenários são escritos em Gherkin em português para documentar o comportamento esperado do produto de forma clara para negócio, QA e desenvolvimento.<br><br>A base usa Page Object para separar ações de tela dos steps, reduzindo duplicação e facilitando manutenção. A cobertura inclui catálogo, pedidos, endereço, pagamento, confirmação de compra e regras de cupons válidos, expirados e inválidos, com execução preparada para CI/CD no GitHub Actions.",
+        code: `Cenário: Comprar café com cupom válido\n  Dado que acesso a loja Starbugs\n  Quando escolho o produto "Expresso Gelado"\n  E informo o cupom "MEUCAFE"\n  E finalizo o pedido com pagamento PIX\n  Então devo ver a confirmação da compra\n  E o desconto deve ser aplicado no total`,
+        repo: "https://github.com/DouglasAntoni0/BDD-cucumber",
+        visualClass: "bdd-bg",
+        iconClass: "ph-flow-arrow",
+        reverseBorder: false
+    },
+    {
+        id: "modal-10",
+        number: "10",
+        category: "volunteer",
+        title: "SouJunior: Automação Open Source",
+        summary: "Testes E2E garantindo a qualidade da plataforma da ONG SouJunior.",
+        tags: ["Playwright", "Cypress", "Voluntariado", "Open Source"],
+        tools: ["Playwright", "Cypress", "GitHub Actions", "QA Social"],
+        desc: "Atuação direta como Software Quality Engineer voluntário na ONG SouJunior. Este projeto concentra a suíte de testes E2E desenvolvida para garantir a estabilidade e confiabilidade da plataforma utilizada por profissionais de tecnologia.<br><br>A arquitetura de qualidade contempla scripts robustos criados tanto em <strong>Cypress</strong> quanto em <strong>Playwright</strong>, cobrindo fluxos críticos de negócio como cadastro, listagem de iniciativas e depoimentos, rodando de forma contínua em pipelines de CI/CD para assegurar o conceito de 'Zero Falhas' no ambiente de impacto social.",
+        code: `import { test, expect } from '@playwright/test';\n\ntest.describe('Iniciativas - SouJunior', () => {\n  test('Deve carregar a página com sucesso', async ({ page }) => {\n    await page.goto('/iniciativas');\n    \n    const title = page.locator('h1');\n    await expect(title).toContainText('Nossas Iniciativas');\n    \n    const cards = page.locator('.iniciativa-card');\n    await expect(cards.first()).toBeVisible();\n  });\n});`,
+        repo: "https://github.com/DouglasAntoni0/Testes-E2E-SouJunior",
+        visualClass: "volunteer-bg",
+        iconClass: "ph-heart",
         reverseBorder: true
     }
 ];

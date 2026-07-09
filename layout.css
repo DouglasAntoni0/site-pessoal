@@ -636,6 +636,9 @@ nav a:hover { color: var(--aurora-emerald); }
 .playwright-bg, .playwright-visual { background: linear-gradient(135deg, #020617, #4c1d95); }
 .mobile-bg { background: linear-gradient(135deg, #020617, #1e3a8a); }
 .volunteer-bg { background: linear-gradient(135deg, #020617, #831843); }
+.pytest-bg { background: linear-gradient(135deg, #020617, #134e4a); }
+.selenium-bg { background: linear-gradient(135deg, #020617, #365314); }
+.bdd-bg { background: linear-gradient(135deg, #020617, #581c87); }
 
 
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); z-index: 999; opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.4s ease; }

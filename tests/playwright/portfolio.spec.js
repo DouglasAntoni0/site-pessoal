@@ -138,9 +138,12 @@ test('renderiza todos os projetos e separa voluntariado corretamente', async ({ 
   await blockExternalAssets(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.locator('#projects-container article')).toHaveCount(6);
+  await expect(page.locator('#projects-container article')).toHaveCount(9);
   await expect(page.locator('#volunteer-container article')).toHaveCount(1);
-  await expect(page.getByRole('button', { name: 'Ver Detalhes' })).toHaveCount(7);
+  await expect(page.getByRole('button', { name: 'Ver Detalhes' })).toHaveCount(10);
+  await expect(page.getByRole('heading', { name: /Pytest: Gerenciador de Tarefas/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Selenium JS Toolshop QA/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /BDD com Cucumber/ })).toBeVisible();
 });
 
 test('abre e fecha modal pelo botão, overlay e tecla Escape', async ({ page }) => {
@@ -168,7 +171,7 @@ test('todos os modais possuem conteúdo, badges e link externo seguro', async ({
 
   const buttons = page.getByRole('button', { name: 'Ver Detalhes' });
   const count = await buttons.count();
-  expect(count).toBe(7);
+  expect(count).toBe(10);
 
   for (let index = 0; index < count; index += 1) {
     const button = buttons.nth(index);
@@ -248,7 +251,7 @@ test('todos os modais mobile exibem snippet de código e botão do repositório'
 
   const buttons = page.getByRole('button', { name: 'Ver Detalhes' });
   const count = await buttons.count();
-  expect(count).toBe(7);
+  expect(count).toBe(10);
 
   for (let index = 0; index < count; index += 1) {
     const button = buttons.nth(index);
