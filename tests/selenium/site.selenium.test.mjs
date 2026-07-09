@@ -81,9 +81,13 @@ try {
       assert.equal(certificationCards.length, 13, `${name}: certification card count`);
       const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
       assert.equal(certificationViewButtons.length, 13, `${name}: certification view button count`);
+      const supportCards = await driver.findElements(By.css('#certifications .certification-support-card'));
+      assert.equal(supportCards.length, 2, `${name}: complementary certification card count`);
       const certificationsText = await driver.executeScript('return document.querySelector("#certifications").textContent;');
       assert.match(certificationsText, /Segurança em Tecnologia da Informação/, `${name}: security certificate title`);
       assert.match(certificationsText, /Projetos de Sistemas de TI/, `${name}: systems projects certificate title`);
+      assert.match(certificationsText, /Inglês - Avançado/, `${name}: advanced english credential title`);
+      assert.match(certificationsText, /Informática/, `${name}: informatics credential title`);
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', certificationViewButtons[0]);
       await wait(150);
       await driver.executeScript('arguments[0].click();', certificationViewButtons[0]);

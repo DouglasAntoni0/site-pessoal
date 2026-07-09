@@ -51,8 +51,12 @@ Certifications Section Renders
     Should Be Equal As Integers    ${cert_count}    13
     ${cert_button_count}=    Get Element Count    css:#certifications .certification-view-btn
     Should Be Equal As Integers    ${cert_button_count}    13
+    ${support_count}=    Get Element Count    css:#certifications .certification-support-card
+    Should Be Equal As Integers    ${support_count}    2
     Page Should Contain    Segurança em Tecnologia da Informação
     Page Should Contain    Projetos de Sistemas de TI
+    Page Should Contain    Inglês - Avançado
+    Page Should Contain    Informática
     Execute Javascript    document.querySelector('#certifications .certification-view-btn').click()
     Wait Until Element Is Visible    css:#certificate-viewer-modal.active
     ${certificate_src}=    Get Element Attribute    css:#certificate-modal-image    src

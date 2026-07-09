@@ -69,10 +69,13 @@ describe('Portfolio Douglas QA', () => {
       cy.contains('Certificações que sustentam').should('be.visible');
       cy.get('.certification-card').should('have.length', 13);
       cy.get('.certification-view-btn').should('have.length', 13);
+      cy.get('.certification-support-card').should('have.length', 2);
       cy.contains('Ninja do Cypress').should('be.visible');
       cy.contains('Playwright Zombie Edition').should('be.visible');
       cy.contains('Segurança em Tecnologia da Informação').should('be.visible');
       cy.contains('Projetos de Sistemas de TI').should('be.visible');
+      cy.contains('Inglês - Avançado').should('be.visible');
+      cy.contains('Informática').should('be.visible');
       cy.get('.certifications-cta')
         .should('have.attr', 'href', 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/')
         .and('have.attr', 'target', '_blank')
