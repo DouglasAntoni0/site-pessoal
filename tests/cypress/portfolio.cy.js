@@ -38,6 +38,8 @@ describe('Portfolio Douglas QA', () => {
     cy.contains('Shift-Left & Operações').should('be.visible');
     cy.contains('a', 'Atuação').click();
     cy.contains('Da estratégia de teste').should('be.visible');
+    cy.contains('a', 'Certificações').click();
+    cy.contains('Certificações que sustentam').should('be.visible');
     cy.contains('a', 'Projetos').click();
     cy.contains('Arsenal de').should('be.visible');
     cy.contains('a', 'Open Source').click();
@@ -61,6 +63,21 @@ describe('Portfolio Douglas QA', () => {
     expectNoHorizontalOverflow();
   });
 
+
+  it('renderiza certificações com CTA seguro para o LinkedIn', () => {
+    cy.get('#certifications').scrollIntoView().within(() => {
+      cy.contains('Certificações que sustentam').should('be.visible');
+      cy.get('.certification-card').should('have.length', 11);
+      cy.contains('Ninja do Cypress').should('be.visible');
+      cy.contains('Playwright Zombie Edition').should('be.visible');
+      cy.get('.certifications-cta')
+        .should('have.attr', 'href', 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/')
+        .and('have.attr', 'target', '_blank')
+        .and('have.attr', 'rel')
+        .and('include', 'noopener');
+    });
+    expectNoHorizontalOverflow();
+  });
   it('todas as 32 tech-tags possuem um ícone', () => {
     cy.get('.tech-tag').should('have.length', 32);
     cy.get('.tech-tag').each(($tag) => {

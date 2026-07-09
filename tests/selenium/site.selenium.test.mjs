@@ -79,6 +79,14 @@ try {
       assert.equal(overflow.documentOverflow <= 1, true, `${name}: document overflow ${JSON.stringify(overflow)}`);
       assert.equal(overflow.bodyOverflow <= 1, true, `${name}: body overflow ${JSON.stringify(overflow)}`);
 
+      const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
+      assert.match(await certificationNav.getText(), /Certificações/, `${name}: certifications nav label`);
+      const certificationCards = await driver.findElements(By.css('#certifications .certification-card'));
+      assert.equal(certificationCards.length, 11, `${name}: certification card count`);
+      const certificationCta = await driver.findElement(By.css('#certifications .certifications-cta'));
+      assert.equal(await certificationCta.getAttribute('href'), 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/', `${name}: certifications CTA href`);
+      assert.equal(await certificationCta.getAttribute('target'), '_blank', `${name}: certifications CTA target`);
+      assert.match(await certificationCta.getAttribute('rel'), /noopener/, `${name}: certifications CTA rel`);
       const buttons = await driver.findElements(By.css('.trigger-modal'));
       assert.equal(buttons.length, 7, `${name}: modal trigger count`);
 

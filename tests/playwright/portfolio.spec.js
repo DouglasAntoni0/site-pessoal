@@ -64,7 +64,7 @@ test('mantém a navegação principal íntegra em todos os breakpoints', async (
   await blockExternalAssets(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  for (const label of ['Início', 'Visão & Tech', 'Projetos', 'Open Source', 'Contato']) {
+  for (const label of ['Início', 'Visão & Tech', 'Atuação', 'Certificações', 'Projetos', 'Open Source', 'Contato']) {
     await expect(page.getByRole('link', { name: label }).first()).toBeVisible();
   }
   await expectNoHorizontalOverflow(page);
@@ -79,6 +79,7 @@ test('ancoras do menu navegam para seções sem esconder conteúdo crítico', as
   const targets = [
     ['Visão & Tech', 'Shift-Left & Operações'],
     ['Atuação', 'Da estratégia de teste'],
+    ['Certificações', 'Certificações que sustentam'],
     ['Projetos', 'Arsenal de'],
     ['Open Source', 'Voluntariado'],
     ['Contato', 'Engenharia de nível mundial']
@@ -102,6 +103,22 @@ test('seção de atuação e currículo ficam disponíveis', async ({ page }) =>
   await expect(resume).toHaveAttribute('download', '');
 });
 
+
+test('seção de certificações renderiza cards e CTA seguro do LinkedIn', async ({ page }) => {
+  await blockExternalAssets(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const section = page.locator('#certifications');
+  await expect(section.getByRole('heading', { name: /Certificações que sustentam/ })).toBeVisible();
+  await expect(section.locator('.certification-card')).toHaveCount(11);
+  await expect(section.getByText('Profissão: Engenheiro de Qualidade de Software')).toBeVisible();
+  await expect(section.getByText('Playwright Zombie Edition')).toBeVisible();
+  const linkedin = section.getByRole('link', { name: /Ver certificações no LinkedIn/ });
+  await expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/');
+  await expect(linkedin).toHaveAttribute('target', '_blank');
+  await expect(linkedin).toHaveAttribute('rel', /noopener/);
+  await expectNoHorizontalOverflow(page);
+});
 test('renderiza todos os projetos e separa voluntariado corretamente', async ({ page }) => {
   await blockExternalAssets(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -315,7 +332,7 @@ test('seções aparecem na ordem correta na página', async ({ page }) => {
     return [...sections].map(s => s.id);
   });
 
-  expect(sectionIds).toEqual(['hero', 'vision', 'quality', 'projects', 'volunteer', 'contact']);
+  expect(sectionIds).toEqual(['hero', 'vision', 'quality', 'certifications', 'projects', 'volunteer', 'contact']);
 });
 
 test('quality strip exibe as 3 métricas sem overflow', async ({ page }) => {

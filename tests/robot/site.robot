@@ -43,3 +43,13 @@ Project Modal Opens And Closes
     Page Should Contain    Automação de Performance com K6
     Press Keys    None    ESC
     Wait Until Element Is Not Visible    css:.glass-modal.active
+
+Certifications Section Renders
+    Execute Javascript    document.querySelector('#certifications').scrollIntoView({ block: 'center', inline: 'center' })
+    Page Should Contain    Certificações que sustentam
+    ${cert_count}=    Get Element Count    css:#certifications .certification-card
+    Should Be Equal As Integers    ${cert_count}    11
+    Page Should Contain    Playwright Zombie Edition
+    ${href}=    Get Element Attribute    css:#certifications .certifications-cta    href
+    Should Contain    ${href}    linkedin.com/in/douglas-antonio-qa/details/certifications
+    Page Should Not Overflow Horizontally

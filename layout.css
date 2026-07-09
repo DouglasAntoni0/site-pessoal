@@ -5,7 +5,7 @@
     --aurora-blue: #2563EB;
     --aurora-emerald: #10B981;
     --aurora-purple: #8B5CF6;
-    --mobile-header-space: 174px;
+    --mobile-header-space: 190px;
     
     --glass-bg: rgba(255, 255, 255, 0.02);
     --glass-border: rgba(255, 255, 255, 0.08);
@@ -346,6 +346,131 @@ nav a:hover { color: var(--aurora-emerald); }
 }
 
 
+
+.certifications-section {
+    padding: clamp(72px, 12vw, 120px) 0;
+}
+
+.certifications-header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 48px;
+    max-width: 900px;
+    text-align: center;
+}
+
+.certifications-header p {
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.8;
+    margin: -16px auto 28px;
+    max-width: 780px;
+    text-wrap: pretty;
+}
+
+.certifications-cta {
+    gap: 10px;
+    max-width: 100%;
+    padding-inline: 28px;
+}
+
+.certifications-cta i {
+    flex: 0 0 auto;
+    font-size: 1.25rem;
+}
+
+.certifications-grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.certification-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    overflow: hidden;
+    padding: 28px;
+    position: relative;
+}
+
+.certification-card::before {
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.18), transparent 44%);
+    content: '';
+    inset: 0;
+    opacity: 0.85;
+    pointer-events: none;
+    position: absolute;
+}
+
+.certification-card > * {
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.certification-topline {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.certification-school {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    border-radius: 999px;
+    color: #A7F3D0;
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    padding: 7px 12px;
+    text-transform: uppercase;
+}
+
+.certification-icon {
+    color: var(--aurora-emerald);
+    flex: 0 0 auto;
+    font-size: 2rem;
+}
+
+.certification-card h3 {
+    font-size: clamp(1.12rem, 2vw, 1.35rem);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    overflow-wrap: anywhere;
+}
+
+.certification-card p {
+    color: var(--text-secondary);
+    flex: 1 1 auto;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    text-wrap: pretty;
+}
+
+.certification-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.certification-meta span {
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 999px;
+    color: #CBD5E1;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.35;
+    padding: 7px 11px;
+}
 .projects-section { padding: clamp(72px, 12vw, 120px) 0; }
 .volunteer-section { padding-top: 20px; }
 .section-title { font-size: clamp(2rem, 5vw, 3.25rem); text-align: center; margin-bottom: 40px; line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
@@ -446,6 +571,7 @@ footer { text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255
     .project-visual { width: 100%; min-width: 0; font-size: 5rem; }
     .quality-grid,
     .quality-strip { grid-template-columns: 1fr; }
+    .certifications-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
@@ -480,6 +606,7 @@ footer { text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255
         line-height: 1.18;
     }
     .vision-card, .project-content { padding: 28px; }
+    .certification-card { padding: 26px; }
     .disclaimer { align-items: flex-start; margin-bottom: 48px; }
     .quality-card,
     .quality-strip > div { padding: 26px; }
@@ -499,6 +626,8 @@ footer { text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255
     .code-container { min-height: 170px; }
     .code-container pre { max-height: 220px; min-height: 170px; padding: 18px; font-size: 0.82rem; }
     .contact-link { padding: 24px; }
+    .certifications-grid { grid-template-columns: 1fr; }
+    .certifications-cta { width: 100%; }
 }
 
 @media (max-width: 420px) {
