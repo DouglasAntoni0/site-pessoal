@@ -81,7 +81,7 @@ try {
       assert.equal(certificationCards.length, 13, `${name}: certification card count`);
       const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
       assert.equal(certificationViewButtons.length, 13, `${name}: certification view button count`);
-      const certificationsText = await driver.findElement(By.css('#certifications')).getText();
+      const certificationsText = await driver.executeScript('return document.querySelector("#certifications").textContent;');
       assert.match(certificationsText, /Segurança em Tecnologia da Informação/, `${name}: security certificate title`);
       assert.match(certificationsText, /Projetos de Sistemas de TI/, `${name}: systems projects certificate title`);
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', certificationViewButtons[0]);
