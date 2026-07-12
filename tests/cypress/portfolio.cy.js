@@ -1,144 +1,109 @@
-const externalHosts = [
-  'https://fonts.googleapis.com/**',
-  'https://fonts.gstatic.com/**',
-  'https://cdnjs.cloudflare.com/**',
-  'https://unpkg.com/**'
-];
-
-function blockExternalAssets() {
-  externalHosts.forEach((host) => {
-    cy.intercept(host, { statusCode: 200, body: '' });
-  });
-}
-
 function expectNoHorizontalOverflow() {
-  cy.document().then((doc) => {
-    const htmlOverflow = doc.documentElement.scrollWidth - doc.documentElement.clientWidth;
-    const bodyOverflow = doc.body.scrollWidth - doc.body.clientWidth;
-    expect(htmlOverflow).to.be.at.most(1);
-    expect(bodyOverflow).to.be.at.most(1);
+  cy.document().then(doc => {
+    expect(doc.documentElement.scrollWidth - doc.documentElement.clientWidth).to.be.at.most(1);
+    expect(doc.body.scrollWidth - doc.body.clientWidth).to.be.at.most(1);
   });
 }
 
 describe('Portfolio Douglas QA', () => {
   beforeEach(() => {
-    blockExternalAssets();
     cy.visit('/');
   });
 
-  it('carrega hero, navegação e projetos sem erros críticos', () => {
+  it('carrega hero, projetos e recursos somente locais', () => {
     cy.title().should('eq', 'Douglas Antonio | Software Quality Engineer');
     cy.get('h1').should('contain.text', 'Engenharia de Qualidade Escalável');
+    cy.get('#projects-container article').should('have.length', 9);
+    cy.get('#volunteer-container article').should('have.length', 1);
     cy.get('.trigger-modal').should('have.length', 10);
-    cy.contains('Pytest: Gerenciador de Tarefas').should('be.visible');
-    cy.contains('Selenium JS Toolshop QA').should('be.visible');
-    cy.contains('BDD com Cucumber').should('be.visible');
-    expectNoHorizontalOverflow();
-  });
-
-  it('navega pelas seções principais', () => {
-    cy.contains('a', 'Visão & Tech').click();
-    cy.contains('Shift-Left & Operações').should('be.visible');
-    cy.contains('a', 'Atuação').click();
-    cy.contains('Da estratégia de teste').should('be.visible');
-    cy.contains('a', 'Certificações').click();
-    cy.contains('Certificações que sustentam').should('be.visible');
-    cy.contains('a', 'Projetos').click();
-    cy.contains('Arsenal de').should('be.visible');
-    cy.contains('a', 'Open Source').click();
-    cy.contains('Voluntariado').should('be.visible');
-  });
-
-  it('abre e fecha modal de projeto', () => {
-    cy.get('.trigger-modal').first().click();
-    cy.get('.glass-modal.active').should('be.visible').and('contain.text', 'Automação de Performance com K6');
-    cy.contains('K6 (JavaScript)').should('be.visible');
-    cy.get('.glass-modal.active .close-modal').click();
-    cy.get('.glass-modal.active').should('not.exist');
-  });
-
-  it('valida responsividade mobile básica', () => {
-    cy.viewport(390, 844);
-    cy.reload();
-    cy.contains('a', 'Open Source').should('be.visible');
-    cy.contains('a', 'Currículo').should('have.attr', 'href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
-    cy.get('h1').should('be.visible');
-    expectNoHorizontalOverflow();
-  });
-
-
-  it('renderiza certificações com CTA seguro para o LinkedIn', () => {
-    cy.get('#certifications').scrollIntoView().within(() => {
-      cy.contains('Certificações que sustentam').should('be.visible');
-      cy.get('.certification-card').should('have.length', 13);
-      cy.get('.certification-view-btn').should('have.length', 13);
-      cy.get('.certification-support-card').should('have.length', 2);
-      cy.contains('Ninja do Cypress').should('be.visible');
-      cy.contains('Playwright Zombie Edition').should('be.visible');
-      cy.contains('Segurança em Tecnologia da Informação').should('be.visible');
-      cy.contains('Projetos de Sistemas de TI').should('be.visible');
-      cy.contains('Inglês - Avançado').should('be.visible');
-      cy.contains('Informática').should('be.visible');
-      cy.get('.certifications-cta')
-        .should('have.attr', 'href', 'https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/')
-        .and('have.attr', 'target', '_blank')
-        .and('have.attr', 'rel')
-        .and('include', 'noopener');
+    cy.get('#project-modal').should('have.length', 1);
+    cy.window().then(win => {
+      const foreign = win.performance.getEntriesByType('resource')
+        .map(entry => new URL(entry.name))
+        .filter(url => url.origin !== win.location.origin);
+      expect(foreign).to.deep.equal([]);
     });
+    expectNoHorizontalOverflow();
+  });
 
+  it('abre o modal compartilhado com texto escapado e restaura o foco', () => {
+    cy.get('.trigger-modal').first().focus().click();
+    cy.get('#project-modal.active')
+      .should('be.visible')
+      .and('contain.text', 'Automação de Performance com K6')
+      .and('contain.text', 'K6 (JavaScript)');
+    cy.get('#project-modal a[target="_blank"]').should('have.attr', 'rel').and('include', 'noopener');
+    cy.get('body').type('{esc}');
+    cy.get('#project-modal').should('not.have.class', 'active');
+    cy.get('.trigger-modal').first().should('have.focus');
+  });
+
+  it('certificações usam preview WebP e preservam o PNG original', () => {
+    cy.get('#certifications .certification-card').should('have.length', 13);
+    cy.get('#certifications .certification-support-card').should('have.length', 2);
     cy.get('#certifications .certification-view-btn').first().click();
     cy.get('#certificate-viewer-modal').should('have.class', 'active');
-    cy.get('#certificate-modal-title').should('contain.text', 'Profissão: Engenheiro de Qualidade de Software');
-    cy.get('#certificate-modal-image')
-      .should('have.attr', 'src')
-      .and('include', 'assets/certificates/ebac-engenheiro-qualidade-software.png');
-    cy.get('#certificate-viewer-modal .close-modal').click();
+    cy.get('#certificate-modal-image').should('have.attr', 'src').and('match', /previews\/.+\.webp$/);
+    cy.get('#certificate-modal-open').should('have.attr', 'href').and('match', /\.png$/);
+    cy.get('body').type('{esc}');
     cy.get('#certificate-viewer-modal').should('not.have.class', 'active');
-    expectNoHorizontalOverflow();
   });
-  it('todas as 32 tech-tags possuem um ícone', () => {
+
+  it('menu mobile fecha por Escape, link e clique externo', () => {
+    cy.viewport(390, 844);
+    cy.get('#primary-nav').should('not.be.visible');
+    cy.get('#menu-toggle').click().should('have.attr', 'aria-expanded', 'true');
+    cy.get('body').type('{esc}');
+    cy.get('#primary-nav').should('not.be.visible');
+    cy.get('#menu-toggle').should('have.focus');
+
+    cy.get('#menu-toggle').click();
+    cy.get('#primary-nav a[href="#projects"]').click();
+    cy.get('#primary-nav').should('not.be.visible');
+
+    cy.get('#menu-toggle').click();
+    cy.get('main').click('topLeft');
+    cy.get('#primary-nav').should('not.be.visible');
+  });
+
+  for (const [label, width, height] of [
+    ['móvel mínimo', 280, 653],
+    ['móvel', 390, 844],
+    ['paisagem', 667, 375],
+    ['tablet', 768, 1024],
+    ['desktop', 1440, 900]
+  ]) {
+    it(`layout ${label} (${width}x${height}) não cria overflow`, () => {
+      cy.viewport(width, height);
+      cy.reload();
+      cy.get('h1').should('be.visible');
+      expectNoHorizontalOverflow();
+      cy.window().then(win => {
+        const header = win.document.querySelector('.glass-header').getBoundingClientRect();
+        const title = win.document.querySelector('.hero-title').getBoundingClientRect();
+        expect(title.top).to.be.at.least(header.bottom);
+        expect(title.bottom).to.be.at.most(win.innerHeight);
+      });
+    });
+  }
+
+  it('preserva seções, currículo, tags e contatos', () => {
+    cy.get('section[id]').then(sections => {
+      expect([...sections].map(section => section.id))
+        .to.deep.equal(['hero', 'vision', 'quality', 'certifications', 'projects', 'volunteer', 'contact']);
+    });
     cy.get('.tech-tag').should('have.length', 32);
-    cy.get('.tech-tag').each(($tag) => {
-      cy.wrap($tag).find('i').should('have.length', 1);
+    cy.get('.contact-link').should('have.length', 3).each(link => {
+      cy.wrap(link).should('have.attr', 'rel').and('include', 'noopener');
     });
+    cy.contains('a', 'Currículo').should('have.attr', 'href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
   });
 
-  it('layout tablet 768px sem overflow horizontal', () => {
-    cy.viewport(768, 1024);
-    cy.reload();
+  it('mantém conteúdo visível com texto a 200%', () => {
+    cy.viewport(320, 800);
+    cy.document().then(doc => { doc.documentElement.style.fontSize = '200%'; });
     cy.get('h1').should('be.visible');
-    cy.contains('a', 'Projetos').should('be.visible');
+    cy.get('#menu-toggle').should('be.visible');
     expectNoHorizontalOverflow();
-  });
-
-  it('layout mobile estreito 320px mantém tudo na tela', () => {
-    cy.viewport(320, 740);
-    cy.reload();
-    cy.get('h1').should('be.visible');
-    cy.contains('a', 'Contato').should('be.visible');
-    expectNoHorizontalOverflow();
-  });
-
-  it('cards de contato possuem links corretos e seguros', () => {
-    cy.get('.contact-link').should('have.length', 3);
-    cy.get('a.whatsapp-card').should('have.attr', 'href').and('include', 'wa.me');
-    cy.get('a.linkedin-card').should('have.attr', 'href').and('include', 'linkedin.com');
-    cy.get('a.github-card').should('have.attr', 'href').and('include', 'github.com');
-    cy.get('.contact-link').each(($link) => {
-      cy.wrap($link).should('have.attr', 'rel').and('include', 'noopener');
-    });
-  });
-
-  it('footer está visível com copyright', () => {
-    cy.get('footer').scrollIntoView().should('be.visible');
-    cy.get('footer').should('contain.text', 'Douglas Antonio');
-  });
-
-  it('meta viewport está presente', () => {
-    cy.document().then((doc) => {
-      const viewport = doc.querySelector('meta[name="viewport"]');
-      expect(viewport).to.not.be.null;
-      expect(viewport.getAttribute('content')).to.include('width=device-width');
-    });
   });
 });

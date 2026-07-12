@@ -4,18 +4,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "serve": "python -m http.server 4173 --bind 127.0.0.1",
+    "serve": "python -m http.server 4173 --bind 127.0.0.1 --directory dist",
     "build": "node scripts/build-static.mjs",
-    "check:js": "node --check main.js && node --check projects-data.js",
-    "test:playwright": "playwright test",
-    "test:cypress": "node tests/support/run-with-server.mjs 4174 cypress run --config baseUrl=http://127.0.0.1:4174",
-    "test:selenium": "node tests/selenium/site.selenium.test.mjs",
-    "test:robot": "node tests/support/run-with-server.mjs 4177 robot --outputdir test-results/robot --variable BASE_URL:http://127.0.0.1:4177 tests/robot/site.robot",
-    "test:all": "npm run check:js && npm run test:playwright && npm run test:cypress && npm run test:selenium && npm run test:robot"
+    "check:js": "node --check src/scripts/main.js && node --check src/scripts/navigation.js && node --check src/scripts/projects.js && node --check src/scripts/modals.js && node --check src/scripts/motion.js && node --check src/data/projects.js && node --check scripts/build-static.mjs && node --check scripts/check-budgets.mjs",
+    "test:budget": "npm run build && node scripts/check-budgets.mjs",
+    "test:lighthouse": "npm run build && lhci autorun",
+    "test:playwright": "npm run build && playwright test",
+    "test:cypress": "npm run build && node tests/support/run-with-server.mjs 4174 cypress run --config baseUrl=http://127.0.0.1:4174",
+    "test:selenium": "npm run build && node tests/selenium/site.selenium.test.mjs",
+    "test:robot": "npm run build && node tests/support/run-with-server.mjs 4177 robot --outputdir test-results/robot --variable BASE_URL:http://127.0.0.1:4177 tests/robot/site.robot",
+    "test:all": "npm run check:js && npm run test:budget && npm run test:playwright && npm run test:cypress && npm run test:selenium && npm run test:robot"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.59.1",
     "cypress": "^15.14.2",
-    "selenium-webdriver": "^4.43.0"
+    "esbuild": "^0.28.1",
+    "selenium-webdriver": "^4.43.0",
+    "sharp": "^0.35.3"
   }
 }

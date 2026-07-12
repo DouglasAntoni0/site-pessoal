@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Builder, By, Key, until } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome.js';
@@ -8,6 +9,7 @@ import chrome from 'selenium-webdriver/chrome.js';
 const port = 4176;
 const baseUrl = process.env.BASE_URL || `http://127.0.0.1:${port}`;
 const root = fileURLToPath(new URL('../../', import.meta.url));
+const dist = path.join(root, 'dist');
 
 async function waitForServer() {
   const deadline = Date.now() + 15_000;
@@ -41,7 +43,7 @@ async function buildDriver(width, height) {
 
 let server;
 if (!process.env.BASE_URL) {
-  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
+  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1', '--directory', dist], {
     cwd: root,
     stdio: 'ignore',
     windowsHide: true
@@ -59,7 +61,9 @@ try {
     ['desktop', 1440, 900],
     ['tablet', 768, 1024],
     ['mobile', 390, 844],
-    ['small-mobile', 320, 740]
+    ['small-mobile', 320, 568],
+    ['minimum-mobile', 280, 653],
+    ['landscape-mobile', 667, 375]
   ]) {
     const driver = await buildDriver(width, height);
     try {
@@ -76,7 +80,7 @@ try {
       assert.equal(overflow.bodyOverflow <= 1, true, `${name}: body overflow ${JSON.stringify(overflow)}`);
 
       const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
-      assert.match(await certificationNav.getText(), /Certificações/, `${name}: certifications nav label`);
+      assert.match(await certificationNav.getAttribute('textContent'), /Certificações/, `${name}: certifications nav label`);
       const certificationCards = await driver.findElements(By.css('#certifications .certification-card'));
       assert.equal(certificationCards.length, 13, `${name}: certification card count`);
       const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
@@ -93,7 +97,7 @@ try {
       await driver.executeScript('arguments[0].click();', certificationViewButtons[0]);
       const certificateModal = await driver.wait(until.elementLocated(By.css('#certificate-viewer-modal.active')), 8000);
       const certificateImage = await certificateModal.findElement(By.css('#certificate-modal-image'));
-      assert.match(await certificateImage.getAttribute('src'), /assets\/certificates\/ebac-engenheiro-qualidade-software\.png/, `${name}: certification image src`);
+      assert.match(await certificateImage.getAttribute('src'), /assets\/certificates\/previews\/ebac-engenheiro-qualidade-software\.webp/, `${name}: certification image src`);
       await driver.actions().sendKeys(Key.ESCAPE).perform();
       await driver.wait(until.elementIsNotVisible(certificateModal), 8000);
       const certificationCta = await driver.findElement(By.css('#certifications .certifications-cta'));

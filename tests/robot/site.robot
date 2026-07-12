@@ -63,7 +63,7 @@ Certifications Section Renders
     Execute Javascript    document.querySelector('#certifications .certification-view-btn').click()
     Wait Until Element Is Visible    css:#certificate-viewer-modal.active
     ${certificate_src}=    Get Element Attribute    css:#certificate-modal-image    src
-    Should Contain    ${certificate_src}    assets/certificates/ebac-engenheiro-qualidade-software.png
+    Should Contain    ${certificate_src}    assets/certificates/previews/ebac-engenheiro-qualidade-software.webp
     Press Keys    None    ESC
     Wait Until Element Is Not Visible    css:#certificate-viewer-modal.active
     Page Should Contain    Playwright Zombie Edition
