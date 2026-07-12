@@ -89,6 +89,7 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
+          cache-dependency-path: requirements-robot.txt
       - run: npm ci
       - run: pip install -r requirements-robot.txt
       - run: npm run test:robot
