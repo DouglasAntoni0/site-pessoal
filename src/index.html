@@ -4,72 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfólio de Douglas Antonio, Software Quality Engineer especialista em automação E2E, API, mobile e performance.">
+    <meta name="theme-color" content="#040914">
+    <meta name="color-scheme" content="dark">
+    <link rel="canonical" href="https://douglasqa.netlify.app/">
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
     <title>Douglas Antonio | Software Quality Engineer</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-
-    <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="animations.css">
+    <link rel="preload" href="__INTER_FONT__" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="__SPACE_FONT__" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="__APP_CSS__">
 </head>
 
 <body>
+    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
 
 
-    <div class="aurora-wrapper">
+    <div class="aurora-wrapper" aria-hidden="true">
         <div class="aurora-orb orb-1"></div>
         <div class="aurora-orb orb-2"></div>
-        <div class="aurora-orb orb-3"></div>
-        <div class="aurora-noise"></div>
     </div>
 
 
     <header class="glass-header">
         <div class="container header-container">
-            <div class="logo">
-                DOUGLAS.QA<span class="neon-dot"></span>
+            <div class="header-row">
+                <a class="logo" href="#hero" aria-label="DOUGLAS.QA — início">
+                    DOUGLAS.QA<span class="neon-dot" aria-hidden="true"></span>
+                </a>
+                <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false"
+                    aria-controls="primary-nav" aria-label="Abrir menu principal">
+                    <span class="menu-toggle-lines" aria-hidden="true"></span>
+                </button>
             </div>
-            <nav aria-label="Navegação principal">
+            <nav class="primary-nav" id="primary-nav" aria-label="Navegação principal">
                 <ul>
-                    <li><a href="#hero" class="magnetic-menu">Início</a></li>
-                    <li><a href="#vision" class="magnetic-menu">Visão & Tech</a></li>
-                    <li><a href="#quality" class="magnetic-menu">Atuação</a></li>
-                    <li><a href="#certifications" class="magnetic-menu">Certificações</a></li>
-                    <li><a href="#projects" class="magnetic-menu">Projetos</a></li>
-                    <li><a href="#volunteer" class="magnetic-menu">Open Source</a></li>
-                    <li><a href="#contact" class="magnetic-menu">Contato</a></li>
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#vision">Visão &amp; Tech</a></li>
+                    <li><a href="#quality">Atuação</a></li>
+                    <li><a href="#certifications">Certificações</a></li>
+                    <li><a href="#projects">Projetos</a></li>
+                    <li><a href="#volunteer">Open Source</a></li>
+                    <li><a href="#contact">Contato</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main id="smooth-wrapper">
-        <div id="smooth-content">
+    <main id="main-content">
 
 
             <section id="hero" class="hero-section container">
                 <div class="hero-content">
-                    <h1 class="hero-title split-text" id="main-title">Engenharia de Qualidade Escalável. Do código à
+                    <h1 class="hero-title" id="main-title">Engenharia de Qualidade Escalável. Do código à
                         produção com zero falhas.</h1>
                     <h2 class="hero-subtitle">Douglas Antonio — QA
                         Engineer | Especialista em Automação E2E, API, Mobile & Performance.</h2>
-                    <p class="hero-paragraph gs-animate-up">
+                    <p class="hero-paragraph">
                         Protegendo a experiência do usuário final e garantindo a estabilidade de sistemas por meio de
                         arquiteturas de testes complexas.</p>
-                    <div class="hero-actions gs-animate-up">
-                        <a href="#projects" class="btn btn-primary magnetic-btn">Meus
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">Meus
                             Projetos</a>
-                        <a href="#contact" class="btn btn-secondary magnetic-btn">Contato</a>
-                        <a href="assets/Douglas_Antonio_QA_Engineer.pdf" class="btn btn-ghost magnetic-btn" download>Currículo</a>
+                        <a href="#contact" class="btn btn-secondary">Contato</a>
+                        <a href="assets/Douglas_Antonio_QA_Engineer.pdf" class="btn btn-ghost" download>Currículo</a>
                     </div>
                 </div>
             </section>
@@ -79,8 +76,7 @@
                 <div class="container">
                     <div class="vision-grid">
                         <div class="vision-col">
-                            <div class="vision-card glass-panel gs-reveal">
-                                <i class="ph ph-target vision-icon"></i>
+                            <div class="vision-card glass-panel reveal">
                                 <h3>Shift-Left & Operações</h3>
                                 <p>Formado em Engenharia de Qualidade de Software, trago uma base sólida e atípica:
                                     <strong>anos de experiência como Coordenador de Operações.</strong> Essa bagagem no
@@ -91,8 +87,7 @@
                             </div>
                         </div>
                         <div class="vision-col">
-                            <div class="vision-card glass-panel gs-reveal" style="transition-delay: 0.1s;">
-                                <i class="ph ph-device-mobile vision-icon"></i>
+                            <div class="vision-card glass-panel reveal">
                                 <h3>Mobilidade & CI/CD</h3>
                                 <p>Além do Web e API, possuo arquitetura sólida em testes Mobile, manipulando
                                     emuladores, Android Studio, Appium e Maestro. Domino a esteira completa de CI/CD
@@ -101,46 +96,46 @@
                         </div>
                     </div>
 
-                    <div class="tech-stack gs-reveal">
-                        <span class="tech-tag magnetic-menu"><i class="devicon-nodejs-plain colored"></i>JavaScript (Node.js)</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-typescript-plain colored"></i>TypeScript</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-python-plain colored"></i>Python</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-cypressio-plain colored"></i>Cypress</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-playwright-plain colored"></i>Playwright</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-selenium-original colored"></i>WebdriverIO</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-jest-plain colored"></i>Jest</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-mocha-plain colored"></i>Mocha</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-pytest-plain colored"></i>PyTest</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-mask-happy"></i>Faker.js</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-postman-plain colored"></i>Postman</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-insomnia-plain colored"></i>Insomnia</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-swagger-plain colored"></i>Swagger/OpenAPI</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-plugs-connected"></i>REST API</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-device-mobile"></i>Appium</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-magic-wand"></i>Maestro</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-androidstudio-plain colored"></i>Android Studio</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-k6-original colored"></i>K6</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-gauge"></i>JMeter</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-jenkins-plain colored"></i>Jenkins</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-githubactions-plain colored"></i>GitHub Actions</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-gitlab-plain colored"></i>GitLab CI</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-docker-plain colored"></i>Docker</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-git-plain colored"></i>Git Flow</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-database"></i>SQL / NoSQL</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-kanban"></i>Agile/Scrum/Kanban</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-jira-plain colored"></i>Jira</span>
-                        <span class="tech-tag magnetic-menu"><i class="devicon-cucumber-plain colored"></i>BDD/Cucumber/Gherkin</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-hand-pointing"></i>Testes Manuais & Exploratórios</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-arrows-merge"></i>Integração & E2E</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-robot"></i>Robot Framework</span>
-                        <span class="tech-tag magnetic-menu"><i class="ph ph-shield-check"></i>Regressão & Contrato</span>
+                    <div class="tech-stack reveal">
+                        <span class="tech-tag">JavaScript (Node.js)</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Cypress</span>
+                        <span class="tech-tag">Playwright</span>
+                        <span class="tech-tag">WebdriverIO</span>
+                        <span class="tech-tag">Jest</span>
+                        <span class="tech-tag">Mocha</span>
+                        <span class="tech-tag">PyTest</span>
+                        <span class="tech-tag">Faker.js</span>
+                        <span class="tech-tag">Postman</span>
+                        <span class="tech-tag">Insomnia</span>
+                        <span class="tech-tag">Swagger/OpenAPI</span>
+                        <span class="tech-tag">REST API</span>
+                        <span class="tech-tag">Appium</span>
+                        <span class="tech-tag">Maestro</span>
+                        <span class="tech-tag">Android Studio</span>
+                        <span class="tech-tag">K6</span>
+                        <span class="tech-tag">JMeter</span>
+                        <span class="tech-tag">Jenkins</span>
+                        <span class="tech-tag">GitHub Actions</span>
+                        <span class="tech-tag">GitLab CI</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Git Flow</span>
+                        <span class="tech-tag">SQL / NoSQL</span>
+                        <span class="tech-tag">Agile/Scrum/Kanban</span>
+                        <span class="tech-tag">Jira</span>
+                        <span class="tech-tag">BDD/Cucumber/Gherkin</span>
+                        <span class="tech-tag">Testes Manuais & Exploratórios</span>
+                        <span class="tech-tag">Integração & E2E</span>
+                        <span class="tech-tag">Robot Framework</span>
+                        <span class="tech-tag">Regressão & Contrato</span>
                     </div>
                 </div>
             </section>
 
             <section id="quality" class="quality-section">
                 <div class="container">
-                    <div class="quality-header gs-reveal">
+                    <div class="quality-header reveal">
                         <span class="section-kicker">Qualidade orientada a risco</span>
                         <h2 class="section-title">Da estratégia de teste à evidência de release.</h2>
                         <p>Atuação ponta a ponta em QA, conectando requisitos, automação, API, mobile, performance e
@@ -148,27 +143,24 @@
                     </div>
 
                     <div class="quality-grid">
-                        <article class="quality-card glass-panel gs-reveal">
-                            <i class="ph ph-git-branch quality-icon"></i>
+                        <article class="quality-card glass-panel reveal">
                             <h3>Shift-left e Test Strategy</h3>
                             <p>Critérios de aceitação, planos de teste, cenários BDD/Gherkin e priorização por risco
                                 desde o início do SDLC.</p>
                         </article>
-                        <article class="quality-card glass-panel gs-reveal">
-                            <i class="ph ph-bug-beetle quality-icon"></i>
+                        <article class="quality-card glass-panel reveal">
                             <h3>Defeitos acionáveis</h3>
                             <p>Bug reports objetivos, com impacto, evidência, passos de reprodução e comunicação clara
                                 entre desenvolvimento e produto.</p>
                         </article>
-                        <article class="quality-card glass-panel gs-reveal">
-                            <i class="ph ph-shield-check quality-icon"></i>
+                        <article class="quality-card glass-panel reveal">
                             <h3>Release com evidência</h3>
                             <p>Smoke, regressão, exploratório, API, mobile, performance e validações de segurança
                                 alinhadas à saúde da suíte.</p>
                         </article>
                     </div>
 
-                    <div class="quality-strip glass-panel gs-reveal">
+                    <div class="quality-strip glass-panel reveal">
                         <div>
                             <span class="metric-value">CI/CD</span>
                             <span class="metric-label">GitHub Actions, GitLab CI, Jenkins e Docker</span>
@@ -188,23 +180,21 @@
 
             <section id="certifications" class="certifications-section">
                 <div class="container">
-                    <div class="certifications-header gs-reveal">
+                    <div class="certifications-header reveal">
                         <span class="section-kicker">Formação contínua</span>
                         <h2 class="section-title">Certificações que sustentam minha atuação em QA.</h2>
                         <p>Uma visão objetiva dos cursos concluídos em qualidade de software, automação, APIs,
                             performance, segurança, programação, IA e formações complementares, com validação pública concentrada no LinkedIn.</p>
                         <a href="https://www.linkedin.com/in/douglas-antonio-qa/details/certifications/"
-                            target="_blank" rel="noopener noreferrer" class="btn btn-secondary certifications-cta magnetic-btn">
-                            <i class="ph-fill ph-linkedin-logo" aria-hidden="true"></i>
+                            target="_blank" rel="noopener noreferrer" class="btn btn-secondary certifications-cta">
                             Ver certificações no LinkedIn
                         </a>
                     </div>
 
                     <div class="certifications-grid">
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">EBAC</span>
-                                <i class="ph ph-seal-check certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Profissão: Engenheiro de Qualidade de Software</h3>
                             <p>Formação voltada a estratégia de testes, automação, documentação, análise de risco e
@@ -213,19 +203,18 @@
                                 <span>26/11/2025</span>
                                 <span>40 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Profissão: Engenheiro de Qualidade de Software"
                                 data-certificate-school="EBAC"
-                                data-certificate-image="assets/certificates/ebac-engenheiro-qualidade-software.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/ebac-engenheiro-qualidade-software.png"
+                                data-certificate-preview="assets/certificates/previews/ebac-engenheiro-qualidade-software.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">EBAC</span>
-                                <i class="ph ph-shield-check certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Cyber Security</h3>
                             <p>Base para reconhecer riscos de segurança, vulnerabilidades, proteção de dados e pontos
@@ -234,19 +223,18 @@
                                 <span>01/01/2026</span>
                                 <span>23 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Cyber Security"
                                 data-certificate-school="EBAC"
-                                data-certificate-image="assets/certificates/ebac-cyber-security.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/ebac-cyber-security.png"
+                                data-certificate-preview="assets/certificates/previews/ebac-cyber-security.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">EBAC</span>
-                                <i class="ph ph-code certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Introdução à Programação</h3>
                             <p>Fundamentos de lógica, estrutura de código e resolução de problemas, reforçando a base
@@ -255,19 +243,18 @@
                                 <span>16/05/2026</span>
                                 <span>18 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Introdução à Programação"
                                 data-certificate-school="EBAC"
-                                data-certificate-image="assets/certificates/ebac-introducao-programacao.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/ebac-introducao-programacao.png"
+                                data-certificate-preview="assets/certificates/previews/ebac-introducao-programacao.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">EBAC</span>
-                                <i class="ph ph-brain certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Inteligência Artificial</h3>
                             <p>Introdução a conceitos e aplicações de IA, conectando automação, produtividade e análise
@@ -276,19 +263,18 @@
                                 <span>21/06/2026</span>
                                 <span>25 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Inteligência Artificial"
                                 data-certificate-school="EBAC"
-                                data-certificate-image="assets/certificates/ebac-inteligencia-artificial.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/ebac-inteligencia-artificial.png"
+                                data-certificate-preview="assets/certificates/previews/ebac-inteligencia-artificial.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">EBAC</span>
-                                <i class="ph ph-desktop certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>TI do zero ao pro</h3>
                             <p>Panorama inicial de tecnologia, ferramentas e carreira em TI, consolidando a base para
@@ -297,19 +283,18 @@
                                 <span>07/07/2025</span>
                                 <span>12 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="TI do zero ao pro"
                                 data-certificate-school="EBAC"
-                                data-certificate-image="assets/certificates/ebac-ti-zero-ao-pro.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/ebac-ti-zero-ao-pro.png"
+                                data-certificate-preview="assets/certificates/previews/ebac-ti-zero-ao-pro.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Fundação Bradesco</span>
-                                <i class="ph ph-shield-check certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Segurança em Tecnologia da Informação</h3>
                             <p>Curso autoinstrucional focado em fundamentos de segurança em TI, reforçando noções de
@@ -318,19 +303,18 @@
                                 <span>21/04/2025</span>
                                 <span>12 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Segurança em Tecnologia da Informação"
                                 data-certificate-school="Fundação Bradesco"
-                                data-certificate-image="assets/certificates/fundacao-bradesco-seguranca-ti.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/fundacao-bradesco-seguranca-ti.png"
+                                data-certificate-preview="assets/certificates/previews/fundacao-bradesco-seguranca-ti.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Fundação Bradesco</span>
-                                <i class="ph ph-flow-arrow certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Projetos de Sistemas de TI</h3>
                             <p>Conteúdo voltado a organização e entendimento de projetos de sistemas, apoiando visão de
@@ -339,18 +323,17 @@
                                 <span>02/05/2025</span>
                                 <span>15 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Projetos de Sistemas de TI"
                                 data-certificate-school="Fundação Bradesco"
-                                data-certificate-image="assets/certificates/fundacao-bradesco-projetos-sistemas-ti.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/fundacao-bradesco-projetos-sistemas-ti.png"
+                                data-certificate-preview="assets/certificates/previews/fundacao-bradesco-projetos-sistemas-ti.webp">
                                 Ver certificado
                             </button>
                         </article>
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Udemy</span>
-                                <i class="ph ph-check-circle certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Ninja do Cypress</h3>
                             <p>Automação E2E com Cypress, cobrindo escrita de cenários, comandos reutilizáveis,
@@ -359,19 +342,18 @@
                                 <span>01/02/2026</span>
                                 <span>15.5 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Ninja do Cypress"
                                 data-certificate-school="Udemy"
-                                data-certificate-image="assets/certificates/udemy-ninja-cypress.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/udemy-ninja-cypress.png"
+                                data-certificate-preview="assets/certificates/previews/udemy-ninja-cypress.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Udemy</span>
-                                <i class="ph ph-gauge certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Teste de performance com K6</h3>
                             <p>Criação de scripts de carga e validações de performance com K6, apoiando análise de
@@ -380,19 +362,18 @@
                                 <span>16/02/2026</span>
                                 <span>4.5 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Teste de performance com K6"
                                 data-certificate-school="Udemy"
-                                data-certificate-image="assets/certificates/udemy-k6-performance.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/udemy-k6-performance.png"
+                                data-certificate-preview="assets/certificates/previews/udemy-k6-performance.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Udemy</span>
-                                <i class="ph ph-browsers certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Playwright Zombie Edition</h3>
                             <p>Automação web moderna com Playwright, explorando execução confiável, testes
@@ -401,19 +382,18 @@
                                 <span>29/03/2026</span>
                                 <span>14.5 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Playwright Zombie Edition"
                                 data-certificate-school="Udemy"
-                                data-certificate-image="assets/certificates/udemy-playwright-zombie-edition.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/udemy-playwright-zombie-edition.png"
+                                data-certificate-preview="assets/certificates/previews/udemy-playwright-zombie-edition.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Udemy</span>
-                                <i class="ph ph-device-mobile certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Robot Framework e Appium para Android e iOS</h3>
                             <p>Testes mobile com Robot Framework e Appium, incluindo interação com apps, organização de
@@ -422,19 +402,18 @@
                                 <span>30/04/2026</span>
                                 <span>8 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Robot Framework e Appium para Android e iOS"
                                 data-certificate-school="Udemy"
-                                data-certificate-image="assets/certificates/udemy-robot-appium-mobile.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/udemy-robot-appium-mobile.png"
+                                data-certificate-preview="assets/certificates/previews/udemy-robot-appium-mobile.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Udemy</span>
-                                <i class="ph ph-plugs-connected certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>Dominando Postman do Teste Manual a Performance APIs</h3>
                             <p>Validação de APIs com Postman, saindo de testes manuais para coleções estruturadas,
@@ -443,19 +422,18 @@
                                 <span>08/06/2026</span>
                                 <span>15 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="Dominando Postman do Teste Manual a Performance APIs"
                                 data-certificate-school="Udemy"
-                                data-certificate-image="assets/certificates/udemy-postman-api-performance.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/udemy-postman-api-performance.png"
+                                data-certificate-preview="assets/certificates/previews/udemy-postman-api-performance.webp">
                                 Ver certificado
                             </button>
                         </article>
 
-                        <article class="certification-card glass-panel gs-reveal">
+                        <article class="certification-card glass-panel reveal">
                             <div class="certification-topline">
                                 <span class="certification-school">Udemy</span>
-                                <i class="ph ph-flow-arrow certification-icon" aria-hidden="true"></i>
                             </div>
                             <h3>BDD eXperience</h3>
                             <p>Práticas de BDD para aproximar negócio, desenvolvimento e qualidade por meio de
@@ -464,17 +442,17 @@
                                 <span>28/06/2026</span>
                                 <span>5 horas</span>
                             </div>
-                            <button type="button" class="certification-view-btn magnetic-btn"
+                            <button type="button" class="certification-view-btn"
                                 data-certificate-title="BDD eXperience"
                                 data-certificate-school="Udemy"
-                                data-certificate-image="assets/certificates/udemy-bdd-experience.png">
-                                <i class="ph ph-certificate" aria-hidden="true"></i>
+                                data-certificate-image="assets/certificates/udemy-bdd-experience.png"
+                                data-certificate-preview="assets/certificates/previews/udemy-bdd-experience.webp">
                                 Ver certificado
                             </button>
                         </article>
                     </div>
 
-                    <div class="certifications-support gs-reveal">
+                    <div class="certifications-support reveal">
                         <div class="certifications-support-heading">
                             <span class="section-kicker">Base complementar</span>
                             <h3>Formações que ampliam repertório técnico e comunicação.</h3>
@@ -484,10 +462,9 @@
                         </div>
 
                         <div class="certifications-support-grid">
-                            <article class="certification-support-card glass-panel gs-reveal">
+                            <article class="certification-support-card glass-panel reveal">
                                 <div class="certification-topline">
                                     <span class="certification-school">Luziana Lanna Idiomas</span>
-                                    <i class="ph ph-translate certification-icon" aria-hidden="true"></i>
                                 </div>
                                 <h3>Inglês - Avançado</h3>
                                 <p>Formação em inglês em nível avançado, útil para ler documentação técnica, acompanhar
@@ -505,10 +482,9 @@
                                 </div>
                             </article>
 
-                            <article class="certification-support-card glass-panel gs-reveal">
+                            <article class="certification-support-card glass-panel reveal">
                                 <div class="certification-topline">
                                     <span class="certification-school">Instituto Santa Luzia</span>
-                                    <i class="ph ph-desktop-tower certification-icon" aria-hidden="true"></i>
                                 </div>
                                 <h3>Informática</h3>
                                 <p>Formação de base em informática, reforçando familiaridade com sistemas, ferramentas
@@ -532,10 +508,9 @@
 
             <section id="projects" class="projects-section">
                 <div class="container">
-                    <div class="projects-header gs-reveal">
+                    <div class="projects-header reveal">
                         <h2 class="section-title">Arsenal de <br><span class="gradient-text">Projetos</span></h2>
                         <div class="disclaimer glass-panel">
-                            <i class="ph ph-warning-circle"></i>
                             <p><strong>Aviso:</strong> Estes são apenas alguns dos meus principais projetos destacados.
                                 Meu conhecimento não se limita a eles. Explore meu GitHub para acessar minha biblioteca
                                 completa de automações.</p>
@@ -549,10 +524,9 @@
 
             <section id="volunteer" class="projects-section volunteer-section">
                 <div class="container">
-                    <div class="projects-header gs-reveal">
+                    <div class="projects-header reveal">
                         <h2 class="section-title">Voluntariado & <br><span class="gradient-text">Open Source</span></h2>
-                        <div class="disclaimer glass-panel" style="border-left: 4px solid var(--aurora-purple);">
-                            <i class="ph ph-heart-straight"></i>
+                        <div class="disclaimer glass-panel disclaimer--volunteer">
                             <p><strong>Impacto Social:</strong> Atuação ativa como QA Voluntário na organização
                                 SouJunior, garantindo a qualidade de software e implementando automações E2E para
                                 projetos que transformam a comunidade tech.</p>
@@ -565,7 +539,7 @@
 
             <section id="contact" class="contact-section">
                 <div class="container">
-                    <div class="contact-box glass-panel gs-reveal">
+                    <div class="contact-box glass-panel reveal">
                         <div class="contact-header">
                             <h2 class="section-title">Engenharia de nível mundial. <br>Vamos <span
                                     class="gradient-text">escalar o seu produto.</span></h2>
@@ -575,8 +549,8 @@
 
                         <div class="contact-grid">
                             <a href="https://wa.me/5533991073110" target="_blank" rel="noopener noreferrer"
-                                class="contact-link whatsapp-card magnetic-btn">
-                                <div class="contact-icon"><i class="ph-fill ph-whatsapp-logo"></i></div>
+                                class="contact-link whatsapp-card">
+                                <div class="contact-icon"></div>
                                 <div class="contact-info">
                                     <span class="label">Chat Direto</span>
                                     <span class="value">WhatsApp</span>
@@ -585,8 +559,8 @@
 
                             <a href="https://www.linkedin.com/in/douglas-antonio-qa/" target="_blank"
                                 rel="noopener noreferrer"
-                                class="contact-link linkedin-card magnetic-btn">
-                                <div class="contact-icon"><i class="ph-fill ph-linkedin-logo"></i></div>
+                                class="contact-link linkedin-card">
+                                <div class="contact-icon"></div>
                                 <div class="contact-info">
                                     <span class="label">Conexão Profissional</span>
                                     <span class="value">LinkedIn</span>
@@ -594,8 +568,8 @@
                             </a>
 
                             <a href="https://github.com/DouglasAntoni0" target="_blank" rel="noopener noreferrer"
-                                class="contact-link github-card magnetic-btn">
-                                <div class="contact-icon"><i class="ph-fill ph-github-logo"></i></div>
+                                class="contact-link github-card">
+                                <div class="contact-icon"></div>
                                 <div class="contact-info">
                                     <span class="label">Repositórios</span>
                                     <span class="value">GitHub</span>
@@ -611,44 +585,46 @@
                     <p>© 2026 Douglas Antonio. Todos os direitos reservados. Desenhado para "Zero Falhas".</p>
                 </div>
             </footer>
-
-        </div>
     </main>
 
 
     <div class="modal-overlay" id="modal-overlay"></div>
 
 
-    <div id="modals-container"></div>
+    <div class="glass-modal" id="project-modal" role="dialog" aria-modal="true" aria-hidden="true"
+        aria-labelledby="project-modal-title" tabindex="-1">
+        <button type="button" class="close-modal" aria-label="Fechar detalhes do projeto">
+            <span aria-hidden="true">×</span>
+        </button>
+        <div class="modal-body">
+            <h2 id="project-modal-title">Projeto</h2>
+            <div class="modal-desc" id="project-modal-description"></div>
+            <div class="modal-stack" id="project-modal-tools"></div>
+            <div class="code-container"><pre><code id="project-modal-code"></code></pre></div>
+            <a id="project-modal-link" href="#" target="_blank" rel="noopener noreferrer"
+                class="btn btn-primary btn-modal">Acessar repositório</a>
+        </div>
+    </div>
 
     <div class="glass-modal certificate-modal" id="certificate-viewer-modal" role="dialog" aria-modal="true"
         aria-hidden="true" aria-labelledby="certificate-modal-title" tabindex="-1">
         <button type="button" class="close-modal" aria-label="Fechar certificado">
-            <i class="ph ph-x" aria-hidden="true"></i>
+            <span aria-hidden="true">×</span>
         </button>
         <div class="modal-body certificate-modal-body">
-            <span class="modal-badge certificate-modal-school stagger-el" id="certificate-modal-school">Certificado</span>
-            <h2 id="certificate-modal-title" class="stagger-el">Certificado</h2>
-            <figure class="certificate-viewer stagger-el">
-                <img id="certificate-modal-image" alt="">
+            <span class="modal-badge certificate-modal-school" id="certificate-modal-school">Certificado</span>
+            <h2 id="certificate-modal-title">Certificado</h2>
+            <figure class="certificate-viewer">
+                <img id="certificate-modal-image" width="1600" height="1000" decoding="async" alt="">
             </figure>
             <a id="certificate-modal-open" href="#" target="_blank" rel="noopener noreferrer"
-                class="btn btn-primary btn-modal stagger-el">
-                <i class="ph ph-arrow-square-out" aria-hidden="true"></i>
+                class="btn btn-primary btn-modal">
                 Abrir imagem em nova guia
             </a>
         </div>
     </div>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-
-
-    <script src="projects-data.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="__APP_JS__"></script>
 </body>
 
 </html>

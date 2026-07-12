@@ -7,6 +7,7 @@ import { setTimeout as wait } from 'node:timers/promises';
 const [, , portArg, ...command] = process.argv;
 const port = Number(portArg || 4173);
 const root = fileURLToPath(new URL('../../', import.meta.url));
+const dist = path.join(root, 'dist');
 const url = `http://127.0.0.1:${port}`;
 const externalUrl = process.env.BASE_URL;
 
@@ -30,7 +31,7 @@ async function waitForServer() {
 
 let server;
 if (!externalUrl) {
-  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], {
+  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1', '--directory', dist], {
     cwd: root,
     stdio: 'ignore',
     windowsHide: true

@@ -1,37 +1,99 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { build } from 'esbuild';
+import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+const src = path.join(root, 'src');
 const dist = path.join(root, 'dist');
-const files = [
-  'index.html',
-  'layout.css',
-  'animations.css',
-  'projects-data.js',
-  'main.js'
-];
+const assetOutdir = path.join(dist, 'assets');
 
 async function copyIfExists(source, target) {
-  try {
-    const stat = await fs.stat(source);
-    if (stat.isDirectory()) {
-      await fs.cp(source, target, { recursive: true });
-    } else {
-      await fs.copyFile(source, target);
+    try {
+        const stat = await fs.stat(source);
+        await fs.mkdir(path.dirname(target), { recursive: true });
+        if (stat.isDirectory()) {
+            await fs.cp(source, target, { recursive: true, force: true });
+        } else {
+            await fs.copyFile(source, target);
+        }
+    } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
     }
-  } catch (error) {
-    if (error.code !== 'ENOENT') throw error;
-  }
+}
+
+
+async function buildCertificatePreviews() {
+    const sourceDir = path.join(root, 'assets/certificates');
+    const targetDir = path.join(dist, 'assets/certificates/previews');
+    await fs.mkdir(targetDir, { recursive: true });
+    const entries = await fs.readdir(sourceDir, { withFileTypes: true });
+    await Promise.all(entries
+        .filter((entry) => entry.isFile() && entry.name.endsWith('.png'))
+        .map((entry) => sharp(path.join(sourceDir, entry.name))
+            .resize({ width: 1600, height: 1000, fit: 'inside', withoutEnlargement: true })
+            .webp({ quality: 82, smartSubsample: true })
+            .toFile(path.join(targetDir, entry.name.replace(/\.png$/i, '.webp')))));
+}
+
+function outputUrl(outputPath) {
+    const absolute = path.isAbsolute(outputPath) ? outputPath : path.resolve(root, outputPath);
+    return path.relative(dist, absolute).replaceAll('\\', '/');
 }
 
 await fs.rm(dist, { recursive: true, force: true });
-await fs.mkdir(dist, { recursive: true });
+await fs.mkdir(assetOutdir, { recursive: true });
 
-for (const file of files) {
-  await copyIfExists(path.join(root, file), path.join(dist, file));
+const result = await build({
+    entryPoints: {
+        app: path.join(src, 'scripts/main.js'),
+        styles: path.join(src, 'styles/index.css')
+    },
+    outdir: assetOutdir,
+    entryNames: 'build/[name]-[hash]',
+    assetNames: 'build/[name]-[hash]',
+    bundle: true,
+    minify: true,
+    metafile: true,
+    sourcemap: false,
+    target: ['es2018'],
+    format: 'esm',
+    loader: { '.woff2': 'file' },
+    legalComments: 'none',
+    logLevel: 'info'
+});
+
+const outputs = Object.entries(result.metafile.outputs);
+const findEntry = (suffix) => {
+    const match = outputs.find(([, info]) => info.entryPoint?.replaceAll('\\', '/').endsWith(suffix));
+    if (!match) throw new Error(`Missing build output for ${suffix}`);
+    return outputUrl(match[0]);
+};
+const findAsset = (name) => {
+    const match = outputs.find(([output]) => path.basename(output).startsWith(`${name}-`) && output.endsWith('.woff2'));
+    if (!match) throw new Error(`Missing font output for ${name}`);
+    return outputUrl(match[0]);
+};
+
+const replacements = {
+    __APP_JS__: findEntry('/scripts/main.js'),
+    __APP_CSS__: findEntry('/styles/index.css'),
+    __INTER_FONT__: findAsset('inter-latin'),
+    __SPACE_FONT__: findAsset('space-grotesk-latin')
+};
+
+let html = await fs.readFile(path.join(src, 'index.html'), 'utf8');
+for (const [token, value] of Object.entries(replacements)) {
+    if (!html.includes(token)) throw new Error(`Missing HTML placeholder ${token}`);
+    html = html.replaceAll(token, value);
 }
+await fs.writeFile(path.join(dist, 'index.html'), html);
 
 await copyIfExists(path.join(root, 'assets'), path.join(dist, 'assets'));
+await buildCertificatePreviews();
+await copyIfExists(path.join(src, 'assets/icons'), path.join(dist, 'assets/icons'));
+await copyIfExists(path.join(src, 'assets/fonts/Inter-OFL.txt'), path.join(dist, 'assets/fonts/Inter-OFL.txt'));
+await copyIfExists(path.join(src, 'assets/fonts/SpaceGrotesk-OFL.txt'), path.join(dist, 'assets/fonts/SpaceGrotesk-OFL.txt'));
 
-console.log('Static site built in dist/. Tests are intentionally not part of the Netlify deploy artifact.');
+console.log('Static production site built in dist/.');

@@ -1,38 +1,59 @@
-# Douglas QA - Portfólio Profissional
+# Douglas QA — Portfólio profissional
 
-![Status](https://img.shields.io/badge/Status-Ativo-success.svg)
-![Licença](https://img.shields.io/badge/Licença-Copyright-red.svg)
+Portfólio pessoal de Douglas Antonio, Software Quality Engineer, com foco em automação E2E, API, mobile, performance, Shift-Left e CI/CD.
 
-## Sobre o Projeto
+A aplicação é estática e foi desenhada para entregar a mesma experiência funcional em celulares antigos, tablets e desktops. Efeitos avançados são aprimoramento progressivo: dispositivos touch, telas compactas e usuários com `prefers-reduced-motion` recebem uma versão sem animações contínuas.
 
-Este é o repositório oficial do meu portfólio profissional na web. O projeto foi arquitetado e desenvolvido do zero para demonstrar minha vasta experiência como **Software Quality Engineer**. 
+## Arquitetura
 
-O site atua como um hub central para exibir minhas habilidades técnicas, projetos (com foco especializado em automação E2E, API, Mobile & Performance), minha trajetória profissional de anos na área e minha mentalidade de atuação técnica orientada a resultados (foco no *Shift-Left*, prevenção de falhas e CI/CD).
+- `src/index.html`: marcação semântica e conteúdo público.
+- `src/styles/`: base, layout, componentes, movimento e breakpoints.
+- `src/scripts/`: navegação, projetos, modais e efeitos nativos.
+- `src/data/projects.js`: dados tipados por JSDoc, validados por allowlists.
+- `src/assets/`: fontes WOFF2 locais, licenças e sprite SVG.
+- `scripts/build-static.mjs`: gera HTML, CSS e JavaScript minificados e versionados por hash.
+- `dist/`: saída de produção gerada; é o único diretório publicado e testado.
 
-A estrutura foi projetada para ter um padrão de design de nível elevado, utilizando alto desempenho, acessibilidade e micro-interações fluidas orientadas à experiência do usuário, transmitindo clareza e credibilidade técnica.
+O runtime não carrega bibliotecas, fontes ou ícones de terceiros. Animações usam Web Animations API, um único `IntersectionObserver` e, durante interação desktop, no máximo um `requestAnimationFrame`.
 
-## Stack & Tecnologias Utilizadas.
+## Desenvolvimento
 
-A aplicação foi construída visando um ecossistema leve sem dependências pesadas, pautada em:
+Requer Node.js 22 e Python 3 para o servidor estático e as suítes Selenium/Robot.
 
-- **HTML5** (Marcação semântica e limpa)
-- **CSS3** (Estilização modular completa, uso avançado de propriedades customizadas - variáveis e responsividade)
-- **JavaScript (Vanilla)** (Manipulação limpa de DOM e controle de dados separados dos componentes visuais)
-- **GSAP (GreenSock Animation Platform)** (Core das animações complexas do sistema)
-- **GSAP ScrollTrigger** (Controle avançado das animações atrelado ao scroll da página)
-- **Vanilla-Tilt.js** (Efeito vidro / 3D interativo magnético nos cards)
+```bash
+npm ci
+npm run build
+npm run serve
+```
 
-## ⚠️ Direitos Autorais e Restrições de Uso
+Abra `http://127.0.0.1:4173`. Não edite `dist/` diretamente: ele é recriado a cada build.
 
-Este site e o seu respectivo repositório referem-se a um projeto **estritamente pessoal e de natureza autoral**.
+## Qualidade
 
-Todo o ecossistema pertencente a ele (incluindo mas não se limitando a: código-fonte, layout, design, identidades visuais, ilustrações, efeitos visuais, redação dos textos e lógicas estruturais) possui estritamente **Todos os Direitos Reservados (All Rights Reserved)** da obra garantidos ao autor e seu criador legal, **Douglas Antonio**.
+```bash
+npm run check:js
+npm run test:budget
+npm run test:playwright
+npm run test:cypress
+npm run test:selenium
+pip install -r requirements-robot.txt
+npm run test:robot
+npm run test:lighthouse
+```
 
-**Fica estabelecido que:**
-1. **É EXPRESSAMENTE PROIBIDA** qualquer modalidade de cópia, clonagem "fork", reprodução, distribuição comercial ou não-comercial, modificação de trechos, comercialização ou criação de obras derivadas a partir deste repositório sem a devida, expressa e prévia autorização por escrito do autor.
-2. A utilização não autorizada total ou parcial poderá acarretar nas devidas interpelações e denúncias nas diretrizes de plataformas de hospedagem, bem como implicações judiciais cabíveis de violação de propriedade intelectual e direitos de autor.
-3. Este repositório encontra-se público **comercialmente e exclusivamente** por razões técnicas, para facilitar a infraestrutura de deploy e integração com serviços de hospedagem terceiros. A disponibilização pública do código não revoga, sob nenhuma hipótese, as restrições de direitos autorais e copyright citadas acima.
-Tem interesse no trabalho realizado aqui, deseja implementar metodologias sólidas no seu projeto para ganho de qualidade ou até mesmo sugerir propostas de desafios? **Vamos conversar e escalar os seus produtos.**
+`npm run test:all` executa as quatro suítes E2E após sintaxe e orçamento. O CI usa Node 22 em pull requests e na `main`, testa Chromium integralmente, executa smokes em Firefox/WebKit e roda Lighthouse três vezes no perfil móvel.
 
----
-**[Douglas Antonio](https://www.linkedin.com/in/douglas-antonio-qa/)** © 2026. *Engenharia de Qualidade Escalável.*
+Orçamentos de produção:
+
+- até 8 requisições críticas;
+- JS e CSS com até 20 KiB Brotli cada;
+- HTML, bundles e fontes com até 250 KiB Brotli;
+- DOM com até 900 nós;
+- Lighthouse: Performance ≥ 95 e Accessibility/Best Practices/SEO = 100;
+- LCP ≤ 2,5 s, CLS ≤ 0,05 e TBT ≤ 150 ms.
+
+## Direitos autorais
+
+Este site, seu conteúdo, código, identidade visual e demais ativos são uma obra pessoal de Douglas Antonio. Todos os direitos são reservados. Cópia, redistribuição, comercialização ou criação de trabalhos derivados exigem autorização prévia e expressa do autor.
+
+[Douglas Antonio](https://www.linkedin.com/in/douglas-antonio-qa/) © 2026 — Engenharia de Qualidade Escalável.
