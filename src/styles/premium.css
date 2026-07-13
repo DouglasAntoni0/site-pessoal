@@ -579,6 +579,11 @@ body {
   filter: drop-shadow(0 0 0.35rem color-mix(in srgb, var(--chip-color) 36%, transparent));
 }
 
+/* Android Chromium can drop path fill attributes from external SVG symbols. */
+.skill-icon--brand {
+  fill: var(--chip-color);
+}
+
 .tone-blue { --tone-color: var(--blue); --chip-color: var(--blue); }
 .tone-cyan { --tone-color: var(--cyan); --chip-color: var(--cyan); }
 .tone-amber { --tone-color: var(--amber); --chip-color: var(--amber); }

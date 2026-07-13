@@ -107,7 +107,10 @@ function renderSkillGroups() {
                 </div>
             </div>
             <div class="skill-list">
-                ${skillGroup.skills.map((skill) => `<span class="tech-tag skill-chip tone-${skill.tone}" data-skill-id="${escapeHtml(skill.id)}"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#${escapeHtml(skill.icon)}"></use></svg><span>${escapeHtml(skill.label)}</span></span>`).join('')}
+                ${skillGroup.skills.map((skill) => {
+                    const brandClass = skill.icon.startsWith('brand-') ? ' skill-icon--brand' : '';
+                    return `<span class="tech-tag skill-chip tone-${skill.tone}" data-skill-id="${escapeHtml(skill.id)}"><svg class="skill-icon${brandClass}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#${escapeHtml(skill.icon)}"></use></svg><span>${escapeHtml(skill.label)}</span></span>`;
+                }).join('')}
             </div>
         </article>`).join('');
 }

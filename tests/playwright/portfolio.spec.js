@@ -241,6 +241,21 @@ test('competências têm ícones locais válidos e projetos refletem o currícul
   await expect(modal).toContainText('BDD / Gherkin');
 });
 
+test('logos de competências mantêm preenchimento visível no mobile', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const brandIcons = page.locator('.skill-icon--brand');
+  await expect(brandIcons.first()).toBeVisible();
+  expect(await brandIcons.count()).toBeGreaterThan(30);
+  expect(await brandIcons.evaluateAll(icons => icons.every(icon => {
+    const style = getComputedStyle(icon);
+    const rect = icon.getBoundingClientRect();
+    return style.fill !== 'none' && style.visibility === 'visible' && Number(style.opacity) > 0 && rect.width > 0 && rect.height > 0;
+  }))).toBe(true);
+});
+
 test('desktop executa movimento progressivo e spotlight sem alterar layout', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium');
   await page.goto('/');
