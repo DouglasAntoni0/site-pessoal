@@ -60,11 +60,14 @@ test('@smoke carrega a experiência publicada sem terceiros ou erros', async ({ 
   await page.goto('/', { waitUntil: 'networkidle' });
 
   await expect(page).toHaveTitle('Douglas Antonio | Software Quality Engineer');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Engenharia de Qualidade Escalável');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Qualidade que antecipa riscos');
   await expect(page.locator('#projects-container article')).toHaveCount(9);
   await expect(page.locator('#volunteer-container article')).toHaveCount(1);
   await expect(page.locator('#project-modal')).toHaveCount(1);
   await expect(page.locator('#certifications .certification-card')).toHaveCount(13);
+  await expect(page.locator('[data-skill-group]')).toHaveCount(6);
+  await expect(page.locator('.skill-chip')).toHaveCount(62);
+  await expect(page.locator('.skill-chip .skill-icon use')).toHaveCount(62);
   expect(await page.locator('*').count()).toBeLessThanOrEqual(900);
   expect(thirdParty).toEqual([]);
   expect(errors).toEqual([]);
@@ -154,7 +157,27 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
   await expect(button).toBeFocused();
 });
 
-test('reduced motion e touch mantêm todo o conteúdo estático', async ({ page }, testInfo) => {
+test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium');
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4173');
+
+  expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
+  expect(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running'))).toBe(true);
+  await page.waitForTimeout(1200);
+  expect(await page.evaluate(() => document.getAnimations().filter(animation => animation.playState === 'running').length)).toBe(0);
+
+  const project = page.locator('.project-row').first();
+  await project.scrollIntoViewIfNeeded();
+  await project.tap({ position: { x: 120, y: 100 } });
+  await expect(project).not.toHaveClass(/pointer-active/);
+  expect(await project.locator('.project-content').evaluate(element => element.style.transform)).toBe('');
+  await expectNoOverflow(page);
+  await context.close();
+});
+
+test('reduced motion mantém conteúdo e painel QA estáticos', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
@@ -190,7 +213,45 @@ test('ordem pública das seções, links e contatos é preservada', async ({ pag
     .toEqual(['hero', 'vision', 'quality', 'certifications', 'projects', 'volunteer', 'contact']);
   await expect(page.getByRole('link', { name: 'Currículo' })).toHaveAttribute('href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
   await expect(page.locator('.contact-link')).toHaveCount(3);
-  await expect(page.locator('.tech-tag')).toHaveCount(32);
+  await expect(page.locator('.skill-chip')).toHaveCount(62);
+  await expect(page.locator('[data-skill-group]')).toHaveCount(6);
+  await expect(page.locator('#certifications')).toContainText('Conversação: básico-intermediária');
+});
+
+test('competências têm ícones locais válidos e projetos refletem o currículo', async ({ page }) => {
+  await page.goto('/');
+  const iconReferences = await page.locator('.skill-chip use').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
+  expect(iconReferences).toHaveLength(62);
+  expect(iconReferences.every(reference => reference?.startsWith('assets/icons/sprite.svg#'))).toBe(true);
+
+  const sprite = await page.evaluate(() => fetch('assets/icons/sprite.svg').then(response => response.text()));
+  for (const reference of new Set(iconReferences)) {
+    expect(sprite).toContain(`id="${reference.split('#')[1]}"`);
+  }
+
+  await page.locator('[data-project-id="modal-3"] .trigger-modal').click();
+  const modal = page.locator('#project-modal');
+  await expect(modal).toContainText('PostgreSQL');
+  await expect(modal).toContainText('Fixtures JSON');
+  await expect(modal).toContainText('Screenshots & Traces');
+  await page.keyboard.press('Escape');
+
+  await page.locator('[data-project-id="modal-10"] .trigger-modal').click();
+  await expect(modal).toContainText('Bug Tracking');
+  await expect(modal).toContainText('BDD / Gherkin');
+});
+
+test('desktop executa movimento progressivo e spotlight sem alterar layout', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium');
+  await page.goto('/');
+  expect(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running'))).toBe(true);
+
+  const project = page.locator('.project-row').first();
+  await project.scrollIntoViewIfNeeded();
+  await project.hover({ position: { x: 160, y: 120 } });
+  await expect(project).toHaveClass(/pointer-active/);
+  expect(await project.locator('.project-content').evaluate(element => element.style.transform)).toContain('rotateX');
+  await expectNoOverflow(page);
 });
 
 test('snapshot visual determinístico em desktop e mobile', async ({ page }, testInfo) => {

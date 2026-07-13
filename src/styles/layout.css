@@ -70,6 +70,10 @@
   position: absolute;
   left: 0;
 }
+.primary-nav[hidden] {
+  display: block;
+}
+
 
 .menu-toggle-lines::before { top: -0.4rem; }
 .menu-toggle-lines::after { top: 0.4rem; }

@@ -42,9 +42,7 @@ export function initModals(projectMap) {
         overlay.classList.add('active');
         document.body.classList.add('modal-open');
         const control = modal.querySelector('.close-modal') || modal;
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => control.focus({ preventScroll: true }));
-        });
+        setTimeout(() => control.focus({ preventScroll: true }), 0);
     };
 
     const populateProject = (project) => {

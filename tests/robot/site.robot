@@ -24,9 +24,18 @@ Page Should Not Overflow Horizontally
 Hero And Navigation Are Visible On Mobile
     Title Should Be    Douglas Antonio | Software Quality Engineer
     Page Should Contain Element    css:h1
-    Page Should Contain    Engenharia de Qualidade Escalável
+    Page Should Contain    Qualidade que antecipa riscos
     Page Should Contain Link    Open Source
     Page Should Not Overflow Horizontally
+
+Skills And Icons Match Resume
+    ${group_count}=    Get Element Count    css:[data-skill-group]
+    ${skill_count}=    Get Element Count    css:.skill-chip
+    ${icon_count}=    Get Element Count    css:.skill-chip svg use
+    Should Be Equal As Integers    ${group_count}    6
+    Should Be Equal As Integers    ${skill_count}    62
+    Should Be Equal As Integers    ${icon_count}    62
+    Page Should Contain    Appium Inspector
 
 Projects And Volunteer Cards Render
     ${main_count}=    Get Element Count    css:#projects-container article
@@ -58,7 +67,9 @@ Certifications Section Renders
     Should Be Equal As Integers    ${support_count}    2
     Page Should Contain    Segurança em Tecnologia da Informação
     Page Should Contain    Projetos de Sistemas de TI
-    Page Should Contain    Inglês - Avançado
+    Page Should Contain    Inglês técnico — formação e uso atual
+    Page Should Contain    Leitura: intermediária
+    Page Should Contain    Conversação: básico-intermediária
     Page Should Contain    Informática
     Execute Javascript    document.querySelector('#certifications .certification-view-btn').click()
     Wait Until Element Is Visible    css:#certificate-viewer-modal.active

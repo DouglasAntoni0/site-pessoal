@@ -8,8 +8,8 @@ const dist = path.join(root, 'dist');
 const htmlPath = path.join(dist, 'index.html');
 const html = await fs.readFile(htmlPath, 'utf8');
 
-const localReferences = [...html.matchAll(/(?:href|src)="(assets\/[^"#?]+)"/g)].map((match) => match[1]);
-const criticalReferences = [...new Set(localReferences.filter((reference) => /(?:assets\/build\/.+\.(?:css|js|woff2)|assets\/icons\/favicon\.svg)$/.test(reference)))];
+const localReferences = [...html.matchAll(/(?:href|src)="(assets\/[^"#?]+)(?:#[^"]*)?"/g)].map((match) => match[1]);
+const criticalReferences = [...new Set(localReferences.filter((reference) => /(?:assets\/build\/.+\.(?:css|js|woff2)|assets\/icons\/(?:favicon|sprite)\.svg)$/.test(reference)))];
 const files = [{ name: 'index.html', path: htmlPath }];
 for (const reference of criticalReferences) files.push({ name: reference, path: path.join(dist, reference) });
 

@@ -72,7 +72,15 @@
 
 .modal-overlay,
 .glass-modal {
-  transition: opacity 180ms ease, transform 220ms ease, visibility 220ms;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease,
+    visibility 0s linear 220ms;
+}
+
+.modal-overlay.active,
+.glass-modal.active {
+  transition: opacity 180ms ease, transform 220ms ease, visibility 0s linear 0s;
 }
 
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {

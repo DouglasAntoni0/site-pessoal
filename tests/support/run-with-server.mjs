@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import path from 'node:path';
@@ -39,6 +40,13 @@ if (!externalUrl) {
 }
 
 try {
+  await fs.mkdir(path.join(root, 'test-results'), { recursive: true });
+
+  const outputDirectoryIndex = command.indexOf('--outputdir');
+  if (outputDirectoryIndex >= 0 && command[outputDirectoryIndex + 1]) {
+    await fs.mkdir(path.resolve(root, command[outputDirectoryIndex + 1]), { recursive: true });
+  }
+
   if (!externalUrl) {
     await waitForServer();
   }

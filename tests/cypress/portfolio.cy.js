@@ -12,7 +12,7 @@ describe('Portfolio Douglas QA', () => {
 
   it('carrega hero, projetos e recursos somente locais', () => {
     cy.title().should('eq', 'Douglas Antonio | Software Quality Engineer');
-    cy.get('h1').should('contain.text', 'Engenharia de Qualidade Escalável');
+    cy.get('h1').should('contain.text', 'Qualidade que antecipa riscos');
     cy.get('#projects-container article').should('have.length', 9);
     cy.get('#volunteer-container article').should('have.length', 1);
     cy.get('.trigger-modal').should('have.length', 10);
@@ -92,11 +92,19 @@ describe('Portfolio Douglas QA', () => {
       expect([...sections].map(section => section.id))
         .to.deep.equal(['hero', 'vision', 'quality', 'certifications', 'projects', 'volunteer', 'contact']);
     });
-    cy.get('.tech-tag').should('have.length', 32);
+    cy.get('[data-skill-group]').should('have.length', 6);
+    cy.get('.skill-chip').should('have.length', 62).each(chip => {
+      cy.wrap(chip).find('svg use').should('have.attr', 'href').and('match', /^assets\/icons\/sprite\.svg#/);
+    });
+    cy.get('#certifications')
+      .should('contain.text', 'Formação avançada')
+      .and('contain.text', 'Leitura: intermediária')
+      .and('contain.text', 'Conversação: básico-intermediária')
+      .and('not.contain.text', 'Expira');
     cy.get('.contact-link').should('have.length', 3).each(link => {
       cy.wrap(link).should('have.attr', 'rel').and('include', 'noopener');
     });
-    cy.contains('a', 'Currículo').should('have.attr', 'href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
+    cy.contains('a', 'Baixar currículo').should('have.attr', 'href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
   });
 
   it('mantém conteúdo visível com texto a 200%', () => {

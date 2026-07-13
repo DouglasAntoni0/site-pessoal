@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "python -m http.server 4173 --bind 127.0.0.1 --directory dist",
     "build": "node scripts/build-static.mjs",
-    "check:js": "node --check src/scripts/main.js && node --check src/scripts/navigation.js && node --check src/scripts/projects.js && node --check src/scripts/modals.js && node --check src/scripts/motion.js && node --check src/data/projects.js && node --check scripts/build-static.mjs && node --check scripts/check-budgets.mjs",
+    "check:js": "node --check src/scripts/main.js && node --check src/scripts/navigation.js && node --check src/scripts/projects.js && node --check src/scripts/modals.js && node --check src/scripts/motion.js && node --check src/data/projects.js && node --check src/data/skills.js && node --check scripts/build-static.mjs && node --check scripts/check-budgets.mjs",
     "test:budget": "npm run build && node scripts/check-budgets.mjs",
     "test:lighthouse": "npm run build && lhci autorun",
     "test:playwright": "npm run build && playwright test",
@@ -21,6 +21,7 @@
     "cypress": "^15.14.2",
     "esbuild": "^0.28.1",
     "selenium-webdriver": "^4.43.0",
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.3",
+    "simple-icons": "^16.26.0"
   }
 }

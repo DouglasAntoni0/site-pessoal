@@ -22,10 +22,13 @@
     <div class="aurora-wrapper" aria-hidden="true">
         <div class="aurora-orb orb-1"></div>
         <div class="aurora-orb orb-2"></div>
+        <div class="aurora-orb orb-3"></div>
+        <div class="qa-grid-background"></div>
     </div>
 
 
     <header class="glass-header">
+        <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
         <div class="container header-container">
             <div class="header-row">
                 <a class="logo" href="#hero" aria-label="DOUGLAS.QA — início">
@@ -36,7 +39,7 @@
                     <span class="menu-toggle-lines" aria-hidden="true"></span>
                 </button>
             </div>
-            <nav class="primary-nav" id="primary-nav" aria-label="Navegação principal">
+            <nav class="primary-nav" id="primary-nav" aria-label="Navegação principal" hidden>
                 <ul>
                     <li><a href="#hero">Início</a></li>
                     <li><a href="#vision">Visão &amp; Tech</a></li>
@@ -54,81 +57,86 @@
 
 
             <section id="hero" class="hero-section container">
-                <div class="hero-content">
-                    <h1 class="hero-title" id="main-title">Engenharia de Qualidade Escalável. Do código à
-                        produção com zero falhas.</h1>
-                    <h2 class="hero-subtitle">Douglas Antonio — QA
-                        Engineer | Especialista em Automação E2E, API, Mobile & Performance.</h2>
-                    <p class="hero-paragraph">
-                        Protegendo a experiência do usuário final e garantindo a estabilidade de sistemas por meio de
-                        arquiteturas de testes complexas.</p>
-                    <div class="hero-actions">
-                        <a href="#projects" class="btn btn-primary">Meus
-                            Projetos</a>
-                        <a href="#contact" class="btn btn-secondary">Contato</a>
-                        <a href="assets/Douglas_Antonio_QA_Engineer.pdf" class="btn btn-ghost" download>Currículo</a>
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <span class="hero-eyebrow"><span aria-hidden="true"></span> Software Quality Engineer</span>
+                        <h1 class="hero-title" id="main-title">Qualidade que antecipa riscos. <span>Automação que protege cada release.</span></h1>
+                        <h2 class="hero-subtitle">Douglas Antonio — QA Engineer | Web, API, Mobile, Performance &amp; Segurança.</h2>
+                        <p class="hero-paragraph">Transformo requisitos e riscos em arquiteturas de teste escaláveis, evidências acionáveis e ciclos de entrega mais confiáveis.</p>
+                        <div class="hero-actions">
+                            <a href="#projects" class="btn btn-primary">Explorar projetos</a>
+                            <a href="#contact" class="btn btn-secondary">Falar comigo</a>
+                            <a href="assets/Douglas_Antonio_QA_Engineer.pdf" class="btn btn-ghost" download>Baixar currículo</a>
+                        </div>
+                        <div class="hero-proof" aria-label="Resumo do portfólio">
+                            <div><strong data-counter="10">10</strong><span>projetos em destaque</span></div>
+                            <div><strong data-counter="4">4</strong><span>frentes: Web, API, Mobile e Performance</span></div>
+                            <div><strong data-counter="62">62</strong><span>competências técnicas</span></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-command-center glass-panel" aria-label="Fluxo de qualidade: requisitos, automação, evidências e release">
+                        <div class="qa-console-topbar">
+                            <div class="qa-console-status"><span aria-hidden="true"></span> Quality pipeline online</div>
+                            <span class="qa-console-build">build #2026.07</span>
+                        </div>
+                        <div class="qa-radar" aria-hidden="true">
+                            <span class="qa-radar-ring ring-a"></span>
+                            <span class="qa-radar-ring ring-b"></span>
+                            <span class="qa-radar-sweep"></span>
+                            <span class="qa-radar-core">QA</span>
+                        </div>
+                        <div class="qa-pipeline" aria-hidden="true">
+                            <span class="qa-pipeline-line"></span>
+                            <div class="qa-stage is-complete"><i>01</i><strong>Requisitos</strong><small>riscos mapeados</small></div>
+                            <div class="qa-stage is-complete"><i>02</i><strong>Automação</strong><small>suíte executada</small></div>
+                            <div class="qa-stage is-active"><i>03</i><strong>Evidências</strong><small>traces &amp; reports</small></div>
+                            <div class="qa-stage"><i>04</i><strong>Release</strong><small>decisão segura</small></div>
+                        </div>
+                        <div class="qa-signals" aria-hidden="true">
+                            <span><i></i>WEB</span><span><i></i>API</span><span><i></i>MOBILE</span><span><i></i>PERF</span>
+                        </div>
+                        <div class="qa-console-log" aria-hidden="true">
+                            <span><b>PASS</b> contrato da API validado</span>
+                            <span><b>PASS</b> fluxo crítico protegido</span>
+                            <span><b>INFO</b> evidências prontas para triagem</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-
             <section id="vision" class="vision-section">
                 <div class="container">
+                    <div class="section-heading reveal">
+                        <span class="section-kicker">Visão multidisciplinar</span>
+                        <h2 class="section-title">Qualidade conectada ao produto, <span class="gradient-text">do risco ao release.</span></h2>
+                        <p>Experiência operacional, automação e segurança aplicadas em conjunto para tornar problemas visíveis antes que afetem o usuário.</p>
+                    </div>
                     <div class="vision-grid">
-                        <div class="vision-col">
-                            <div class="vision-card glass-panel reveal">
-                                <h3>Shift-Left & Operações</h3>
-                                <p>Formado em Engenharia de Qualidade de Software, trago uma base sólida e atípica:
-                                    <strong>anos de experiência como Coordenador de Operações.</strong> Essa bagagem no
-                                    gerenciamento de processos, controle de SLAs de alta complexidade e resolução de
-                                    gargalos operacionais traduz-se diretamente na minha atuação como QA: visão
-                                    analítica apurada, foco na prevenção de falhas (shift-left) e mitigação de
-                                    retrabalho.</p>
-                            </div>
-                        </div>
-                        <div class="vision-col">
-                            <div class="vision-card glass-panel reveal">
-                                <h3>Mobilidade & CI/CD</h3>
-                                <p>Além do Web e API, possuo arquitetura sólida em testes Mobile, manipulando
-                                    emuladores, Android Studio, Appium e Maestro. Domino a esteira completa de CI/CD
-                                    para garantir que nenhum bug chegue em produção.</p>
-                            </div>
-                        </div>
+                        <article class="vision-card glass-panel reveal tone-blue">
+                            <span class="vision-card-index">01</span>
+                            <h3>Shift-Left &amp; Operações</h3>
+                            <p>Formado em Engenharia de Qualidade de Software, somo experiência em coordenação de operações, controle de SLAs e resolução de gargalos à prevenção de falhas, análise de risco e redução de retrabalho.</p>
+                        </article>
+                        <article class="vision-card glass-panel reveal tone-violet">
+                            <span class="vision-card-index">02</span>
+                            <h3>Mobilidade &amp; CI/CD</h3>
+                            <p>Arquiteturas de teste Web, API e Mobile com Appium, Maestro, Android Studio e emuladores, integradas a pipelines que entregam feedback rápido e rastreável.</p>
+                        </article>
+                        <article class="vision-card glass-panel reveal tone-emerald">
+                            <span class="vision-card-index">03</span>
+                            <h3>Qualidade + Segurança</h3>
+                            <p>Fundamentos de Cybersecurity incorporados à análise funcional para identificar riscos estruturais, vulnerabilidades, gargalos de usabilidade e pontos críticos de confiabilidade.</p>
+                        </article>
                     </div>
 
-                    <div class="tech-stack reveal">
-                        <span class="tech-tag">JavaScript (Node.js)</span>
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Cypress</span>
-                        <span class="tech-tag">Playwright</span>
-                        <span class="tech-tag">WebdriverIO</span>
-                        <span class="tech-tag">Jest</span>
-                        <span class="tech-tag">Mocha</span>
-                        <span class="tech-tag">PyTest</span>
-                        <span class="tech-tag">Faker.js</span>
-                        <span class="tech-tag">Postman</span>
-                        <span class="tech-tag">Insomnia</span>
-                        <span class="tech-tag">Swagger/OpenAPI</span>
-                        <span class="tech-tag">REST API</span>
-                        <span class="tech-tag">Appium</span>
-                        <span class="tech-tag">Maestro</span>
-                        <span class="tech-tag">Android Studio</span>
-                        <span class="tech-tag">K6</span>
-                        <span class="tech-tag">JMeter</span>
-                        <span class="tech-tag">Jenkins</span>
-                        <span class="tech-tag">GitHub Actions</span>
-                        <span class="tech-tag">GitLab CI</span>
-                        <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">Git Flow</span>
-                        <span class="tech-tag">SQL / NoSQL</span>
-                        <span class="tech-tag">Agile/Scrum/Kanban</span>
-                        <span class="tech-tag">Jira</span>
-                        <span class="tech-tag">BDD/Cucumber/Gherkin</span>
-                        <span class="tech-tag">Testes Manuais & Exploratórios</span>
-                        <span class="tech-tag">Integração & E2E</span>
-                        <span class="tech-tag">Robot Framework</span>
-                        <span class="tech-tag">Regressão & Contrato</span>
+                    <div class="skills-heading reveal">
+                        <span class="section-kicker">Stack completa</span>
+                        <h2>Ferramentas e competências para testar o sistema por inteiro.</h2>
+                        <p>Uma visão organizada do repertório técnico usado em automação, dados, performance, mobile, DevOps e estratégia de qualidade.</p>
+                    </div>
+                    <div class="skill-groups">
+                        __SKILLS__
                     </div>
                 </div>
             </section>
@@ -140,6 +148,15 @@
                         <h2 class="section-title">Da estratégia de teste à evidência de release.</h2>
                         <p>Atuação ponta a ponta em QA, conectando requisitos, automação, API, mobile, performance e
                             segurança para reduzir retrabalho e aumentar previsibilidade nas entregas.</p>
+                    </div>
+
+                    <div class="quality-lifecycle glass-panel reveal" aria-label="Ciclo de qualidade">
+                        <span class="lifecycle-track" aria-hidden="true"><span id="lifecycle-progress"></span></span>
+                        <div class="lifecycle-step"><i>01</i><strong>Descobrir</strong><small>requisitos, riscos e critérios</small></div>
+                        <div class="lifecycle-step"><i>02</i><strong>Projetar</strong><small>cenários, dados e estratégia</small></div>
+                        <div class="lifecycle-step"><i>03</i><strong>Validar</strong><small>Web, API, Mobile e Performance</small></div>
+                        <div class="lifecycle-step"><i>04</i><strong>Evidenciar</strong><small>bugs, traces e relatórios</small></div>
+                        <div class="lifecycle-step"><i>05</i><strong>Decidir</strong><small>feedback para o release</small></div>
                     </div>
 
                     <div class="quality-grid">
@@ -466,19 +483,16 @@
                                 <div class="certification-topline">
                                     <span class="certification-school">Luziana Lanna Idiomas</span>
                                 </div>
-                                <h3>Inglês - Avançado</h3>
-                                <p>Formação em inglês em nível avançado, útil para ler documentação técnica, acompanhar
-                                    materiais internacionais, entender mensagens de erro, estudar ferramentas de QA e se
-                                    comunicar melhor em ambientes onde tecnologia, produto e desenvolvimento usam termos
-                                    em inglês com frequência.</p>
-                                <ul class="certification-support-list" aria-label="Aplicações do inglês avançado">
-                                    <li>Leitura de documentação, guias oficiais e changelogs de ferramentas de teste.</li>
-                                    <li>Interpretação de logs, mensagens de erro, issues e evidências técnicas.</li>
-                                    <li>Mais autonomia para estudar conteúdos internacionais de automação e qualidade.</li>
+                                <h3>Inglês técnico — formação e uso atual</h3>
+                                <p>Formação avançada concluída na Luziana Lanna Idiomas entre 2015 e 2020, apresentada separadamente da autoavaliação prática registrada no currículo.</p>
+                                <ul class="certification-support-list language-levels" aria-label="Proficiência atual em inglês">
+                                    <li><strong>Leitura:</strong> intermediária, com foco em documentação, guias e changelogs.</li>
+                                    <li><strong>Compreensão:</strong> intermediária para logs, issues, aulas e materiais técnicos.</li>
+                                    <li><strong>Conversação:</strong> básico-intermediária.</li>
                                 </ul>
                                 <div class="certification-meta">
-                                    <span>Emitido em jul/2015</span>
-                                    <span>Expira em jun/2020</span>
+                                    <span>Formação avançada</span>
+                                    <span>Período: 2015–2020</span>
                                 </div>
                             </article>
 
@@ -498,7 +512,7 @@
                                 </ul>
                                 <div class="certification-meta">
                                     <span>Emitido em jul/2019</span>
-                                    <span>Expira em jun/2020</span>
+                                    <span>Período: 2019–2020</span>
                                 </div>
                             </article>
                         </div>
@@ -541,10 +555,8 @@
                 <div class="container">
                     <div class="contact-box glass-panel reveal">
                         <div class="contact-header">
-                            <h2 class="section-title">Engenharia de nível mundial. <br>Vamos <span
-                                    class="gradient-text">escalar o seu produto.</span></h2>
-                            <p>Conecte-se comigo diretamente para oportunidades profissionais e discussões arquiteturais
-                                complexas de QA.</p>
+                            <h2 class="section-title">Qualidade para decisões mais seguras. <br><span class="gradient-text">Vamos proteger seu próximo release.</span></h2>
+                            <p>Conecte-se comigo para oportunidades profissionais, automação e estratégia de qualidade orientada a risco.</p>
                         </div>
 
                         <div class="contact-grid">
@@ -582,7 +594,7 @@
 
             <footer>
                 <div class="container">
-                    <p>© 2026 Douglas Antonio. Todos os direitos reservados. Desenhado para "Zero Falhas".</p>
+                    <p>© 2026 Douglas Antonio. Todos os direitos reservados. Qualidade construída com evidências.</p>
                 </div>
             </footer>
     </main>

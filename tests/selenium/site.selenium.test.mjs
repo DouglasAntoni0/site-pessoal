@@ -71,13 +71,19 @@ try {
       await driver.wait(until.titleIs('Douglas Antonio | Software Quality Engineer'), 8000);
       const heading = await driver.wait(async () => {
         const text = await driver.findElement(By.css('h1')).getAttribute('textContent');
-        return /Engenharia de Qualidade Escalável/.test(text) ? text : false;
+        return /Qualidade que antecipa riscos/.test(text) ? text : false;
       }, 8000, `${name}: hero title text`);
-      assert.match(heading, /Engenharia de Qualidade Escalável/, `${name}: hero title`);
+      assert.match(heading, /Qualidade que antecipa riscos/, `${name}: hero title`);
 
       const overflow = await getOverflow(driver);
       assert.equal(overflow.documentOverflow <= 1, true, `${name}: document overflow ${JSON.stringify(overflow)}`);
       assert.equal(overflow.bodyOverflow <= 1, true, `${name}: body overflow ${JSON.stringify(overflow)}`);
+      const skillGroups = await driver.findElements(By.css('[data-skill-group]'));
+      const skillChips = await driver.findElements(By.css('.skill-chip'));
+      const skillIconReferences = await driver.executeScript('return [...document.querySelectorAll(".skill-chip use")].map(node => node.getAttribute("href"));');
+      assert.equal(skillGroups.length, 6, `${name}: skill group count`);
+      assert.equal(skillChips.length, 62, `${name}: skill count`);
+      assert.equal(skillIconReferences.every(reference => reference.startsWith('assets/icons/sprite.svg#')), true, `${name}: skill icon references`);
 
       const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
       assert.match(await certificationNav.getAttribute('textContent'), /Certificações/, `${name}: certifications nav label`);
@@ -90,7 +96,9 @@ try {
       const certificationsText = await driver.executeScript('return document.querySelector("#certifications").textContent;');
       assert.match(certificationsText, /Segurança em Tecnologia da Informação/, `${name}: security certificate title`);
       assert.match(certificationsText, /Projetos de Sistemas de TI/, `${name}: systems projects certificate title`);
-      assert.match(certificationsText, /Inglês - Avançado/, `${name}: advanced english credential title`);
+      assert.match(certificationsText, /Inglês técnico — formação e uso atual/, `${name}: english section title`);
+      assert.match(certificationsText, /Leitura:\s*intermediária/, `${name}: english reading level`);
+      assert.match(certificationsText, /Conversação:\s*básico-intermediária/, `${name}: english speaking level`);
       assert.match(certificationsText, /Informática/, `${name}: informatics credential title`);
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', certificationViewButtons[0]);
       await wait(150);
