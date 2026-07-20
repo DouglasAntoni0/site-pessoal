@@ -51,8 +51,6 @@ describe('Portfolio Douglas QA', () => {
     cy.contains('#certifications .certification-card', 'Testando com Inteligência (Artificial)').within(() => {
       cy.contains('19/07/2026');
       cy.contains('6 horas');
-      cy.get('.certification-course-link')
-        .should('have.attr', 'href', 'https://www.udemy.com/course/ia-para-qa/');
     });
   });
 

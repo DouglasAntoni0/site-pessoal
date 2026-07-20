@@ -21,7 +21,6 @@
 .btn,
 .tech-tag,
 .certification-view-btn,
-.certification-course-link,
 .contact-link,
 .project-content {
   transition:
@@ -35,9 +34,7 @@
 .btn:hover,
 .btn:focus-visible,
 .certification-view-btn:hover,
-.certification-view-btn:focus-visible,
-.certification-course-link:hover,
-.certification-course-link:focus-visible {
+.certification-view-btn:focus-visible {
   transform: translateY(-2px);
 }
 

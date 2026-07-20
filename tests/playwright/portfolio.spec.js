@@ -160,8 +160,6 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
     .filter({ hasText: 'Testando com Inteligência (Artificial)' });
   await expect(iaCard).toContainText('19/07/2026');
   await expect(iaCard).toContainText('6 horas');
-  await expect(iaCard.getByRole('link', { name: 'Ver curso' }))
-    .toHaveAttribute('href', 'https://www.udemy.com/course/ia-para-qa/');
 
   const iaButton = iaCard.getByRole('button', { name: 'Ver certificado' });
   await iaButton.click();
