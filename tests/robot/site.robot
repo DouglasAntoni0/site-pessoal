@@ -60,13 +60,14 @@ Certifications Section Renders
     Execute Javascript    document.querySelector('#certifications').scrollIntoView({ block: 'center', inline: 'center' })
     Page Should Contain    Certificações que sustentam
     ${cert_count}=    Get Element Count    css:#certifications .certification-card
-    Should Be Equal As Integers    ${cert_count}    13
+    Should Be Equal As Integers    ${cert_count}    14
     ${cert_button_count}=    Get Element Count    css:#certifications .certification-view-btn
-    Should Be Equal As Integers    ${cert_button_count}    13
+    Should Be Equal As Integers    ${cert_button_count}    14
     ${support_count}=    Get Element Count    css:#certifications .certification-support-card
     Should Be Equal As Integers    ${support_count}    2
     Page Should Contain    Segurança em Tecnologia da Informação
     Page Should Contain    Projetos de Sistemas de TI
+    Page Should Contain    Testando com Inteligência (Artificial)
     Page Should Contain    Inglês técnico — formação e uso atual
     Page Should Contain    Leitura: intermediária
     Page Should Contain    Conversação: básico-intermediária

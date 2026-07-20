@@ -88,14 +88,15 @@ try {
       const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
       assert.match(await certificationNav.getAttribute('textContent'), /Certificações/, `${name}: certifications nav label`);
       const certificationCards = await driver.findElements(By.css('#certifications .certification-card'));
-      assert.equal(certificationCards.length, 13, `${name}: certification card count`);
+      assert.equal(certificationCards.length, 14, `${name}: certification card count`);
       const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
-      assert.equal(certificationViewButtons.length, 13, `${name}: certification view button count`);
+      assert.equal(certificationViewButtons.length, 14, `${name}: certification view button count`);
       const supportCards = await driver.findElements(By.css('#certifications .certification-support-card'));
       assert.equal(supportCards.length, 2, `${name}: complementary certification card count`);
       const certificationsText = await driver.executeScript('return document.querySelector("#certifications").textContent;');
       assert.match(certificationsText, /Segurança em Tecnologia da Informação/, `${name}: security certificate title`);
       assert.match(certificationsText, /Projetos de Sistemas de TI/, `${name}: systems projects certificate title`);
+      assert.match(certificationsText, /Testando com Inteligência \(Artificial\)/, `${name}: AI testing certificate title`);
       assert.match(certificationsText, /Inglês técnico — formação e uso atual/, `${name}: english section title`);
       assert.match(certificationsText, /Leitura:\s*intermediária/, `${name}: english reading level`);
       assert.match(certificationsText, /Conversação:\s*básico-intermediária/, `${name}: english speaking level`);

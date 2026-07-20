@@ -39,7 +39,7 @@ describe('Portfolio Douglas QA', () => {
   });
 
   it('certificações usam preview WebP e preservam o PNG original', () => {
-    cy.get('#certifications .certification-card').should('have.length', 13);
+    cy.get('#certifications .certification-card').should('have.length', 14);
     cy.get('#certifications .certification-support-card').should('have.length', 2);
     cy.get('#certifications .certification-view-btn').first().click();
     cy.get('#certificate-viewer-modal').should('have.class', 'active');
@@ -47,6 +47,13 @@ describe('Portfolio Douglas QA', () => {
     cy.get('#certificate-modal-open').should('have.attr', 'href').and('match', /\.png$/);
     cy.get('body').type('{esc}');
     cy.get('#certificate-viewer-modal').should('not.have.class', 'active');
+
+    cy.contains('#certifications .certification-card', 'Testando com Inteligência (Artificial)').within(() => {
+      cy.contains('19/07/2026');
+      cy.contains('6 horas');
+      cy.get('.certification-course-link')
+        .should('have.attr', 'href', 'https://www.udemy.com/course/ia-para-qa/');
+    });
   });
 
   it('menu mobile fecha por Escape, link e clique externo', () => {

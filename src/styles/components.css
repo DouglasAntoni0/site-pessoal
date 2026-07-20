@@ -196,6 +196,7 @@
 }
 
 .certification-view-btn,
+.certification-course-link,
 .btn-text-link {
   display: inline-flex;
   align-items: center;
@@ -207,13 +208,33 @@
   cursor: pointer;
 }
 
-.certification-view-btn {
+.certification-view-btn,
+.certification-course-link {
   min-height: 2.75rem;
   margin-top: 1.25rem;
   padding: 0.75rem 1rem;
   border: 1px solid rgba(52, 211, 153, 0.28);
   border-radius: 0.7rem;
   background: rgba(52, 211, 153, 0.08);
+}
+
+.certification-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.certification-actions .certification-view-btn,
+.certification-actions .certification-course-link {
+  flex: 1 1 8rem;
+  margin-top: 0;
+}
+
+.certification-course-link {
+  border-color: rgba(167, 139, 250, 0.32);
+  background: rgba(167, 139, 250, 0.1);
+  color: #ddd6fe;
 }
 
 .btn-text-link {

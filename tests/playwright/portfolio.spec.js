@@ -64,7 +64,7 @@ test('@smoke carrega a experiência publicada sem terceiros ou erros', async ({ 
   await expect(page.locator('#projects-container article')).toHaveCount(9);
   await expect(page.locator('#volunteer-container article')).toHaveCount(1);
   await expect(page.locator('#project-modal')).toHaveCount(1);
-  await expect(page.locator('#certifications .certification-card')).toHaveCount(13);
+  await expect(page.locator('#certifications .certification-card')).toHaveCount(14);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('.skill-chip .skill-icon use')).toHaveCount(62);
@@ -155,6 +155,21 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
   await expect(modal.locator('#certificate-modal-image')).toHaveAttribute('decoding', 'async');
   await page.keyboard.press('Escape');
   await expect(button).toBeFocused();
+
+  const iaCard = page.locator('#certifications .certification-card')
+    .filter({ hasText: 'Testando com Inteligência (Artificial)' });
+  await expect(iaCard).toContainText('19/07/2026');
+  await expect(iaCard).toContainText('6 horas');
+  await expect(iaCard.getByRole('link', { name: 'Ver curso' }))
+    .toHaveAttribute('href', 'https://www.udemy.com/course/ia-para-qa/');
+
+  const iaButton = iaCard.getByRole('button', { name: 'Ver certificado' });
+  await iaButton.click();
+  await expect(modal.locator('#certificate-modal-title')).toHaveText('Testando com Inteligência (Artificial)');
+  await expect(modal.locator('#certificate-modal-image'))
+    .toHaveAttribute('src', 'assets/certificates/previews/udemy-testando-com-inteligencia-artificial.webp');
+  await expect(modal.getByRole('link', { name: /Abrir imagem/ }))
+    .toHaveAttribute('href', 'assets/certificates/udemy-testando-com-inteligencia-artificial.png');
 });
 
 test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ browser }, testInfo) => {
