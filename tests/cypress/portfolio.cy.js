@@ -39,7 +39,7 @@ describe('Portfolio Douglas QA', () => {
   });
 
   it('certificações usam preview WebP e preservam o PNG original', () => {
-    cy.get('#certifications .certification-card').should('have.length', 14);
+    cy.get('#certifications .certification-card').should('have.length', 15);
     cy.get('#certifications .certification-support-card').should('have.length', 2);
     cy.get('#certifications .certification-view-btn').first().click();
     cy.get('#certificate-viewer-modal').should('have.class', 'active');
@@ -51,6 +51,11 @@ describe('Portfolio Douglas QA', () => {
     cy.contains('#certifications .certification-card', 'Testando com Inteligência (Artificial)').within(() => {
       cy.contains('19/07/2026');
       cy.contains('6 horas');
+    });
+
+    cy.contains('#certifications .certification-card', 'Playwright Além da Interface').within(() => {
+      cy.contains('15/08/2026');
+      cy.contains('6.5 horas');
     });
   });
 

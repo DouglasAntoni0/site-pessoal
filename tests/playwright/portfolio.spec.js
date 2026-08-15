@@ -64,7 +64,7 @@ test('@smoke carrega a experiência publicada sem terceiros ou erros', async ({ 
   await expect(page.locator('#projects-container article')).toHaveCount(9);
   await expect(page.locator('#volunteer-container article')).toHaveCount(1);
   await expect(page.locator('#project-modal')).toHaveCount(1);
-  await expect(page.locator('#certifications .certification-card')).toHaveCount(14);
+  await expect(page.locator('#certifications .certification-card')).toHaveCount(15);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('.skill-chip .skill-icon use')).toHaveCount(62);
@@ -168,16 +168,42 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
     .toHaveAttribute('src', 'assets/certificates/previews/udemy-testando-com-inteligencia-artificial.webp');
   await expect(modal.getByRole('link', { name: /Abrir imagem/ }))
     .toHaveAttribute('href', 'assets/certificates/udemy-testando-com-inteligencia-artificial.png');
+
+  await page.keyboard.press('Escape');
+  const backendCard = page.locator('#certifications .certification-card')
+    .filter({ hasText: 'Playwright Além da Interface' });
+  await expect(backendCard).toContainText('15/08/2026');
+  await expect(backendCard).toContainText('6.5 horas');
+
+  await backendCard.getByRole('button', { name: 'Ver certificado' }).click();
+  await expect(modal.locator('#certificate-modal-title')).toHaveText('Playwright Além da Interface');
+  await expect(modal.locator('#certificate-modal-image'))
+    .toHaveAttribute('src', 'assets/certificates/previews/udemy-playwright-alem-da-interface.webp');
+  await expect(modal.getByRole('link', { name: /Abrir imagem/ }))
+    .toHaveAttribute('href', 'assets/certificates/udemy-playwright-alem-da-interface.png');
 });
 
 test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium');
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
   const page = await context.newPage();
+  await page.addInitScript(() => {
+    const nativeAnimate = Element.prototype.animate;
+    window.__qaAnimationCalls = [];
+    Element.prototype.animate = function animate(keyframes, options) {
+      window.__qaAnimationCalls.push({
+        duration: typeof options === 'object' ? options.duration : options,
+        iterations: typeof options === 'object' ? (options.iterations ?? 1) : 1
+      });
+      return nativeAnimate.call(this, keyframes, options);
+    };
+  });
   await page.goto('http://127.0.0.1:4173');
 
   expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
-  expect(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running'))).toBe(true);
+  const entryAnimations = await page.evaluate(() => window.__qaAnimationCalls);
+  expect(entryAnimations.length).toBeGreaterThan(0);
+  expect(entryAnimations.every(animation => animation.iterations === 1)).toBe(true);
   await page.waitForTimeout(1200);
   expect(await page.evaluate(() => document.getAnimations().filter(animation => animation.playState === 'running').length)).toBe(0);
 
