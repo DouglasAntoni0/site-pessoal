@@ -60,13 +60,16 @@ function initHeroMotion() {
         { opacity: 1, transform: 'translateY(0) scale(1)' }
     ], { duration: 680, delay: 210, easing: 'cubic-bezier(.16,1,.3,1)' });
 
-    counterAnimations = [...document.querySelectorAll('[data-counter]')].map((element, index) => ({
-        element,
-        target: Number(element.dataset.counter),
-        start: 0,
-        duration: 650 + index * 90
-    }));
-    scheduleFrame();
+    // Touch devices keep the final values and avoid a layout update on every frame.
+    if (window.matchMedia(DESKTOP_POINTER_QUERY).matches) {
+        counterAnimations = [...document.querySelectorAll('[data-counter]')].map((element, index) => ({
+            element,
+            target: Number(element.dataset.counter),
+            start: 0,
+            duration: 650 + index * 90
+        }));
+        scheduleFrame();
+    }
 }
 
 function revealElement(element) {
@@ -175,10 +178,9 @@ function renderCounters(now) {
         if (!counter.start) counter.start = now;
         const elapsed = Math.min(1, (now - counter.start) / counter.duration);
         const eased = 1 - Math.pow(1 - elapsed, 3);
-        counter.element.textContent = String(Math.round(counter.target * eased));
-        if (elapsed < 1) return true;
-        counter.element.textContent = String(counter.target);
-        return false;
+        const value = String(Math.round(counter.target * eased));
+        if (counter.element.textContent !== value) counter.element.textContent = value;
+        return elapsed < 1;
     });
     return counterAnimations.length > 0;
 }

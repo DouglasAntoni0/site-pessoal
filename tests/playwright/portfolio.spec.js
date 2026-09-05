@@ -201,6 +201,7 @@ test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ bro
   await page.goto(testInfo.project.use.baseURL);
 
   expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
+  expect(await page.locator('[data-counter]').allTextContents()).toEqual(['10', '4', '62']);
   const entryAnimations = await page.evaluate(() => window.__qaAnimationCalls);
   expect(entryAnimations.length).toBeGreaterThan(0);
   expect(entryAnimations.every(animation => animation.iterations === 1)).toBe(true);
