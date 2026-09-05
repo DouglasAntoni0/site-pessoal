@@ -16,7 +16,11 @@
   }
 
   .primary-nav {
+    max-height: calc(100vh - var(--header-row-height) - env(safe-area-inset-top, 0px) - 0.25rem);
+    max-height: calc(100dvh - var(--header-row-height) - env(safe-area-inset-top, 0px) - 0.25rem);
     padding-bottom: 0.9rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .primary-nav[hidden] {
@@ -35,6 +39,8 @@
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 0.65rem;
     background: rgba(255, 255, 255, 0.035);
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .primary-nav a::after {

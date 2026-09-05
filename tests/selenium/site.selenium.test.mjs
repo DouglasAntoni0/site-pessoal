@@ -88,9 +88,9 @@ try {
       const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
       assert.match(await certificationNav.getAttribute('textContent'), /Certificações/, `${name}: certifications nav label`);
       const certificationCards = await driver.findElements(By.css('#certifications .certification-card'));
-      assert.equal(certificationCards.length, 15, `${name}: certification card count`);
+      assert.equal(certificationCards.length, 16, `${name}: certification card count`);
       const certificationViewButtons = await driver.findElements(By.css('#certifications .certification-view-btn'));
-      assert.equal(certificationViewButtons.length, 15, `${name}: certification view button count`);
+      assert.equal(certificationViewButtons.length, 16, `${name}: certification view button count`);
       const supportCards = await driver.findElements(By.css('#certifications .certification-support-card'));
       assert.equal(supportCards.length, 2, `${name}: complementary certification card count`);
       const certificationsText = await driver.executeScript('return document.querySelector("#certifications").textContent;');

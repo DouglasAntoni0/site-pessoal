@@ -54,7 +54,7 @@ test('@smoke carrega a experiência publicada sem terceiros ou erros', async ({ 
   const thirdParty = [];
   page.on('request', request => {
     const url = new URL(request.url());
-    if (url.origin !== 'http://127.0.0.1:4173') thirdParty.push(url.href);
+    if (url.origin !== new URL(test.info().project.use.baseURL).origin) thirdParty.push(url.href);
   });
 
   await page.goto('/', { waitUntil: 'networkidle' });
@@ -64,7 +64,7 @@ test('@smoke carrega a experiência publicada sem terceiros ou erros', async ({ 
   await expect(page.locator('#projects-container article')).toHaveCount(9);
   await expect(page.locator('#volunteer-container article')).toHaveCount(1);
   await expect(page.locator('#project-modal')).toHaveCount(1);
-  await expect(page.locator('#certifications .certification-card')).toHaveCount(15);
+  await expect(page.locator('#certifications .certification-card')).toHaveCount(16);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('.skill-chip .skill-icon use')).toHaveCount(62);
@@ -198,7 +198,7 @@ test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ bro
       return nativeAnimate.call(this, keyframes, options);
     };
   });
-  await page.goto('http://127.0.0.1:4173');
+  await page.goto(testInfo.project.use.baseURL);
 
   expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
   const entryAnimations = await page.evaluate(() => window.__qaAnimationCalls);
@@ -211,7 +211,7 @@ test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ bro
   await project.scrollIntoViewIfNeeded();
   await project.tap({ position: { x: 120, y: 100 } });
   await expect(project).not.toHaveClass(/pointer-active/);
-  expect(await project.locator('.project-content').evaluate(element => element.style.transform)).toBe('');
+  expect(await project.locator('.project-visual').evaluate(element => element.style.transform)).toBe('');
   await expectNoOverflow(page);
   await context.close();
 });
@@ -304,8 +304,11 @@ test('desktop executa movimento progressivo e spotlight sem alterar layout', asy
   await project.scrollIntoViewIfNeeded();
   await project.hover({ position: { x: 160, y: 120 } });
   await expect(project).toHaveClass(/pointer-active/);
-  expect(await project.locator('.project-content').evaluate(element => element.style.transform)).toContain('rotateX');
+  expect(await project.locator('.project-visual').evaluate(element => element.style.transform)).toContain('rotateX');
+  expect(await project.locator('.project-content').evaluate(element => element.style.transform)).toBe('');
   await expectNoOverflow(page);
+  await project.getByRole('button', { name: 'Ver detalhes' }).click();
+  await expect(page.getByRole('dialog', { name: 'Automação de Performance com K6' })).toBeVisible();
 });
 
 test('snapshot visual determinístico em desktop e mobile', async ({ page }, testInfo) => {

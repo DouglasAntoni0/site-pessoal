@@ -39,7 +39,7 @@ describe('Portfolio Douglas QA', () => {
   });
 
   it('certificações usam preview WebP e preservam o PNG original', () => {
-    cy.get('#certifications .certification-card').should('have.length', 15);
+    cy.get('#certifications .certification-card').should('have.length', 16);
     cy.get('#certifications .certification-support-card').should('have.length', 2);
     cy.get('#certifications .certification-view-btn').first().click();
     cy.get('#certificate-viewer-modal').should('have.class', 'active');

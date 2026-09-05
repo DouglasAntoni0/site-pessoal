@@ -10,7 +10,7 @@ let activeRow = null;
 let counterAnimations = [];
 
 function animateElement(element, keyframes, options) {
-    if (!element || typeof element.animate !== 'function') return;
+    if (!element || typeof element.animate !== 'function' || motionShouldBeReduced()) return;
     element.animate(keyframes, { fill: 'none', ...options });
 }
 
@@ -25,7 +25,11 @@ function syncMotionPreference() {
     const reduced = motionShouldBeReduced();
     document.documentElement.classList.toggle('motion-reduced', reduced);
     if (reduced) {
-        document.getAnimations().forEach((animation) => animation.cancel());
+        document.getAnimations?.().forEach((animation) => animation.cancel());
+        resetCard(activeRow);
+        activeRow = null;
+        pointerEvent = null;
+        pointerDirty = false;
         for (const element of document.querySelectorAll('[data-counter]')) {
             element.textContent = element.dataset.counter;
         }
@@ -66,10 +70,14 @@ function initHeroMotion() {
 }
 
 function revealElement(element) {
-    animateElement(element, [
+    // An entry animation must never move a button between pointerdown and pointerup.
+    const keyframes = element.querySelector('a, button')
+        ? [{ opacity: 0.76 }, { opacity: 1 }]
+        : [
         { opacity: 0.76, transform: 'translateY(26px) scale(.985)' },
         { opacity: 1, transform: 'translateY(0) scale(1)' }
-    ], { duration: 580, easing: 'cubic-bezier(.16,1,.3,1)' });
+    ];
+    animateElement(element, keyframes, { duration: 580, easing: 'cubic-bezier(.16,1,.3,1)' });
 
     if (!element.matches('.skill-group')) return;
     [...element.querySelectorAll('.skill-chip')].forEach((chip, index) => {
@@ -108,12 +116,15 @@ function resetCard(row) {
     content.style.removeProperty('--spot-x');
     content.style.removeProperty('--spot-y');
     content.style.removeProperty('will-change');
+    const visual = row.querySelector('.project-visual');
+    visual?.style.removeProperty('transform');
+    visual?.style.removeProperty('will-change');
 }
 
 function renderPointer() {
     pointerDirty = false;
     const desktopPointer = window.matchMedia(DESKTOP_POINTER_QUERY).matches;
-    if (!desktopPointer || !pointerEvent) {
+    if (!desktopPointer || !pointerEvent || motionShouldBeReduced()) {
         resetCard(activeRow);
         activeRow = null;
         return;
@@ -136,8 +147,10 @@ function renderPointer() {
     const rotateX = (0.5 - y) * 8;
     content.style.setProperty('--spot-x', `${Math.round(x * 100)}%`);
     content.style.setProperty('--spot-y', `${Math.round(y * 100)}%`);
-    content.style.setProperty('will-change', 'transform');
-    content.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+    // Keep text and buttons stationary while the decorative preview follows the pointer.
+    const visual = row.querySelector('.project-visual');
+    visual?.style.setProperty('will-change', 'transform');
+    visual?.style.setProperty('transform', `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`);
     row.classList.add('pointer-active');
 }
 

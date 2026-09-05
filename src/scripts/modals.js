@@ -16,22 +16,30 @@ export function initModals(projectMap) {
     const certificateSchool = document.getElementById('certificate-modal-school');
     const certificateImage = document.getElementById('certificate-modal-image');
     const certificateOpen = document.getElementById('certificate-modal-open');
+    const certificateStatus = document.getElementById('certificate-modal-status');
     if (!overlay || !projectModal || !certificateModal) return;
 
     let lastFocusedElement = null;
+    let focusFrame = 0;
+    const background = [...document.querySelectorAll('.glass-header, main, .skip-link')];
 
     const activeModal = () => document.querySelector('.glass-modal.active');
 
     const closeAll = ({ restoreFocus = true } = {}) => {
+        cancelAnimationFrame(focusFrame);
+        background.forEach(element => { element.inert = false; });
+        if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
+            lastFocusedElement.focus({ preventScroll: true });
+        } else if (document.activeElement?.closest('.glass-modal')) {
+            document.activeElement.blur();
+        }
         for (const modal of document.querySelectorAll('.glass-modal.active')) {
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
+            modal.inert = true;
         }
         overlay.classList.remove('active');
         document.body.classList.remove('modal-open');
-        if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
-            lastFocusedElement.focus({ preventScroll: true });
-        }
     };
 
     const openModal = (modal, trigger) => {
@@ -39,10 +47,17 @@ export function initModals(projectMap) {
         lastFocusedElement = trigger instanceof HTMLElement ? trigger : document.activeElement;
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
+        modal.inert = false;
         overlay.classList.add('active');
         document.body.classList.add('modal-open');
         const control = modal.querySelector('.close-modal') || modal;
-        setTimeout(() => control.focus({ preventScroll: true }), 0);
+        background.forEach(element => { element.inert = true; });
+        focusFrame = requestAnimationFrame(() => {
+            if (!modal.classList.contains('active')) return;
+            // Firefox needs the formerly hidden dialog laid out before accepting focus.
+            modal.getBoundingClientRect();
+            control.focus({ preventScroll: true });
+        });
     };
 
     const populateProject = (project) => {
@@ -70,11 +85,27 @@ export function initModals(projectMap) {
         if (!image || !preview) return false;
         certificateTitle.textContent = title;
         certificateSchool.textContent = school;
+        certificateImage.hidden = true;
+        certificateStatus.hidden = false;
+        certificateStatus.textContent = 'Carregando certificado…';
         certificateImage.alt = `Certificado ${title} - ${school}`;
         certificateImage.src = preview;
-        certificateOpen.href = image;
+        certificateOpen.href = trigger.dataset.certificatePdf || image;
+        certificateOpen.textContent = trigger.dataset.certificatePdf
+            ? 'Abrir PDF original em nova guia'
+            : 'Abrir imagem em nova guia';
         return true;
     };
+
+    certificateImage.addEventListener('load', () => {
+        certificateImage.hidden = false;
+        certificateStatus.hidden = true;
+    });
+    certificateImage.addEventListener('error', () => {
+        certificateImage.hidden = true;
+        certificateStatus.hidden = false;
+        certificateStatus.textContent = 'Não foi possível carregar a prévia. Use o botão abaixo para abrir o documento original.';
+    });
 
     document.addEventListener('click', (event) => {
         const projectTrigger = event.target.closest('.trigger-modal[data-project-id]');
@@ -119,7 +150,10 @@ export function initModals(projectMap) {
 
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
+        if (!modal.contains(document.activeElement)) {
+            event.preventDefault();
+            first.focus();
+        } else if (event.shiftKey && document.activeElement === first) {
             event.preventDefault();
             last.focus();
         } else if (!event.shiftKey && document.activeElement === last) {

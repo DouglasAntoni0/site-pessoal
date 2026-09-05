@@ -259,7 +259,6 @@ section[id] {
   align-items: center;
   padding: 2.5rem;
   overflow: hidden;
-  transform-style: preserve-3d;
 }
 
 .project-row.reversed .project-content {

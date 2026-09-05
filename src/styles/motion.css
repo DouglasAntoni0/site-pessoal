@@ -22,6 +22,7 @@
 .tech-tag,
 .certification-view-btn,
 .contact-link,
+.project-visual,
 .project-content {
   transition:
     border-color 180ms ease,
@@ -149,7 +150,8 @@
     transition-duration: 0.01ms !important;
   }
 
-  .project-content {
+  .project-content,
+  .project-visual {
     transform: none !important;
   }
 }
