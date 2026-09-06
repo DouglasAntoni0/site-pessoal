@@ -49,12 +49,15 @@ async function expectHeroSafe(page) {
   expect(metrics.opacity, JSON.stringify(metrics)).toBeGreaterThanOrEqual(0.75);
 }
 
-test('@smoke carrega a experiência publicada sem terceiros ou erros', async ({ page }) => {
+test('@smoke carrega a experiência sem recursos externos inesperados ou erros', async ({ page }) => {
   const errors = collectRuntimeErrors(page);
   const thirdParty = [];
   page.on('request', request => {
     const url = new URL(request.url());
-    if (url.origin !== new URL(test.info().project.use.baseURL).origin) thirdParty.push(url.href);
+    const site = new URL(test.info().project.use.baseURL);
+    const rum = site.origin === 'https://douglasqa.netlify.app'
+      && url.origin === 'https://netlify-rum.netlify.app' && request.resourceType() === 'script';
+    if (url.origin !== site.origin && !rum) thirdParty.push(url.href);
   });
 
   await page.goto('/', { waitUntil: 'networkidle' });
@@ -156,6 +159,7 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
   await page.keyboard.press('Escape');
   await expect(button).toBeFocused();
 
+  await page.locator('#certificates-more > summary').click();
   const iaCard = page.locator('#certifications .certification-card')
     .filter({ hasText: 'Testando com Inteligência (Artificial)' });
   await expect(iaCard).toContainText('19/07/2026');
@@ -245,12 +249,15 @@ test('texto a 200% continua navegável sem overflow horizontal', async ({ page }
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Abrir menu principal' })).toBeVisible();
   await expectNoOverflow(page);
+  const clippedText = await page.locator('.hero-proof span, .skill-group-header > div, .lifecycle-step small').evaluateAll(elements =>
+    elements.filter(element => element.getBoundingClientRect().right > element.parentElement.getBoundingClientRect().right + 1).map(element => element.textContent));
+  expect(clippedText).toEqual([]);
 });
 
-test('ordem pública das seções, links e contatos é preservada', async ({ page }) => {
+test('projetos aparecem após a apresentação e preservam os contatos', async ({ page }) => {
   await page.goto('/');
   expect(await page.locator('section[id]').evaluateAll(sections => sections.map(section => section.id)))
-    .toEqual(['hero', 'vision', 'quality', 'certifications', 'projects', 'volunteer', 'contact']);
+    .toEqual(['hero', 'projects', 'vision', 'quality', 'certifications', 'volunteer', 'contact']);
   await expect(page.getByRole('link', { name: 'Currículo' })).toHaveAttribute('href', 'assets/Douglas_Antonio_QA_Engineer.pdf');
   await expect(page.locator('.contact-link')).toHaveCount(3);
   await expect(page.locator('.skill-chip')).toHaveCount(62);

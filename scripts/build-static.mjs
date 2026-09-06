@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import sharp from 'sharp';
 import * as simpleIcons from 'simple-icons';
+import { renderMainProjects, renderVolunteer, renderCertificates } from './render-content.mjs';
 import { skillGroups } from '../src/data/skills.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -140,8 +141,10 @@ const result = await build({
     },
     outdir: assetOutdir,
     entryNames: 'build/[name]-[hash]',
+    chunkNames: 'build/[name]-[hash]',
     assetNames: 'build/[name]-[hash]',
     bundle: true,
+    splitting: true,
     minify: true,
     metafile: true,
     sourcemap: false,
@@ -169,7 +172,10 @@ const replacements = {
     __APP_CSS__: findEntry('/styles/index.css'),
     __INTER_FONT__: findAsset('inter-latin'),
     __SPACE_FONT__: findAsset('space-grotesk-latin'),
-    __SKILLS__: renderSkillGroups()
+    __SKILLS__: renderSkillGroups(),
+    __PROJECTS__: renderMainProjects(),
+    __VOLUNTEER__: renderVolunteer(),
+    __CERTIFICATES__: renderCertificates()
 };
 
 let html = await fs.readFile(path.join(src, 'index.html'), 'utf8');
@@ -177,7 +183,9 @@ for (const [token, value] of Object.entries(replacements)) {
     if (!html.includes(token)) throw new Error(`Missing HTML placeholder ${token}`);
     html = html.replaceAll(token, value);
 }
-await fs.writeFile(path.join(dist, 'index.html'), html);
+// The template contains no preformatted text; code samples are populated on demand.
+// Drop indentation while preserving whitespace between inline elements.
+await fs.writeFile(path.join(dist, 'index.html'), html.replace(/^[\t ]+/gm, '').replace(/>\s+</g, '> <'));
 
 await copyIfExists(path.join(root, 'assets'), path.join(dist, 'assets'));
 await buildCertificatePreviews();

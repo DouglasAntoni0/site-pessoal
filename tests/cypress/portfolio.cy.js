@@ -1,6 +1,9 @@
 function expectNoHorizontalOverflow() {
   cy.document().then(doc => {
-    expect(doc.documentElement.scrollWidth - doc.documentElement.clientWidth).to.be.at.most(1);
+    const width = doc.documentElement.clientWidth;
+    const overflow = [...doc.querySelectorAll('main *')].filter(el => el.getBoundingClientRect().right > width + 1)
+      .slice(0, 5).map(el => ({tag: el.tagName, class: el.className, parent: el.parentElement.className, right: el.getBoundingClientRect().right}));
+    expect(doc.documentElement.scrollWidth - width, JSON.stringify(overflow)).to.be.at.most(1);
     expect(doc.body.scrollWidth - doc.body.clientWidth).to.be.at.most(1);
   });
 }
@@ -10,7 +13,7 @@ describe('Portfolio Douglas QA', () => {
     cy.visit('/');
   });
 
-  it('carrega hero, projetos e recursos somente locais', () => {
+  it('carrega hero e projetos sem recursos externos inesperados', () => {
     cy.title().should('eq', 'Douglas Antonio | Software Quality Engineer');
     cy.get('h1').should('contain.text', 'Qualidade que antecipa riscos');
     cy.get('#projects-container article').should('have.length', 9);
@@ -19,8 +22,12 @@ describe('Portfolio Douglas QA', () => {
     cy.get('#project-modal').should('have.length', 1);
     cy.window().then(win => {
       const foreign = win.performance.getEntriesByType('resource')
-        .map(entry => new URL(entry.name))
-        .filter(url => url.origin !== win.location.origin);
+        .filter(entry => {
+          const url = new URL(entry.name);
+          const rum = win.location.origin === 'https://douglasqa.netlify.app'
+            && url.origin === 'https://netlify-rum.netlify.app' && entry.initiatorType === 'script';
+          return url.origin !== win.location.origin && !rum;
+        });
       expect(foreign).to.deep.equal([]);
     });
     expectNoHorizontalOverflow();
@@ -48,6 +55,7 @@ describe('Portfolio Douglas QA', () => {
     cy.get('body').type('{esc}');
     cy.get('#certificate-viewer-modal').should('not.have.class', 'active');
 
+    cy.get('#certificates-more > summary').click();
     cy.contains('#certifications .certification-card', 'Testando com Inteligência (Artificial)').within(() => {
       cy.contains('19/07/2026');
       cy.contains('6 horas');
@@ -100,7 +108,7 @@ describe('Portfolio Douglas QA', () => {
   it('preserva seções, currículo, tags e contatos', () => {
     cy.get('section[id]').then(sections => {
       expect([...sections].map(section => section.id))
-        .to.deep.equal(['hero', 'vision', 'quality', 'certifications', 'projects', 'volunteer', 'contact']);
+        .to.deep.equal(['hero', 'projects', 'vision', 'quality', 'certifications', 'volunteer', 'contact']);
     });
     cy.get('[data-skill-group]').should('have.length', 6);
     cy.get('.skill-chip').should('have.length', 62).each(chip => {

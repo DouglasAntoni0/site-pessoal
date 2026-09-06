@@ -3,7 +3,7 @@ function focusableElements(modal) {
         .filter((element) => element.offsetParent !== null);
 }
 
-export function initModals(projectMap) {
+export function initModals(loadProjects) {
     const overlay = document.getElementById('modal-overlay');
     const projectModal = document.getElementById('project-modal');
     const certificateModal = document.getElementById('certificate-viewer-modal');
@@ -12,6 +12,7 @@ export function initModals(projectMap) {
     const projectTools = document.getElementById('project-modal-tools');
     const projectCode = document.getElementById('project-modal-code');
     const projectLink = document.getElementById('project-modal-link');
+    const projectCase = document.getElementById('project-modal-case');
     const certificateTitle = document.getElementById('certificate-modal-title');
     const certificateSchool = document.getElementById('certificate-modal-school');
     const certificateImage = document.getElementById('certificate-modal-image');
@@ -19,13 +20,28 @@ export function initModals(projectMap) {
     const certificateStatus = document.getElementById('certificate-modal-status');
     if (!overlay || !projectModal || !certificateModal) return;
 
+    // Native links work even when this enhancement cannot run.
+    for (const trigger of document.querySelectorAll('.trigger-modal, .certification-view-btn')) {
+        trigger.setAttribute('role', 'button');
+        trigger.setAttribute('aria-haspopup', 'dialog');
+        trigger.setAttribute('aria-controls', trigger.matches('.trigger-modal') ? 'project-modal' : 'certificate-viewer-modal');
+        if (trigger.matches('.trigger-modal')) trigger.textContent = 'Ver detalhes';
+        trigger.addEventListener('keydown', event => {
+            if (event.key !== ' ') return;
+            event.preventDefault();
+            trigger.click();
+        });
+    }
+
     let lastFocusedElement = null;
     let focusFrame = 0;
+    let projectRequest = 0;
     const background = [...document.querySelectorAll('.glass-header, main, .skip-link')];
 
     const activeModal = () => document.querySelector('.glass-modal.active');
 
     const closeAll = ({ restoreFocus = true } = {}) => {
+        projectRequest += 1;
         cancelAnimationFrame(focusFrame);
         background.forEach(element => { element.inert = false; });
         if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
@@ -74,7 +90,38 @@ export function initModals(projectMap) {
             return badge;
         }));
         projectCode.textContent = project.code;
+        projectCode.closest('.code-container').hidden = false;
         projectLink.href = project.repoUrl;
+        projectCase.replaceChildren();
+        projectCase.hidden = !project.caseStudy;
+        if (project.caseStudy) {
+            const study = project.caseStudy;
+            for (const [label, content] of [['Problema', study.problem], ['Minha contribuição', study.contribution], ['Resultado verificado', study.result]]) {
+                const heading = document.createElement('h3');
+                heading.textContent = label;
+                const paragraph = document.createElement('p');
+                paragraph.textContent = content;
+                projectCase.append(heading, paragraph);
+            }
+            const figure = document.createElement('figure');
+            const img = document.createElement('img');
+            img.src = study.image;
+            img.alt = study.imageAlt;
+            img.width = 720;
+            img.height = 280;
+            const caption = document.createElement('figcaption');
+            caption.textContent = 'Resumo visual dos dados da execução indicada. ' + study.scope;
+            figure.append(img, caption);
+            projectCase.append(figure);
+            for (const [label, href] of [['Ver execução no GitHub', study.runUrl], ['Consultar teste de origem', study.sourceUrl]]) {
+                const link = document.createElement('a');
+                link.textContent = label;
+                link.href = href;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                projectCase.append(link);
+            }
+        }
     };
 
     const populateCertificate = (trigger) => {
@@ -97,6 +144,29 @@ export function initModals(projectMap) {
         return true;
     };
 
+    const showProject = async trigger => {
+        const request = ++projectRequest;
+        trigger.setAttribute('aria-busy', 'true');
+        try {
+            const projectMap = await loadProjects();
+            if (request !== projectRequest) return;
+            const project = projectMap.get(trigger.dataset.projectId);
+            if (!project) throw new Error('Project data unavailable');
+            populateProject(project);
+        } catch {
+            if (request !== projectRequest) return;
+            projectTitle.textContent = trigger.closest('article').querySelector('h3').textContent;
+            projectDescription.textContent = 'Não foi possível carregar os detalhes. Você pode consultar o projeto no repositório.';
+            projectTools.replaceChildren();
+            projectCase.hidden = true;
+            projectCode.closest('.code-container').hidden = true;
+            projectLink.href = trigger.href;
+        } finally {
+            trigger.removeAttribute('aria-busy');
+        }
+        if (request === projectRequest) openModal(projectModal, trigger);
+    };
+
     certificateImage.addEventListener('load', () => {
         certificateImage.hidden = false;
         certificateStatus.hidden = true;
@@ -108,14 +178,11 @@ export function initModals(projectMap) {
     });
 
     document.addEventListener('click', (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
         const projectTrigger = event.target.closest('.trigger-modal[data-project-id]');
         if (projectTrigger) {
-            const project = projectMap.get(projectTrigger.dataset.projectId);
-            if (project) {
-                event.preventDefault();
-                populateProject(project);
-                openModal(projectModal, projectTrigger);
-            }
+            event.preventDefault();
+            void showProject(projectTrigger);
             return;
         }
 
@@ -132,6 +199,7 @@ export function initModals(projectMap) {
     overlay.addEventListener('click', () => closeAll());
 
     document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') projectRequest += 1;
         const modal = activeModal();
         if (!modal) return;
         if (event.key === 'Escape') {

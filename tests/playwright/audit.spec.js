@@ -12,6 +12,7 @@ test('@smoke todos os certificados carregam sob demanda e Maestro preserva o PDF
   await page.goto('/', { waitUntil: 'networkidle' });
   expect(certificateRequests).toEqual([]);
 
+  await page.locator('#certificates-more > summary').click();
   const cards = page.locator('.certification-card');
   await expect(cards).toHaveCount(16);
   for (const card of await cards.all()) {
@@ -42,6 +43,7 @@ test('@smoke todos os projetos abrem e os modais isolam o foco do conteúdo de f
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
+  await page.locator('#projects-more > summary').click();
   for (const trigger of await page.locator('.trigger-modal').all()) {
     await trigger.click();
     const modal = page.locator('#project-modal');
@@ -102,7 +104,7 @@ test('reduzir movimento durante a sessão interrompe tilt e novas animações de
 test('falha no preview mostra alternativa para abrir o documento', async ({ page }) => {
   await page.route('**/certificates/previews/*', route => route.abort());
   await page.goto('/');
-  await page.locator('.certification-view-btn').last().click();
+  await page.locator('[data-certificate-title="Maestro: Testes Mobile do Zero ao Pipeline"]').click();
   const modal = page.getByRole('dialog', { name: 'Maestro: Testes Mobile do Zero ao Pipeline', exact: true });
   await expect(modal.getByRole('status')).toContainText('Não foi possível carregar');
   await expect(modal.getByRole('link', { name: 'Abrir PDF original em nova guia' })).toBeVisible();

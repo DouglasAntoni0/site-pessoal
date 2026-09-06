@@ -1,12 +1,18 @@
 import { initModals } from './modals.js';
 import { initMotion } from './motion.js';
 import { initNavigation } from './navigation.js';
-import { renderProjects } from './projects.js';
+
+let projectMapPromise;
+function loadProjects() {
+    return projectMapPromise ||= import('./projects.js').then(module => module.getProjectMap()).catch(error => {
+        projectMapPromise = null;
+        throw error;
+    });
+}
 
 function bootstrap() {
-    const projectMap = renderProjects();
     initNavigation();
-    initModals(projectMap);
+    initModals(loadProjects);
     initMotion();
 }
 

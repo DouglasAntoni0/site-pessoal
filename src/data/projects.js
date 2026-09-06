@@ -1,3 +1,5 @@
+import { caseStudies } from './case-studies.js';
+
 /**
  * @typedef {Object} Project
  * @property {string} id
@@ -23,8 +25,8 @@ const rawProjects = [
         summary: "Testes de carga, stress e spike para resiliência de APIs.",
         tags: ["K6", "Performance", "Stress Test"],
         tools: ["K6 (JavaScript)", "Grafana/InfluxDB", "CLI Automation"],
-        description: ["Implementação de arquitetura de performance voltada diretamente à resiliência e estabilidade da infraestrutura. A aplicação dos testes engloba não apenas disparo cego de requisições, mas cenários hiper-realistas utilizando Load, Soak, Spike e Stress testing.", "Foram desenvolvidos thresholds rígidos de validação para forçar o failover caso a latência p95 ultrapassasse os limites de SLA aceitáveis (500ms) ou a taxa de erros de chamadas superasse 1%. Essa arquitetura atua como a primeira barreira contra gargalos de produção."],
-        code: `import http from 'k6/http';\nimport { check, sleep } from 'k6';\n\nexport const options = {\n  stages: [\n    { duration: '2m', target: 2000 },\n    { duration: '5m', target: 2000 },\n    { duration: '2m', target: 0 },\n  ],\n  thresholds: {\n    http_req_duration: ['p(95)<500'],\n    http_req_failed: ['rate<0.01'],\n  },\n};`,
+        description: ["Suíte de estudo de performance com cenários de smoke, carga, stress, spike, soak e breakpoint, usando APIs públicas de demonstração.", "Os thresholds definem critérios de aprovação por cenário. A configuração padrão inclui p95 abaixo de 500 ms e taxa de falhas abaixo de 1%; cenários de stress e smoke usam limites próprios. São metas configuradas, não resultados medidos nem um mecanismo de failover."],
+        code: `// Trecho de tests/types/load-test.js\nimport { defaultThresholds } from '../../config/thresholds.js';\n\nexport const options = {\n  stages: [\n    { duration: '3m', target: 50 },\n    { duration: '7m', target: 50 },\n    { duration: '5m', target: 100 },\n    { duration: '3m', target: 100 },\n    { duration: '2m', target: 0 },\n  ],\n  thresholds: {\n    ...defaultThresholds,\n    'http_req_duration{endpoint:posts}': ['p(95)<700'],\n    'http_req_duration{endpoint:users}': ['p(95)<700'],\n  },\n  tags: { test_type: 'load' },\n};`,
         repoUrl: "https://github.com/DouglasAntoni0/projeto-completo-k6",
         theme: "k6",
         icon: "gauge",
@@ -177,5 +179,5 @@ export const projects = Object.freeze(rawProjects.map((project) => {
     if (!project.repoUrl.startsWith('https://github.com/')) {
         throw new TypeError(`Invalid project URL: ${project.id}`);
     }
-    return Object.freeze({ ...project, description: Object.freeze([...project.description]) });
+    return Object.freeze({ ...project, caseStudy: caseStudies[project.id], description: Object.freeze([...project.description]) });
 }));

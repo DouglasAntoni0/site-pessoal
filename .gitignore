@@ -7,3 +7,4 @@ dist/
 .lighthouseci/
 .DS_Store
 tmp/
+artifacts/
