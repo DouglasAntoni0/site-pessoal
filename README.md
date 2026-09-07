@@ -11,11 +11,13 @@ A aplicação é estática, com layouts responsivos para celulares, tablets e de
 - `src/scripts/`: navegação, projetos, modais e efeitos nativos.
 - `src/data/`: projetos, certificados, competências e estudos de caso com links para execuções históricas e código em commits específicos.
 - `scripts/render-content.mjs`: gera os cartões no build. Listas expansíveis usam `<details>` nativo; links para repositórios e documentos funcionam sem JavaScript.
-- `src/assets/`: fontes WOFF2 locais, licenças e sprite SVG.
+- `src/assets/`: fontes WOFF2 locais, licenças, ícones SVG das competências e sprite dos demais elementos.
 - `scripts/build-static.mjs`: gera HTML, CSS e JavaScript minificados e versionados por hash. Os detalhes dos projetos são um módulo separado, solicitado na primeira abertura de um modal.
 - `dist/`: saída de produção gerada; é o único diretório publicado e testado.
 
 Fontes, ícones e código da interface são locais. Em produção, o Netlify pode injetar seu agente assíncrono de Real User Monitoring; a CSP permite a origem específica do agente e o endpoint de coleta observado (`ingesteer.services-prod.nsvcs.net/rum_collection`). Animações usam Web Animations API, um único `IntersectionObserver` e, durante interação desktop, no máximo um `requestAnimationFrame`.
+
+Os 62 ícones das competências são vetores completos inseridos no HTML durante o build, com dimensões e atributos de desenho explícitos. Não dependem de referências `<use>` externas, fontes de ícones ou inicialização JavaScript. O catálogo, as origens e as licenças estão em `src/assets/icons/skills/`. Os testes verificam pixels efetivamente pintados em viewport móvel, incluindo falha dos arquivos externos de ícones, rotação, rolagem e navegação sem JavaScript.
 
 ## Desenvolvimento
 

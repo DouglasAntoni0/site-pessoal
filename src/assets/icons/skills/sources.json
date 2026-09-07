@@ -1,0 +1,374 @@
+[
+  {
+    "skill": "agile",
+    "file": "cycle.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/layout-kanban.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "ai",
+    "file": "brain.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brain.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "android-studio",
+    "file": "brand-androidstudio.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-android.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "appium",
+    "file": "brand-appium.svg",
+    "source": "simple-icons@16.26.0/appium",
+    "style": "solid"
+  },
+  {
+    "skill": "appium-inspector",
+    "file": "inspect.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/device-mobile-search.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "bdd",
+    "file": "brand-cucumber.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-cucumber.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "branches-prs",
+    "file": "git-branch.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/git-pull-request.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "contract-tests",
+    "file": "contract.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/file-certificate.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "csharp",
+    "file": "brand-dotnet.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-c-sharp.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "css3",
+    "file": "brand-css.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-css3.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "cybersecurity",
+    "file": "shield-check.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/shield-lock.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "cypress",
+    "file": "brand-cypress.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-cypress.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "docker",
+    "file": "brand-docker.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-docker.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "dotenv",
+    "file": "brand-dotenv.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/file-settings.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "e2e-tests",
+    "file": "route.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/route.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "exploratory-tests",
+    "file": "search.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/compass.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "faker",
+    "file": "brand-faker.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/user-scan.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "git",
+    "file": "brand-git.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-git.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "git-flow",
+    "file": "flow-arrow.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/git-merge.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "github-actions",
+    "file": "brand-githubactions.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/automation.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "gitlab-ci",
+    "file": "brand-gitlab.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-gitlab.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "go",
+    "file": "brand-go.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-golang.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "html5",
+    "file": "brand-html5.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-html5.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "insomnia",
+    "file": "brand-insomnia.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/moon-stars.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "integration-tests",
+    "file": "layers.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/puzzle.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "java",
+    "file": "brand-java.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/coffee.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "javascript-node",
+    "file": "brand-nodedotjs.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-nodejs.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "jenkins",
+    "file": "brand-jenkins.svg",
+    "source": "simple-icons@16.26.0/jenkins",
+    "style": "solid"
+  },
+  {
+    "skill": "jest",
+    "file": "brand-jest.svg",
+    "source": "simple-icons@16.26.0/jest",
+    "style": "solid"
+  },
+  {
+    "skill": "jira",
+    "file": "brand-jira.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-jira.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "jmeter",
+    "file": "brand-apachejmeter.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/feather.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "json",
+    "file": "brand-json.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/json.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "k6",
+    "file": "brand-k6.svg",
+    "source": "simple-icons@16.26.0/k6",
+    "style": "solid"
+  },
+  {
+    "skill": "load-metrics",
+    "file": "chart.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/chart-histogram.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "maestro",
+    "file": "brand-maestro.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/letter-m.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "manual-tests",
+    "file": "checklist.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/clipboard-check.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "markdown",
+    "file": "brand-markdown.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/markdown.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "mobile-emulators",
+    "file": "device-stack.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/devices-2.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "mocha",
+    "file": "brand-mocha.svg",
+    "source": "simple-icons@16.26.0/mocha",
+    "style": "solid"
+  },
+  {
+    "skill": "mongodb",
+    "file": "brand-mongodb.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-mongodb.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "nosql",
+    "file": "database-nodes.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/sitemap.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "performance-tests",
+    "file": "gauge.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/gauge.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "php",
+    "file": "brand-php.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-php.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "playwright",
+    "file": "brand-playwright.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/masks-theater.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "postgresql",
+    "file": "brand-postgresql.svg",
+    "source": "simple-icons@16.26.0/postgresql",
+    "style": "solid"
+  },
+  {
+    "skill": "postman",
+    "file": "brand-postman.svg",
+    "source": "simple-icons@16.26.0/postman",
+    "style": "solid"
+  },
+  {
+    "skill": "pytest",
+    "file": "brand-pytest.svg",
+    "source": "simple-icons@16.26.0/pytest",
+    "style": "solid"
+  },
+  {
+    "skill": "python",
+    "file": "brand-python.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-python.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "react",
+    "file": "brand-react.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-react.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "regression-tests",
+    "file": "repeat.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/history.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "rest-api",
+    "file": "api.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/api.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "robot-framework",
+    "file": "brand-robotframework.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/robot-face.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "ruby",
+    "file": "brand-ruby.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/diamond.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "selenium",
+    "file": "brand-selenium.svg",
+    "source": "simple-icons@16.26.0/selenium",
+    "style": "solid"
+  },
+  {
+    "skill": "sql",
+    "file": "database.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/database.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "swagger",
+    "file": "brand-swagger.svg",
+    "source": "simple-icons@16.26.0/swagger",
+    "style": "solid"
+  },
+  {
+    "skill": "trello",
+    "file": "brand-trello.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-trello.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "typescript",
+    "file": "brand-typescript.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/brand-typescript.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "unit-tests",
+    "file": "unit-test.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/cube.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "webdriverio",
+    "file": "brand-webdriverio.svg",
+    "source": "simple-icons@16.26.0/webdriverio",
+    "style": "solid"
+  },
+  {
+    "skill": "xml",
+    "file": "brand-xml.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/file-type-xml.svg",
+    "style": "outline"
+  },
+  {
+    "skill": "yaml",
+    "file": "brand-yaml.svg",
+    "source": "https://raw.githubusercontent.com/tabler/tabler-icons/55f87a73f45cf1d9eaf16d7da705065483a9e4f9/icons/outline/file-code-2.svg",
+    "style": "outline"
+  }
+]

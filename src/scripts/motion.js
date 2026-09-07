@@ -74,7 +74,7 @@ function initHeroMotion() {
 
 function revealElement(element) {
     // An entry animation must never move a button between pointerdown and pointerup.
-    const keyframes = element.querySelector('a, button')
+    const keyframes = element.matches('.skill-group') || element.querySelector('a, button')
         ? [{ opacity: 0.76 }, { opacity: 1 }]
         : [
         { opacity: 0.76, transform: 'translateY(26px) scale(.985)' },
@@ -82,17 +82,7 @@ function revealElement(element) {
     ];
     animateElement(element, keyframes, { duration: 580, easing: 'cubic-bezier(.16,1,.3,1)' });
 
-    if (!element.matches('.skill-group')) return;
-    [...element.querySelectorAll('.skill-chip')].forEach((chip, index) => {
-        animateElement(chip, [
-            { opacity: 0.72, transform: 'translateY(9px) scale(.97)' },
-            { opacity: 1, transform: 'translateY(0) scale(1)' }
-        ], {
-            duration: 380,
-            delay: Math.min(index * 28, 280),
-            easing: 'cubic-bezier(.2,.8,.2,1)'
-        });
-    });
+    // Skills fade as one group, without creating an animation for every icon.
 }
 
 function initSectionReveals() {

@@ -31,7 +31,7 @@ Hero And Navigation Are Visible On Mobile
 Skills And Icons Match Resume
     ${group_count}=    Get Element Count    css:[data-skill-group]
     ${skill_count}=    Get Element Count    css:.skill-chip
-    ${icon_count}=    Get Element Count    css:.skill-chip svg use
+    ${icon_count}=    Get Element Count    css:.skill-chip svg
     Should Be Equal As Integers    ${group_count}    6
     Should Be Equal As Integers    ${skill_count}    62
     Should Be Equal As Integers    ${icon_count}    62

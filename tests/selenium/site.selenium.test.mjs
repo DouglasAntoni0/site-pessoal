@@ -80,10 +80,10 @@ try {
       assert.equal(overflow.bodyOverflow <= 1, true, `${name}: body overflow ${JSON.stringify(overflow)}`);
       const skillGroups = await driver.findElements(By.css('[data-skill-group]'));
       const skillChips = await driver.findElements(By.css('.skill-chip'));
-      const skillIconReferences = await driver.executeScript('return [...document.querySelectorAll(".skill-chip use")].map(node => node.getAttribute("href"));');
+      const paintedSkillIcons = await driver.executeScript('return [...document.querySelectorAll(".skill-chip svg")].filter(svg => { const box = svg.getBBox(); return box.width > 0 && box.height > 0 && !svg.querySelector("use, image"); }).length;');
       assert.equal(skillGroups.length, 6, `${name}: skill group count`);
       assert.equal(skillChips.length, 62, `${name}: skill count`);
-      assert.equal(skillIconReferences.every(reference => reference.startsWith('assets/icons/sprite.svg#')), true, `${name}: skill icon references`);
+      assert.equal(paintedSkillIcons, 62, `${name}: self-contained skill vectors`);
 
       const certificationNav = await driver.findElement(By.css('a[href="#certifications"]'));
       assert.match(await certificationNav.getAttribute('textContent'), /Certificações/, `${name}: certifications nav label`);

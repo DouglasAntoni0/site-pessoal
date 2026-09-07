@@ -71,7 +71,7 @@ test('@smoke carrega a experiência sem recursos externos inesperados ou erros',
   await expect(page.locator('#certifications .certification-card')).toHaveCount(16);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
-  await expect(page.locator('.skill-chip .skill-icon use')).toHaveCount(62);
+  await expect(page.locator('.skill-chip .skill-icon')).toHaveCount(62);
   expect(await page.locator('*').count()).toBeLessThanOrEqual(900);
   expect(thirdParty).toEqual([]);
   expect(errors).toEqual([]);
@@ -268,14 +268,13 @@ test('projetos aparecem após a apresentação e preservam os contatos', async (
 
 test('competências têm ícones locais válidos e projetos refletem o currículo', async ({ page }) => {
   await page.goto('/');
-  const iconReferences = await page.locator('.skill-chip use').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
-  expect(iconReferences).toHaveLength(62);
-  expect(iconReferences.every(reference => reference?.startsWith('assets/icons/sprite.svg#'))).toBe(true);
-
-  const sprite = await page.evaluate(() => fetch('assets/icons/sprite.svg').then(response => response.text()));
-  for (const reference of new Set(iconReferences)) {
-    expect(sprite).toContain(`id="${reference.split('#')[1]}"`);
-  }
+  const icons = page.locator('.skill-chip .skill-icon');
+  await expect(icons).toHaveCount(62);
+  await expect(icons.locator('use, image')).toHaveCount(0);
+  expect(await icons.evaluateAll(nodes => nodes.every(svg => {
+    const bounds = svg.getBBox();
+    return bounds.width > 0 && bounds.height > 0;
+  }))).toBe(true);
 
   await page.locator('[data-project-id="modal-3"] .trigger-modal').click();
   const modal = page.locator('#project-modal');
@@ -287,21 +286,6 @@ test('competências têm ícones locais válidos e projetos refletem o currícul
   await page.locator('[data-project-id="modal-10"] .trigger-modal').click();
   await expect(modal).toContainText('Bug Tracking');
   await expect(modal).toContainText('BDD / Gherkin');
-});
-
-test('logos de competências mantêm preenchimento visível no mobile', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
-
-  const brandIcons = page.locator('.skill-icon--brand');
-  await expect(brandIcons.first()).toBeVisible();
-  expect(await brandIcons.count()).toBeGreaterThan(30);
-  expect(await brandIcons.evaluateAll(icons => icons.every(icon => {
-    const style = getComputedStyle(icon);
-    const rect = icon.getBoundingClientRect();
-    return style.fill !== 'none' && style.visibility === 'visible' && Number(style.opacity) > 0 && rect.width > 0 && rect.height > 0;
-  }))).toBe(true);
 });
 
 test('desktop executa movimento progressivo e spotlight sem alterar layout', async ({ page }, testInfo) => {

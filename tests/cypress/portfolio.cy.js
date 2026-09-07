@@ -113,7 +113,9 @@ describe('Portfolio Douglas QA', () => {
     });
     cy.get('[data-skill-group]').should('have.length', 6);
     cy.get('.skill-chip').should('have.length', 62).each(chip => {
-      cy.wrap(chip).find('svg use').should('have.attr', 'href').and('match', /^assets\/icons\/sprite\.svg#/);
+      cy.wrap(chip).find('svg').should('have.attr', 'viewBox', '0 0 24 24');
+      cy.wrap(chip).find('svg path').should('have.attr', 'd').and('not.be.empty');
+      cy.wrap(chip).find('svg use, svg image').should('not.exist');
     });
     cy.get('#certifications')
       .should('contain.text', 'Formação avançada')
