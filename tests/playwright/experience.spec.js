@@ -84,6 +84,22 @@ test('o foco do modal não depende do próximo frame de animação', async ({pag
     await expect(page.locator('.trigger-modal').first()).toBeFocused();
 });
 
+test('@smoke modais preservam o foco com movimento reduzido', async ({page}) => {
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.goto('/', {waitUntil:'networkidle'});
+    for (const [trigger, dialog, lastLink] of [
+        [page.locator('.trigger-modal').first(), '#project-modal', '#project-modal-link'],
+        [page.locator('[data-certificate-pdf]'), '#certificate-viewer-modal', '#certificate-modal-open']
+    ]) {
+        await trigger.click();
+        await expect(page.locator(`${dialog} .close-modal`)).toBeFocused();
+        await page.keyboard.press('Shift+Tab');
+        await expect(page.locator(lastLink)).toBeFocused();
+        await page.keyboard.press('Escape');
+        await expect(trigger).toBeFocused();
+    }
+});
+
 test('Escape cancela a abertura pendente de detalhes em conexão lenta', async ({page}) => {
     let resume;
     const gate = new Promise(resolve => { resume = resolve; });
