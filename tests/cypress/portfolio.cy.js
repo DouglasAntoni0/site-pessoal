@@ -25,7 +25,8 @@ describe('Portfolio Douglas QA', () => {
         .filter(entry => {
           const url = new URL(entry.name);
           const rum = win.location.origin === 'https://douglasqa.netlify.app'
-            && url.origin === 'https://netlify-rum.netlify.app' && entry.initiatorType === 'script';
+            && ((url.origin === 'https://netlify-rum.netlify.app' && entry.initiatorType === 'script')
+              || (url.href === 'https://ingesteer.services-prod.nsvcs.net/rum_collection' && entry.initiatorType === 'fetch'));
           return url.origin !== win.location.origin && !rum;
         });
       expect(foreign).to.deep.equal([]);

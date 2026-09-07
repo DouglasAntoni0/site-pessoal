@@ -965,7 +965,11 @@ html.motion-reduced .hero-title span {
   animation: none !important;
 }
 
-html.motion-paused * {
+html.motion-paused *,
+body.modal-open main *,
+body.modal-open main *::before,
+body.modal-open main *::after,
+body.modal-open .aurora-wrapper * {
   animation-play-state: paused !important;
 }
 

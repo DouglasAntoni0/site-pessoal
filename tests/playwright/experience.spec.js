@@ -71,6 +71,19 @@ test('falha ao carregar detalhes preserva o acesso ao repositório', async ({pag
     await expect(trigger).toBeFocused();
 });
 
+test('o foco do modal não depende do próximo frame de animação', async ({page}) => {
+    // Reproduce a delayed rendering frame without relaxing keyboard assertions.
+    await page.addInitScript(() => { window.requestAnimationFrame = () => 0; });
+    await page.goto('/');
+    await page.locator('.trigger-modal').first().click();
+    const close = page.locator('#project-modal .close-modal');
+    await expect(close).toBeFocused();
+    await page.keyboard.press('Shift+Tab');
+    await expect(page.locator('#project-modal-link')).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.trigger-modal').first()).toBeFocused();
+});
+
 test('Escape cancela a abertura pendente de detalhes em conexão lenta', async ({page}) => {
     let resume;
     const gate = new Promise(resolve => { resume = resolve; });

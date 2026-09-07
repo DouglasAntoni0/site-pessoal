@@ -15,7 +15,7 @@ A aplicação é estática, com layouts responsivos para celulares, tablets e de
 - `scripts/build-static.mjs`: gera HTML, CSS e JavaScript minificados e versionados por hash. Os detalhes dos projetos são um módulo separado, solicitado na primeira abertura de um modal.
 - `dist/`: saída de produção gerada; é o único diretório publicado e testado.
 
-Fontes, ícones e código da interface são locais. Em produção, o Netlify pode injetar seu agente assíncrono de Real User Monitoring; a CSP permite apenas a origem específica do agente como script externo. Animações usam Web Animations API, um único `IntersectionObserver` e, durante interação desktop, no máximo um `requestAnimationFrame`.
+Fontes, ícones e código da interface são locais. Em produção, o Netlify pode injetar seu agente assíncrono de Real User Monitoring; a CSP permite a origem específica do agente e o endpoint de coleta observado (`ingesteer.services-prod.nsvcs.net/rum_collection`). Animações usam Web Animations API, um único `IntersectionObserver` e, durante interação desktop, no máximo um `requestAnimationFrame`.
 
 ## Desenvolvimento
 

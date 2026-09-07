@@ -87,9 +87,8 @@
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {
   .glass-header,
   .glass-modal {
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-    background: rgba(4, 9, 20, 0.78);
+    /* A translucent fill avoids repainting the animated page through live blur. */
+    background: rgba(4, 9, 20, 0.96);
   }
 
   .aurora-wrapper {

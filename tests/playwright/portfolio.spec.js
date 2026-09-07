@@ -55,8 +55,9 @@ test('@smoke carrega a experiência sem recursos externos inesperados ou erros',
   page.on('request', request => {
     const url = new URL(request.url());
     const site = new URL(test.info().project.use.baseURL);
-    const rum = site.origin === 'https://douglasqa.netlify.app'
-      && url.origin === 'https://netlify-rum.netlify.app' && request.resourceType() === 'script';
+    const rum = site.origin === 'https://douglasqa.netlify.app' && (
+      (url.origin === 'https://netlify-rum.netlify.app' && request.resourceType() === 'script')
+      || (url.href === 'https://ingesteer.services-prod.nsvcs.net/rum_collection' && ['POST', 'OPTIONS'].includes(request.method())));
     if (url.origin !== site.origin && !rum) thirdParty.push(url.href);
   });
 

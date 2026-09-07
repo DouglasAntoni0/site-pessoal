@@ -68,12 +68,14 @@ export function initModals(loadProjects) {
         document.body.classList.add('modal-open');
         const control = modal.querySelector('.close-modal') || modal;
         background.forEach(element => { element.inert = true; });
-        focusFrame = requestAnimationFrame(() => {
-            if (!modal.classList.contains('active')) return;
-            // Firefox needs the formerly hidden dialog laid out before accepting focus.
-            modal.getBoundingClientRect();
-            control.focus({ preventScroll: true });
-        });
+        // Flush visibility before focusing. Focus must not depend on a future paint.
+        modal.getBoundingClientRect();
+        control.focus({ preventScroll: true });
+        if (document.activeElement !== control) {
+            focusFrame = requestAnimationFrame(() => {
+                if (modal.classList.contains('active')) control.focus({ preventScroll: true });
+            });
+        }
     };
 
     const populateProject = (project) => {
