@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { setTimeout as wait } from 'node:timers/promises';
+import { waitForServer } from './wait-for-server.mjs';
 
 const [, , portArg, ...command] = process.argv;
 const port = Number(portArg || 4173);
@@ -15,19 +15,6 @@ const externalUrl = process.env.BASE_URL;
 if (!command.length) {
   console.error('Missing command to run with static server.');
   process.exit(1);
-}
-
-async function waitForServer() {
-  const deadline = Date.now() + 15_000;
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(url);
-      if (response.ok) return;
-    } catch {
-      await wait(250);
-    }
-  }
-  throw new Error(`Static server did not start at ${url}`);
 }
 
 let server;
@@ -48,7 +35,7 @@ try {
   }
 
   if (!externalUrl) {
-    await waitForServer();
+    await waitForServer(url);
   }
 
   const finalCommand = command.map(arg => arg.replace(`http://127.0.0.1:${port}`, externalUrl || url));

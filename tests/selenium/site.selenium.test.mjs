@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
+import { waitForServer } from '../support/wait-for-server.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Builder, By, Key, until } from 'selenium-webdriver';
@@ -10,19 +11,6 @@ const port = 4176;
 const baseUrl = process.env.BASE_URL || `http://127.0.0.1:${port}`;
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const dist = path.join(root, 'dist');
-
-async function waitForServer() {
-  const deadline = Date.now() + 15_000;
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(baseUrl);
-      if (response.ok) return;
-    } catch {
-      await wait(250);
-    }
-  }
-  throw new Error(`Static server did not start at ${baseUrl}`);
-}
 
 async function getOverflow(driver) {
   return driver.executeScript(() => ({
@@ -54,7 +42,7 @@ const failures = [];
 
 try {
   if (!process.env.BASE_URL) {
-    await waitForServer();
+    await waitForServer(baseUrl);
   }
 
   for (const [name, width, height] of [

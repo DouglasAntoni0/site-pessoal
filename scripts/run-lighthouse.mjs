@@ -2,18 +2,26 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import lighthouse from 'lighthouse';
-import { launch } from 'chrome-launcher';
+import { Launcher } from 'chrome-launcher';
+import { chromium } from '@playwright/test';
 import { assessReports } from './lighthouse-policy.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const url = process.env.BASE_URL || 'http://127.0.0.1:4178/';
 const output = path.join(root, '.lighthouseci');
-const profile = path.join(root, 'test-results', 'lighthouse-profile');
 await fs.mkdir(output, { recursive: true });
-await fs.mkdir(profile, { recursive: true });
-// A dedicated profile also avoids chrome-launcher's temporary-folder cleanup issue on Windows.
-const chrome = await launch({ userDataDir: profile, chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'], logLevel: 'silent' });
+const previousReports = ['assessment.json', 'failure.json', 'chrome-out.log', 'chrome-err.log',
+    ...[1, 2, 3].flatMap(run => [`run-${run}.html`, `run-${run}.json`])];
+await Promise.all(previousReports.map(name => fs.rm(path.join(output, name), { force: true })));
+await fs.mkdir(path.join(root, 'test-results'), { recursive: true });
+const profile = await fs.mkdtemp(path.join(root, 'test-results', 'lighthouse-profile-'));
+const chromePath = chromium.executablePath();
+// Use the browser revision installed from package-lock.json, with a fresh profile.
+// Retain this launcher even if startup fails so finally can stop its own process.
+const chrome = new Launcher({ chromePath, userDataDir: profile, chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'], logLevel: 'error' });
 try {
+    await fs.access(chromePath).catch(() => { throw new Error('Lighthouse browser missing. Run: npx playwright install chromium'); });
+    await chrome.launch();
     const reports = [];
     for (let run = 1; run <= 3; run += 1) {
         const result = await lighthouse(url, { port: chrome.port, output: ['json', 'html'], logLevel: 'error', onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'] });
@@ -27,6 +35,10 @@ try {
     await fs.writeFile(path.join(output, 'assessment.json'), JSON.stringify({ url, measuredAt: new Date().toISOString(), ...assessment }, null, 2));
     console.log(JSON.stringify(assessment, null, 2));
     if (!assessment.passed) process.exitCode = 1;
+} catch (error) {
+    await fs.writeFile(path.join(output, 'failure.json'), JSON.stringify({ measuredAt: new Date().toISOString(), node: process.version, chromePath, message: error.message, stack: error.stack }, null, 2));
+    await Promise.allSettled(['chrome-out.log', 'chrome-err.log'].map(name => fs.copyFile(path.join(profile, name), path.join(output, name))));
+    throw error;
 } finally {
     await chrome.kill();
 }

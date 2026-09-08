@@ -67,7 +67,7 @@ Depois de atualizar conteúdo, gere `dist/`, confira os links e execute as verif
 
 ### Preparar as ferramentas
 
-Depois de `npm ci`, instale os navegadores do Playwright e as dependências do Robot Framework. As suítes Selenium/Robot e o Lighthouse precisam do Chrome disponível no computador.
+Depois de `npm ci`, instale os navegadores do Playwright e as dependências do Robot Framework. As suítes Selenium/Robot precisam do Chrome disponível no computador. O Lighthouse usa o Chromium instalado pelo Playwright, cuja revisão acompanha o `package-lock.json`, com um perfil temporário novo por execução.
 
 ```bash
 npx playwright install chromium firefox webkit
@@ -103,7 +103,7 @@ O [workflow Quality gates](.github/workflows/e2e-tests.yml) executa seis etapas 
 | Cypress | Resultado no terminal e capturas de falha em `cypress/screenshots/`. |
 | Selenium | Resultado no terminal. |
 | Robot Framework | `test-results/robot/log.html`, `report.html` e `output.xml`. |
-| Lighthouse | `.lighthouseci/run-*.html`, `run-*.json` e `assessment.json`. |
+| Lighthouse | `.lighthouseci/run-*.html`, `run-*.json` e `assessment.json`; em caso de erro, `failure.json` e logs disponíveis do navegador. |
 | Android físico | `artifacts/android/report.json` e capturas de tela. |
 
 O CI disponibiliza relatórios de Playwright, Robot e Lighthouse como artefatos, com retenção configurada de sete dias. Abra o relatório local do Playwright com `npx playwright show-report`.
