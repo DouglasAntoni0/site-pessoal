@@ -1,3 +1,4 @@
+import { publicSite } from '../support/public-site.mjs';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs/promises';
@@ -10,7 +11,7 @@ const serial = process.env.ANDROID_SERIAL || (devices.length === 1 ? devices[0] 
 assert(serial && devices.includes(serial), 'Connect and authorize one Android device, or set ANDROID_SERIAL.');
 const adb = (...args) => execFileSync('adb', ['-s', serial, ...args], {encoding: 'utf8', windowsHide: true}).trim();
 assert.notEqual(adb('shell', 'getprop', 'ro.kernel.qemu'), '1', 'This suite requires a physical Android device.');
-const url = process.env.BASE_URL || 'https://douglasqa.netlify.app/';
+const url = publicSite();
 const port = adb('forward', 'tcp:0', 'localabstract:chrome_devtools_remote');
 const output = 'artifacts/android';
 await fs.mkdir(output, {recursive: true});

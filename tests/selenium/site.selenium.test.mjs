@@ -1,16 +1,10 @@
 import assert from 'node:assert/strict';
-import { spawn } from 'node:child_process';
 import { setTimeout as wait } from 'node:timers/promises';
-import { waitForServer } from '../support/wait-for-server.mjs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { publicSite } from '../support/public-site.mjs';
 import { Builder, By, Key, until } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome.js';
 
-const port = 4176;
-const baseUrl = process.env.BASE_URL || `http://127.0.0.1:${port}`;
-const root = fileURLToPath(new URL('../../', import.meta.url));
-const dist = path.join(root, 'dist');
+const baseUrl = publicSite();
 
 async function getOverflow(driver) {
   return driver.executeScript(() => ({
@@ -29,21 +23,7 @@ async function buildDriver(width, height) {
   return new Builder().forBrowser('chrome').setChromeOptions(options).build();
 }
 
-let server;
-if (!process.env.BASE_URL) {
-  server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1', '--directory', dist], {
-    cwd: root,
-    stdio: 'ignore',
-    windowsHide: true
-  });
-}
-
 const failures = [];
-
-try {
-  if (!process.env.BASE_URL) {
-    await waitForServer(baseUrl);
-  }
 
   for (const [name, width, height] of [
     ['desktop', 1440, 900],
@@ -126,11 +106,6 @@ try {
       await driver.quit();
     }
   }
-} finally {
-  if (server) {
-    server.kill();
-  }
-}
 
 if (failures.length) {
   console.error(failures.join('\n'));

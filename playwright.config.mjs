@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const smoke = /@smoke/;
+import { publicSite } from './tests/support/public-site.mjs';
 
 export default defineConfig({
   testDir: './tests/playwright',
@@ -9,21 +9,15 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: 2,
   reporter: [
     ['list'],
     ['html', { outputFolder: 'playwright-report', open: 'never' }]
   ],
   use: {
-    baseURL: process.env.BASE_URL || 'http://127.0.0.1:4173',
+    baseURL: publicSite(),
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure'
-  },
-  webServer: process.env.BASE_URL ? undefined : {
-    command: 'python -m http.server 4173 --bind 127.0.0.1 --directory dist',
-    url: 'http://127.0.0.1:4173',
-    reuseExistingServer: true,
-    timeout: 20_000
   },
   projects: [
     {
@@ -31,13 +25,11 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } }
     },
     {
-      name: 'firefox-smoke',
-      grep: smoke,
+      name: 'firefox',
       use: { ...devices['Desktop Firefox'], viewport: { width: 1366, height: 768 } }
     },
     {
-      name: 'webkit-smoke',
-      grep: smoke,
+      name: 'webkit',
       use: { ...devices['Desktop Safari'], viewport: { width: 1366, height: 768 } }
     }
   ]

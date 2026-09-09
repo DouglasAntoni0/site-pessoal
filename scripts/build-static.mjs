@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
@@ -98,7 +99,7 @@ const result = await build({
     splitting: true,
     minify: true,
     metafile: true,
-    sourcemap: false,
+    sourcemap: 'external',
     target: ['es2018'],
     format: 'esm',
     loader: { '.woff2': 'file' },
@@ -144,4 +145,6 @@ await copyIfExists(path.join(src, 'assets/icons'), path.join(dist, 'assets/icons
 await copyIfExists(path.join(src, 'assets/fonts/Inter-OFL.txt'), path.join(dist, 'assets/fonts/Inter-OFL.txt'));
 await copyIfExists(path.join(src, 'assets/fonts/SpaceGrotesk-OFL.txt'), path.join(dist, 'assets/fonts/SpaceGrotesk-OFL.txt'));
 
+const commit = process.env.COMMIT_REF || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
+await fs.writeFile(path.join(dist, 'deployment.json'), JSON.stringify({ commit }));
 console.log('Static production site built in dist/.');

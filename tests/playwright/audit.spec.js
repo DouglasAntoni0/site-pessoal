@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../support/fixtures.js';
 
 // Keep the functional journeys deterministic; motion has its own tests below and in portfolio.spec.js.
 test.beforeEach(async ({page}) => { await page.emulateMedia({reducedMotion:'reduce'}); });

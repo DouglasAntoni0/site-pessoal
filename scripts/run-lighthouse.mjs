@@ -1,3 +1,4 @@
+import { publicSite } from '../tests/support/public-site.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,7 +8,7 @@ import { chromium } from '@playwright/test';
 import { assessReports } from './lighthouse-policy.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const url = process.env.BASE_URL || 'http://127.0.0.1:4178/';
+const url = publicSite();
 const output = path.join(root, '.lighthouseci');
 await fs.mkdir(output, { recursive: true });
 const previousReports = ['assessment.json', 'failure.json', 'chrome-out.log', 'chrome-err.log',

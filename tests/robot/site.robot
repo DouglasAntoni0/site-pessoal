@@ -4,11 +4,12 @@ Suite Setup    Open Portfolio
 Suite Teardown    Close Browser
 
 *** Variables ***
-${BASE_URL}    http://127.0.0.1:4177
+${BASE_URL}    https://douglasqa.netlify.app/
 ${BROWSER}     Chrome
 
 *** Keywords ***
 Open Portfolio
+    Should Be Equal    ${BASE_URL}    https://douglasqa.netlify.app/
     ${options}=    Evaluate    selenium.webdriver.ChromeOptions()    modules=selenium.webdriver
     Call Method    ${options}    add_argument    --headless\=new
     Call Method    ${options}    add_argument    --disable-gpu

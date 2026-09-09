@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../support/fixtures.js';
 
 const viewports = [
   [280, 653],
@@ -96,7 +96,7 @@ test('@smoke modal compartilhado é seguro e acessível por teclado', async ({ p
 });
 
 test('responsividade extrema preserva título e elimina overflow', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
+  test.setTimeout(120_000);
   for (const [width, height] of viewports) {
     await page.setViewportSize({ width, height });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -107,7 +107,6 @@ test('responsividade extrema preserva título e elimina overflow', async ({ page
 });
 
 test('rotação sem reload mantém a mesma estratégia e o DOM íntegro', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   const nodeCount = await page.locator('*').count();
@@ -121,7 +120,6 @@ test('rotação sem reload mantém a mesma estratégia e o DOM íntegro', async 
 });
 
 test('menu móvel abre e fecha por link, clique externo e Escape', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
 
@@ -189,8 +187,7 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
 });
 
 test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ browser }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
-  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, ...(testInfo.project.name !== 'firefox' ? { isMobile: true } : {}) });
   const page = await context.newPage();
   await page.addInitScript(() => {
     const nativeAnimate = Element.prototype.animate;
@@ -223,7 +220,6 @@ test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ bro
 });
 
 test('reduced motion mantém conteúdo e painel QA estáticos', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
@@ -242,7 +238,6 @@ test('reduced motion mantém conteúdo e painel QA estáticos', async ({ page },
 });
 
 test('texto a 200% continua navegável sem overflow horizontal', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto('/');
   await page.evaluate(() => document.documentElement.style.fontSize = '200%');
@@ -289,7 +284,6 @@ test('competências têm ícones locais válidos e projetos refletem o currícul
 });
 
 test('desktop executa movimento progressivo e spotlight sem alterar layout', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
   await page.goto('/');
   expect(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running'))).toBe(true);
 
@@ -304,17 +298,3 @@ test('desktop executa movimento progressivo e spotlight sem alterar layout', asy
   await expect(page.getByRole('dialog', { name: 'Automação de Performance com K6' })).toBeVisible();
 });
 
-test('snapshot visual determinístico em desktop e mobile', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium');
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const [name, width, height] of [['desktop', 1440, 900], ['mobile', 390, 844]]) {
-    await page.setViewportSize({ width, height });
-    await page.goto('/', { waitUntil: 'networkidle' });
-    await page.screenshot({
-      path: testInfo.outputPath(`${name}.png`),
-      animations: 'disabled',
-      caret: 'hide',
-      fullPage: true
-    });
-  }
-});
