@@ -92,6 +92,7 @@ No Linux, use `npx playwright install --with-deps chromium firefox webkit` para 
 | `npm run test:visual` | Comparação de 12 capturas com referências revisadas, em desktop e celular. |
 | `npm run test:coverage` | Cobertura V8 do JavaScript executado no site público, associada aos fontes. |
 | `npm run test:links` | Disponibilidade HTTP dos links da página e dos detalhes dos projetos. |
+| `npm run test:appium` | Sete jornadas em Chrome de um emulador Android, no site público; job próprio no Actions. |
 | `npm run test:all` | Verificações de código e todas as suítes automatizadas sem exigência de aparelho físico. |
 
 Playwright, Cypress, Selenium, Robot, visual, cobertura, links, Lighthouse e Android acessam o mesmo site público. A configuração rejeita outra `BASE_URL`. Execute os comandos sequencialmente: o Playwright recria sua pasta de resultados e a medição de desempenho deve rodar sem outros testes de navegador concorrentes no computador.
@@ -112,6 +113,7 @@ A [matriz de cobertura](docs/test-coverage.md) relaciona os cenários automatiza
 | Cobertura | `artifacts/coverage/index.html`, `coverage-summary.json` e `measurement.json`. |
 | Links | `artifacts/links/report.json`, com aprovados, falhas e verificações inconclusivas separados. |
 | Publicação | `artifacts/deployment/verified.json`. |
+| Appium Android virtual | `artifacts/appium/report.json`, log e capturas por jornada. |
 | Lighthouse | `.lighthouseci/run-*.html`, `run-*.json` e `assessment.json`; em caso de erro, `failure.json` e logs disponíveis do navegador. |
 | Android físico | `artifacts/android/report.json` e capturas de tela. |
 
@@ -142,6 +144,8 @@ O verificador de links não envia mensagens nem preenche formulários. Respostas
 Os limites são definidos em [`scripts/check-budgets.mjs`](scripts/check-budgets.mjs), [`scripts/lighthouse-policy.mjs`](scripts/lighthouse-policy.mjs) e nos testes Playwright. O Lighthouse usa três execuções; os arquivos completos permitem conferir a variação entre elas. O agente de métricas da hospedagem é verificado separadamente dos recursos gerados pelo build.
 
 ### Android físico
+
+O CI também executa Appium 3.7.0 com UiAutomator2 8.6.1 em um emulador Android API 35 com Chrome. As dependências ficam isoladas em `tests/appium/`, com lockfile próprio. Os sete fluxos verificam conteúdo, ícones, menu, todos os projetos e certificados, disponibilidade do currículo, recarregamento/contatos e texto ampliado. O relatório registra `physical: false`. A conexão local do Appium controla o emulador; a aplicação continua sendo carregada do Netlify. A suíte exige emulador e não faz parte do comando genérico `test:all`.
 
 Com ADB instalado, conecte o aparelho, autorize a depuração USB, desbloqueie a tela e mantenha o Chrome visível:
 

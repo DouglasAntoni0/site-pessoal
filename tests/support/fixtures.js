@@ -2,8 +2,8 @@ import { test as base, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
 
 export const test = base.extend({
-  page: async ({ page, browserName }, use, testInfo) => {
-    const collect = process.env.COVERAGE === '1' && browserName === 'chromium';
+  page: async ({ page, browserName, javaScriptEnabled }, use, testInfo) => {
+    const collect = process.env.COVERAGE === '1' && browserName === 'chromium' && javaScriptEnabled !== false;
     if (collect) await page.coverage.startJSCoverage({ resetOnNavigation: false, reportAnonymousScripts: false });
     await use(page);
     if (collect && !page.isClosed()) {

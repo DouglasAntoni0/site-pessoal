@@ -3,7 +3,7 @@ import { spawnSync } from 'node:child_process';
 
 const files = [];
 for (const folder of ['src', 'scripts', 'tests']) {
-  for await (const file of fs.glob(folder + '/**/*.{js,mjs}')) files.push(file);
+  for await (const file of fs.glob(folder + '/**/*.{js,mjs}', { exclude: ['**/node_modules/**'] })) files.push(file);
 }
 files.push('playwright.config.mjs', 'playwright.visual.config.mjs', 'cypress.config.mjs');
 for (const file of files) {

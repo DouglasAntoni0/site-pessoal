@@ -32,6 +32,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Código executado | JavaScript real do site em Chromium; mapas conferidos por conteúdo; relatório dos cinco módulos e limites mínimos | `scripts/run-coverage.mjs` |
 | Desempenho | Três medições Lighthouse no site público; limites originais de performance, LCP, CLS, TBT, SEO, boas práticas e acessibilidade | `scripts/run-lighthouse.mjs` |
 | Android físico | Chrome do aparelho, toques, hero, menu, projetos, certificado, contatos e erros; modelo/versão/capturas registrados | `tests/android/site.android.mjs` |
+| Android virtual | Appium/UiAutomator2 e Chrome em Android API 35: sete jornadas; todos os projetos e certificados, navegação, currículo, recarga e texto ampliado | `tests/appium/site.appium.mjs`, job Appium no Actions |
 
 Os 45 testes funcionais Playwright são executados integralmente nos três motores: **135 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
 

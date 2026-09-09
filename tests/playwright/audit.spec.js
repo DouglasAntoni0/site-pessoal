@@ -22,6 +22,13 @@ test('@smoke todos os certificados carregam sob demanda e Maestro preserva o PDF
     const modal = page.getByRole('dialog', { name: title, exact: true });
     await expect(modal).toBeVisible();
     await expect.poll(() => modal.locator('img').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+    const clipping = await modal.locator('img').evaluate(image => {
+      const bounds = image.getBoundingClientRect();
+      const frame = image.closest('figure').getBoundingClientRect();
+      return Math.max(bounds.bottom - frame.bottom, frame.top - bounds.top,
+        bounds.right - frame.right, frame.left - bounds.left);
+    });
+    expect(clipping, title + ': certificate must fit its preview frame').toBeLessThanOrEqual(1);
     const original = await modal.locator('#certificate-modal-open').getAttribute('href');
     const response = await request.get(original);
     expect(response.ok(), original).toBe(true);

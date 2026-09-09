@@ -19,7 +19,8 @@
     "test:visual": "playwright test --config playwright.visual.config.mjs",
     "test:coverage": "node scripts/run-coverage.mjs",
     "test:links": "node scripts/check-public-links.mjs",
-    "test:deployment": "node scripts/verify-deployment.mjs"
+    "test:deployment": "node scripts/verify-deployment.mjs",
+    "test:appium": "node tests/appium/site.appium.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

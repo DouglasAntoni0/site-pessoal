@@ -251,3 +251,44 @@ jobs:
             tests/visual/baselines/
             artifacts/deployment/
           retention-days: 7
+
+  appium:
+    name: Appium Android emulator - public Chrome
+    needs: deployment
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            tests/appium/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: npm ci
+      - run: npm ci --prefix tests/appium
+      - name: Enable hardware acceleration for the disposable CI emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          script: npm run test:appium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: appium-android
+          path: artifacts/appium/
+          retention-days: 7

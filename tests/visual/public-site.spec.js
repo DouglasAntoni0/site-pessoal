@@ -12,7 +12,9 @@ test('hero', async ({ page }) => {
 test('skills', async ({ page }) => {
   const section = page.locator('#vision');
   await section.scrollIntoViewIfNeeded();
-  await expect(section).toHaveScreenshot('skills.png');
+  // Component capture: fixed page chrome would otherwise cross the enlarged screenshot.
+  // The header itself is compared separately in the navigation and viewport cases.
+  await expect(section).toHaveScreenshot('skills.png', { style: '.glass-header, .skip-link { visibility: hidden !important; }' });
 });
 
 test('project-modal', async ({ page }) => {
@@ -29,7 +31,8 @@ test('certificate-modal', async ({ page }) => {
 
 test('certificates-expanded', async ({ page }) => {
   await page.locator('#certificates-more > summary').click();
-  await expect(page.locator('#certifications')).toHaveScreenshot('certificates-expanded.png');
+  await expect(page.locator('#certifications')).toHaveScreenshot('certificates-expanded.png',
+    { style: '.glass-header, .skip-link { visibility: hidden !important; }' });
 });
 
 test('navigation', async ({ page }, testInfo) => {
