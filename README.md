@@ -93,7 +93,7 @@ No Linux, use `npx playwright install --with-deps chromium firefox webkit` para 
 | `npm run test:coverage` | Cobertura V8 do JavaScript executado no site público, associada aos fontes. |
 | `npm run test:links` | Disponibilidade HTTP dos links da página e dos detalhes dos projetos. |
 | `npm run test:appium` | Sete jornadas em Chrome de um emulador Android, no site público; job próprio no Actions. |
-| `npm run test:all` | Verificações de código e todas as suítes automatizadas sem exigência de aparelho físico. |
+| `npm run test:all` | Verificações de código e suítes de navegador; Appium e Android físico exigem ambiente Android e têm comandos próprios. |
 
 Playwright, Cypress, Selenium, Robot, visual, cobertura, links, Lighthouse e Android acessam o mesmo site público. A configuração rejeita outra `BASE_URL`. Execute os comandos sequencialmente: o Playwright recria sua pasta de resultados e a medição de desempenho deve rodar sem outros testes de navegador concorrentes no computador.
 
@@ -123,7 +123,7 @@ O CI disponibiliza os relatórios como artefatos, com retenção de sete dias. O
 
 As referências ficam em `tests/visual/baselines/<sistema>/<projeto>/`. O Actions usa Ubuntu 24.04 e a revisão de Chromium do lockfile. Uma execução normal compara as imagens e falha diante de diferenças acima da tolerância de 0,2% dos pixels; nunca atualiza automaticamente as referências. Para uma mudança visual intencional, use o acionamento manual `update_visual_snapshots`, baixe as imagens, revise-as e só então faça commit. Essa execução gera referências; não é uma aprovação da regressão visual. No Windows, as referências são separadas por sistema.
 
-A cobertura usa V8 e source maps do build, sem instrumentar ou hospedar uma cópia do site. O JavaScript obtido do navegador precisa ser idêntico, byte a byte, ao correspondente usado pelo mapa. Os cinco módulos de `src/scripts/` devem constar no relatório. Limites: 90% de linhas e instruções, 85% de funções e 75% de ramos medidos pelo V8. Os contextos especiais criados separadamente, como o teste sem JavaScript, têm testes funcionais próprios e não entram no percentual coletado nas páginas padrão. Os percentuais não representam a proporção de todos os comportamentos possíveis.
+A cobertura usa V8 e os source maps baixados da própria publicação, sem instrumentar ou hospedar uma cópia do site. O JavaScript obtido do navegador precisa ser idêntico, byte a byte, ao bundle público correspondente; os fontes embutidos no mapa também são conferidos com o checkout, normalizando apenas as quebras de linha. Os cinco módulos de `src/scripts/` devem constar no relatório. Limites: 90% de linhas e instruções, 85% de funções e 75% de ramos medidos pelo V8. Os contextos especiais criados separadamente, como o teste sem JavaScript, têm testes funcionais próprios e não entram no percentual coletado nas páginas padrão. Os percentuais não representam a proporção de todos os comportamentos possíveis.
 
 O verificador de links não envia mensagens nem preenche formulários. Respostas de bloqueio ou autenticação são registradas como inconclusivas e exigem revisão manual; não são contadas como links aprovados. Destinos inexistentes ou indisponíveis fazem a verificação falhar.
 
@@ -143,9 +143,11 @@ O verificador de links não envia mensagens nem preenche formulários. Respostas
 
 Os limites são definidos em [`scripts/check-budgets.mjs`](scripts/check-budgets.mjs), [`scripts/lighthouse-policy.mjs`](scripts/lighthouse-policy.mjs) e nos testes Playwright. O Lighthouse usa três execuções; os arquivos completos permitem conferir a variação entre elas. O agente de métricas da hospedagem é verificado separadamente dos recursos gerados pelo build.
 
-### Android físico
+### Android virtual e físico
 
 O CI também executa Appium 3.7.0 com UiAutomator2 8.6.1 em um emulador Android API 35 com Chrome. As dependências ficam isoladas em `tests/appium/`, com lockfile próprio. Os sete fluxos verificam conteúdo, ícones, menu, todos os projetos e certificados, disponibilidade do currículo, recarregamento/contatos e texto ampliado. O relatório registra `physical: false`. A conexão local do Appium controla o emulador; a aplicação continua sendo carregada do Netlify. A suíte exige emulador e não faz parte do comando genérico `test:all`.
+
+Após `npm ci --prefix tests/appium`, execute `npm run prepare:appium`. O UiAutomator2 8.6.1 inclui um shrinkwrap que fixa Morgan 1.11.0; a preparação aplica Morgan 1.12.0 dentro desse pacote e confere as versões realmente instaladas. O Actions executa a preparação e as auditorias de dependências antes de abrir o emulador.
 
 Com ADB instalado, conecte o aparelho, autorize a depuração USB, desbloqueie a tela e mantenha o Chrome visível:
 

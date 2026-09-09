@@ -272,6 +272,9 @@ jobs:
           java-version: '17'
       - run: npm ci
       - run: npm ci --prefix tests/appium
+      - run: npm run prepare:appium
+      - run: npm audit --prefix tests/appium --audit-level=moderate
+      - run: npm audit --prefix tests/appium/node_modules/appium-uiautomator2-driver --omit=dev --audit-level=moderate
       - name: Enable hardware acceleration for the disposable CI emulator
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

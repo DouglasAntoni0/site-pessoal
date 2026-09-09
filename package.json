@@ -20,7 +20,8 @@
     "test:coverage": "node scripts/run-coverage.mjs",
     "test:links": "node scripts/check-public-links.mjs",
     "test:deployment": "node scripts/verify-deployment.mjs",
-    "test:appium": "node tests/appium/site.appium.mjs"
+    "test:appium": "node tests/appium/site.appium.mjs",
+    "prepare:appium": "node scripts/prepare-appium.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -33,7 +34,7 @@
     "istanbul-reports": "^3.2.0",
     "lighthouse": "^13.4.1",
     "selenium-webdriver": "^4.43.0",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "v8-to-istanbul": "^9.3.0"
   }
 }

@@ -13,30 +13,43 @@ function run(args, env = {}) {
   if (result.error) throw result.error;
   return result.status ?? 1;
 }
-// Build only supplies source maps. No local server or instrumented website is used.
-if (run(['scripts/build-static.mjs'])) process.exit(1);
 const status = run(['node_modules/@playwright/test/cli.js', 'test', '--project=chromium'], { COVERAGE: '1' });
 const coverage = libCoverage.createCoverageMap({});
 const bundleRoot = path.resolve('dist/assets/build');
-const bundles = (await fs.readdir(bundleRoot)).filter(name => name.endsWith('.js'));
+const entries = [];
+for await (const filename of fs.glob('test-results/**/v8-coverage.json')) entries.push(...JSON.parse(await fs.readFile(filename, 'utf8')));
+if (!entries.length) throw new Error('Nenhuma cobertura do site público foi coletada.');
 const conversions = new Map();
-for (const name of bundles) {
+// Fetch the source maps belonging to the actual deployed bundles, avoiding
+// platform-dependent build hashes. Check their embedded sources against this checkout.
+for (const entry of entries) {
+  if (conversions.has(entry.url)) continue;
+  const name = path.posix.basename(new URL(entry.url).pathname);
   const file = path.join(bundleRoot, name);
-  const source = await fs.readFile(file, 'utf8');
-  const sourcemap = JSON.parse(await fs.readFile(file + '.map', 'utf8'));
+  const sourceResponse = await fetch(entry.url, { signal: AbortSignal.timeout(20_000) });
+  const mapResponse = await fetch(entry.url + '.map', { signal: AbortSignal.timeout(20_000) });
+  if (!sourceResponse.ok || !mapResponse.ok) throw new Error('Bundle or source map unavailable: ' + entry.url);
+  const source = await sourceResponse.text();
+  const sourcemap = await mapResponse.json();
+  for (let i = 0; i < sourcemap.sources.length; i++) {
+    const mappedPath = path.resolve(path.dirname(file), sourcemap.sources[i]);
+    const allowedRoot = path.resolve('src') + path.sep;
+    if (!mappedPath.startsWith(allowedRoot)) throw new Error('Unexpected mapped source: ' + mappedPath);
+    const local = await fs.readFile(mappedPath, 'utf8');
+    if (local.replaceAll('\r\n', '\n') !== sourcemap.sourcesContent[i].replaceAll('\r\n', '\n')) {
+      throw new Error('O fonte publicado difere do checkout: ' + mappedPath);
+    }
+  }
   const converter = v8toIstanbul(file, 0, { source, sourceMap: { sourcemap } });
   await converter.load();
   converter.applyCoverage([{ functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: source.length, count: 0 }] }]);
   coverage.merge(converter.toIstanbul());
-  conversions.set(name, { file, source, sourcemap });
+  conversions.set(entry.url, { file, source, sourcemap });
 }
-const entries = [];
-for await (const filename of fs.glob('test-results/**/v8-coverage.json')) entries.push(...JSON.parse(await fs.readFile(filename, 'utf8')));
-if (!entries.length) throw new Error('Nenhuma cobertura do site público foi coletada.');
 const checked = new Set();
 for (const entry of entries) {
   const name = path.posix.basename(new URL(entry.url).pathname);
-  const built = conversions.get(name) || [...conversions.values()].find(bundle => bundle.source === entry.source);
+  const built = conversions.get(entry.url);
   if (!built || entry.source !== built.source) {
     throw new Error('O JavaScript publicado difere do código usado para os source maps: ' + entry.url);
   }
