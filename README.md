@@ -10,17 +10,16 @@ A aplicação é estática: o build gera o conteúdo em HTML, e o JavaScript acr
 
 O layout se adapta a celulares, tablets e desktops. Animações contínuas são desativadas em telas compactas, dispositivos touch e com `prefers-reduced-motion`. As verificações automatizadas incluem navegação por teclado, conteúdo sem JavaScript, ausência de rolagem horizontal e carregamento dos recursos.
 
-## Executar localmente
+## Preparar o projeto
 
 Requisitos: **Node.js 22 e npm**, além de **Python 3** disponível como `python` no `PATH`. O CI usa Node 22 e Python 3.11 para o Robot Framework.
 
 ```bash
 npm ci
 npm run build
-npm run serve
 ```
 
-Abra [http://127.0.0.1:4173](http://127.0.0.1:4173). Após alterar os fontes, execute `npm run build` novamente e atualize o navegador. O servidor serve `dist/`, que é recriado a cada build.
+O build recria `dist/` para publicação no Netlify. Todas as suítes que acessam a aplicação usam exclusivamente [https://douglasqa.netlify.app/](https://douglasqa.netlify.app/). Nenhum comando de teste inicia um servidor da aplicação.
 
 ## Organização do projeto
 
@@ -84,16 +83,22 @@ No Linux, use `npx playwright install --with-deps chromium firefox webkit` para 
 | `npm run test:unit` | Testes unitários, incluindo a política de avaliação do Lighthouse. |
 | `npm audit --audit-level=moderate` | Vulnerabilidades moderadas ou superiores nas dependências. |
 | `npm run test:budget` | Build e limites de tamanho e requisições críticas. |
-| `npm run test:playwright` | Suíte completa em Chromium e testes `@smoke` em Firefox/WebKit. |
+| `npm run test:deployment` | Disponibilidade, hash do HTML e identificação da publicação testada. |
+| `npm run test:playwright` | Suíte funcional completa em Chromium, Firefox e WebKit, no site público. |
 | `npm run test:cypress` | Conteúdo, navegação e fluxos da interface. |
 | `npm run test:selenium` | Fluxos e geometria em dimensões de desktop, tablet e celular. |
 | `npm run test:robot` | Cenários E2E com Robot Framework e SeleniumLibrary. |
 | `npm run test:lighthouse` | Três medições no perfil móvel e avaliação dos limites. |
-| `npm run test:all` | Sintaxe, testes unitários, orçamento e as quatro suítes E2E. |
+| `npm run test:visual` | Comparação de 12 capturas com referências revisadas, em desktop e celular. |
+| `npm run test:coverage` | Cobertura V8 do JavaScript executado no site público, associada aos fontes. |
+| `npm run test:links` | Disponibilidade HTTP dos links da página e dos detalhes dos projetos. |
+| `npm run test:all` | Verificações de código e todas as suítes automatizadas sem exigência de aparelho físico. |
 
-As suítes E2E e o Lighthouse geram o build e iniciam seus servidores locais. Execute-os sequencialmente, pois compartilham `dist/` e diretórios de resultados. Auditoria de dependências, Lighthouse e Android têm comandos próprios, executados separadamente de `test:all`.
+Playwright, Cypress, Selenium, Robot, visual, cobertura, links, Lighthouse e Android acessam o mesmo site público. A configuração rejeita outra `BASE_URL`. Execute os comandos sequencialmente: o Playwright recria sua pasta de resultados e a medição de desempenho deve rodar sem outros testes de navegador concorrentes no computador.
 
-O [workflow Quality gates](.github/workflows/e2e-tests.yml) executa seis etapas em pull requests, pushes na `main` e acionamento manual: build e orçamentos, Playwright, Cypress, Selenium, Robot e Lighthouse. Os resultados de cada commit ficam no [GitHub Actions](https://github.com/DouglasAntoni0/site-pessoal/actions/workflows/e2e-tests.yml).
+O [workflow Quality gates](.github/workflows/e2e-tests.yml) executa essas verificações no GitHub Actions. Na `main`, aguarda o Netlify publicar o mesmo SHA em `deployment.json` antes de iniciar as suítes. Em pull requests, os testes de navegador verificam a versão atualmente publicada; não validam uma interface inédita da branch. Análises de código continuam verificando o checkout. O relatório de implantação identifica a versão observada.
+
+A [matriz de cobertura](docs/test-coverage.md) relaciona os cenários automatizados, as simulações de falha e os casos manuais. Testes aprovados não demonstram ausência absoluta de defeitos nem equivalem a testes em todos os aparelhos.
 
 ### Relatórios
 
@@ -102,11 +107,23 @@ O [workflow Quality gates](.github/workflows/e2e-tests.yml) executa seis etapas 
 | Playwright | `playwright-report/index.html` e `test-results/`, com rastros e capturas das falhas. |
 | Cypress | Resultado no terminal e capturas de falha em `cypress/screenshots/`. |
 | Selenium | Resultado no terminal. |
-| Robot Framework | `test-results/robot/log.html`, `report.html` e `output.xml`. |
+| Robot Framework | `artifacts/robot/log.html`, `report.html` e `output.xml`. |
+| Regressão visual | `artifacts/visual-report/` e `artifacts/visual-results/`, incluindo imagens esperada, atual e diferença em falhas. |
+| Cobertura | `artifacts/coverage/index.html`, `coverage-summary.json` e `measurement.json`. |
+| Links | `artifacts/links/report.json`, com aprovados, falhas e verificações inconclusivas separados. |
+| Publicação | `artifacts/deployment/verified.json`. |
 | Lighthouse | `.lighthouseci/run-*.html`, `run-*.json` e `assessment.json`; em caso de erro, `failure.json` e logs disponíveis do navegador. |
 | Android físico | `artifacts/android/report.json` e capturas de tela. |
 
-O CI disponibiliza relatórios de Playwright, Robot e Lighthouse como artefatos, com retenção configurada de sete dias. Abra o relatório local do Playwright com `npx playwright show-report`.
+O CI disponibiliza os relatórios como artefatos, com retenção de sete dias. Os arquivos HTML podem ser abertos após baixar o artefato.
+
+### Referências visuais e cobertura de código
+
+As referências ficam em `tests/visual/baselines/<sistema>/<projeto>/`. O Actions usa Ubuntu 24.04 e a revisão de Chromium do lockfile. Uma execução normal compara as imagens e falha diante de diferenças acima da tolerância de 0,2% dos pixels; nunca atualiza automaticamente as referências. Para uma mudança visual intencional, use o acionamento manual `update_visual_snapshots`, baixe as imagens, revise-as e só então faça commit. Essa execução gera referências; não é uma aprovação da regressão visual. No Windows, as referências são separadas por sistema.
+
+A cobertura usa V8 e source maps do build, sem instrumentar ou hospedar uma cópia do site. O JavaScript obtido do navegador precisa ser idêntico, byte a byte, ao correspondente usado pelo mapa. Os cinco módulos de `src/scripts/` devem constar no relatório. Limites: 90% de linhas e instruções, 85% de funções e 75% de ramos medidos pelo V8. Os contextos especiais criados separadamente, como o teste sem JavaScript, têm testes funcionais próprios e não entram no percentual coletado nas páginas padrão. Os percentuais não representam a proporção de todos os comportamentos possíveis.
+
+O verificador de links não envia mensagens nem preenche formulários. Respostas de bloqueio ou autenticação são registradas como inconclusivas e exigem revisão manual; não são contadas como links aprovados. Destinos inexistentes ou indisponíveis fazem a verificação falhar.
 
 ### Limites de desempenho
 
@@ -132,7 +149,7 @@ Com ADB instalado, conecte o aparelho, autorize a depuração USB, desbloqueie a
 npm run test:android
 ```
 
-O teste usa o site publicado por padrão, abre uma aba própria no Chrome e a fecha ao terminar. Verifica fluxos por eventos de toque e grava evidências em `artifacts/android/`. Exige um aparelho físico autorizado; ausência de dispositivo é tratada como falha. Com mais de um aparelho conectado, defina `ANDROID_SERIAL`. A variável `BASE_URL` permite escolher outra publicação. Esse teste é executado manualmente, fora do CI.
+O teste usa exclusivamente o site público, abre uma aba própria no Chrome e a fecha ao terminar. Verifica fluxos por eventos de toque e grava evidências em `artifacts/android/`. Exige um aparelho físico autorizado; ausência de dispositivo é tratada como falha. Com mais de um aparelho conectado, defina `ANDROID_SERIAL`. Esse teste é executado manualmente, fora do CI. A conexão ADB/CDP local controla o navegador do aparelho; ela não hospeda a aplicação.
 
 ## Publicação e métricas
 

@@ -9,6 +9,7 @@ export default defineConfig({
   expect: { timeout: 10_000, toHaveScreenshot: { animations: 'disabled', maxDiffPixelRatio: 0.002 } },
   workers: 1,
   retries: 0,
+  updateSnapshots: 'none',
   forbidOnly: Boolean(process.env.CI),
   reporter: [['list'], ['html', { outputFolder: 'artifacts/visual-report', open: 'never' }]],
   use: { baseURL: publicSite(), reducedMotion: 'reduce', colorScheme: 'dark', locale: 'pt-BR',

@@ -8,7 +8,7 @@ const results = [];
 try {
   const page = await browser.newPage({ reducedMotion: 'reduce' });
   await page.goto(url);
-  const urls = new Set(await page.locator('a[href]').evaluateAll(links => links.map(a => a.href)));
+  const urls = new Set(await page.locator('a[href]').evaluateAll(links => links.filter(a => !a.closest('.glass-modal')).map(a => a.href)));
   await page.locator('#projects-more > summary').click();
   for (const trigger of await page.locator('.trigger-modal').all()) {
     await trigger.click();
