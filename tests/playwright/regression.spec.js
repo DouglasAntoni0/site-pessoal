@@ -91,6 +91,9 @@ test('REG-05 menu mantém estado correto ao atravessar o breakpoint', async ({ p
   await page.setViewportSize({ width: 961, height: 900 });
   await expect(toggle).toBeHidden();
   await expect(nav).toBeVisible();
+  // CSS visibility changes before the matchMedia listener resets the menu.
+  // Verify that reset before requesting the next viewport transition.
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(nav).toBeHidden();
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
