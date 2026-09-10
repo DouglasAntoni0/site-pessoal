@@ -57,7 +57,11 @@ export function initNavigation() {
     let sectionFrame = 0;
     const updateCurrentSection = () => {
         sectionFrame = 0;
-        const readingLine = headerRow.getBoundingClientRect().bottom + 32;
+        // Native anchors combine the root padding and the section margin.
+        // Include both so landing on an anchor immediately selects that section.
+        const rootPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+        const sectionMargin = sections[0] ? parseFloat(getComputedStyle(sections[0].section).scrollMarginTop) || 0 : 0;
+        const readingLine = Math.max(headerRow.getBoundingClientRect().bottom + 32, rootPadding + sectionMargin + 2);
         let current = sections[0];
         for (const item of sections) {
             if (item.section.getBoundingClientRect().top <= readingLine) current = item;
