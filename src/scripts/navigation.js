@@ -13,6 +13,7 @@ export function initNavigation() {
         toggle.setAttribute('aria-expanded', 'false');
         if (mobile.matches) nav.hidden = true;
         if (restoreFocus) toggle.focus({ preventScroll: true });
+        scheduleSectionUpdate();
     };
 
     const syncLayout = () => {
@@ -22,11 +23,13 @@ export function initNavigation() {
 
     toggle.addEventListener('click', () => {
         const willOpen = toggle.getAttribute('aria-expanded') !== 'true';
+        if (willOpen) updateCurrentSection();
         toggle.setAttribute('aria-expanded', String(willOpen));
         nav.hidden = !willOpen;
         if (willOpen) {
             nav.querySelector('a')?.focus({ preventScroll: true });
         }
+        if (!willOpen) scheduleSectionUpdate();
     });
 
     nav.addEventListener('click', (event) => {
@@ -57,6 +60,9 @@ export function initNavigation() {
     let sectionFrame = 0;
     const updateCurrentSection = () => {
         sectionFrame = 0;
+        // Opening the in-flow mobile menu displaces the page. Keep its reading
+        // position selected until the menu closes or a destination is chosen.
+        if (mobile.matches && toggle.getAttribute('aria-expanded') === 'true') return;
         // Native anchors combine the root padding and the section margin.
         // Include both so landing on an anchor immediately selects that section.
         const rootPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
