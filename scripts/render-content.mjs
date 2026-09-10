@@ -14,7 +14,7 @@ function projectCard(project) {
         <h3>${e(project.title)}</h3>
         <div class="card-tags">${project.tags.map(tag => `<span class="min-tag">${e(tag)}</span>`).join('')}</div>
         <p>${e(project.summary)}</p>
-        ${project.caseStudy ? `<p class="project-outcome">${e(project.caseStudy.outcome)} <span>· ${e(project.caseStudy.date)}</span></p>` : ''}
+        ${project.caseStudy?.outcome ? `<p class="project-outcome">${e(project.caseStudy.outcome)} <span>· ${e(project.caseStudy.date)}</span></p>` : ''}
         <a class="btn-text-link trigger-modal" data-project-id="${e(project.id)}" href="${e(project.repoUrl)}" target="_blank" rel="noopener noreferrer">Acessar repositório</a>
       </div><div class="project-visual" aria-hidden="true"><svg class="project-visual-symbol icon" viewBox="0 0 24 24"><use href="assets/icons/sprite.svg#${e(project.icon)}"/></svg></div></div>
     </article>`;
@@ -26,8 +26,8 @@ function collection(id, label, inner) {
 
 export function renderMainProjects() {
     const main = projects.filter(project => project.category === 'main');
-    const featured = main.filter(project => project.caseStudy);
-    const remaining = main.filter(project => !project.caseStudy);
+    const featured = main.filter(project => project.caseStudy?.featured);
+    const remaining = main.filter(project => !project.caseStudy?.featured);
     return `<div class="projects-timeline">${featured.map(projectCard).join('')}</div>`
         + collection('projects-more', `Ver mais ${remaining.length} projetos`, `<div class="projects-timeline">${remaining.map(projectCard).join('')}</div>`);
 }

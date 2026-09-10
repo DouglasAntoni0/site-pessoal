@@ -176,7 +176,7 @@ test('certificados usam WebP sob demanda e preservam PNG original', async ({ pag
   const backendCard = page.locator('#certifications .certification-card')
     .filter({ hasText: 'Playwright Além da Interface' });
   await expect(backendCard).toContainText('15/08/2026');
-  await expect(backendCard).toContainText('6.5 horas');
+  await expect(backendCard).toContainText('6,5 horas');
 
   await backendCard.getByRole('button', { name: 'Ver certificado' }).click();
   await expect(modal.locator('#certificate-modal-title')).toHaveText('Playwright Além da Interface');
@@ -258,7 +258,7 @@ test('projetos aparecem após a apresentação e preservam os contatos', async (
   await expect(page.locator('.contact-link')).toHaveCount(3);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
-  await expect(page.locator('#certifications')).toContainText('Conversação: básico-intermediária');
+  await expect(page.locator('#certifications')).toContainText('Conversação: do nível básico ao intermediário');
 });
 
 test('competências têm ícones locais válidos e projetos refletem o currículo', async ({ page }) => {

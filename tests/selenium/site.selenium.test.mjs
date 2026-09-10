@@ -68,7 +68,7 @@ const failures = [];
       assert.match(certificationsText, /Playwright Além da Interface/, `${name}: backend Playwright certificate title`);
       assert.match(certificationsText, /Inglês técnico — formação e uso atual/, `${name}: english section title`);
       assert.match(certificationsText, /Leitura:\s*intermediária/, `${name}: english reading level`);
-      assert.match(certificationsText, /Conversação:\s*básico-intermediária/, `${name}: english speaking level`);
+      assert.match(certificationsText, /Conversação:\s*do nível básico ao intermediário/, `${name}: english speaking level`);
       assert.match(certificationsText, /Informática/, `${name}: informatics credential title`);
       await driver.executeScript('arguments[0].scrollIntoView({ block: "center", inline: "center" });', certificationViewButtons[0]);
       await wait(150);

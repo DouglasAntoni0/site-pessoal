@@ -38,7 +38,13 @@ O build recria `dist/` para publicação no Netlify. Todas as suítes que acessa
 
 O [build](scripts/build-static.mjs) minifica o HTML, agrupa CSS e JavaScript com esbuild e coloca hashes nos nomes dos bundles e fontes. Os dados completos dos projetos são carregados na primeira abertura de um modal. Prévias WebP dos certificados são geradas com Sharp; os arquivos originais permanecem disponíveis.
 
-Fontes, ícones e código da interface são locais. As animações usam Web Animations API, um `IntersectionObserver` compartilhado e um agendador de `requestAnimationFrame` para atualizações de rolagem e interação.
+Fontes, ícones e código da interface são locais. As animações usam Web Animations API, um `IntersectionObserver` para as entradas de seção e um agendador de `requestAnimationFrame` para atualizações de rolagem e interação.
+
+### Texto e interações
+
+A navegação destaca a seção atual com `aria-current="location"`, inclusive após rolagem, navegação pelo histórico e mudança de tamanho da tela. Botões respondem ao pressionamento; as coleções usam abertura nativa com uma transição curta de opacidade. Movimento reduzido e economia de dados preservam o conteúdo e desativam os movimentos opcionais.
+
+A apresentação usa ciano nas ações principais, títulos claros e cores de categoria nos ícones. Cargas horárias usam vírgula decimal. Todos os projetos apresentam problema, contribuição e evidência; os três destaques incluem resultados históricos de execução, e os demais apontam para documentação em commits identificados. Títulos oficiais dos certificados são preservados.
 
 ### Ícones das competências
 

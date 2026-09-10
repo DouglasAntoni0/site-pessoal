@@ -72,7 +72,7 @@ Certifications Section Renders
     Page Should Contain    Playwright Além da Interface
     Page Should Contain    Inglês técnico — formação e uso atual
     Page Should Contain    Leitura: intermediária
-    Page Should Contain    Conversação: básico-intermediária
+    Page Should Contain    Conversação: do nível básico ao intermediário
     Page Should Contain    Informática
     Execute Javascript    document.querySelector('#certifications .certification-view-btn').click()
     Wait Until Element Is Visible    css:#certificate-viewer-modal.active

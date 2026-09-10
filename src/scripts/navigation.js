@@ -48,11 +48,46 @@ export function initNavigation() {
     mobile.addEventListener?.('change', syncLayout);
     syncLayout();
 
+    // Track actual section positions, including changes caused by disclosures,
+    // history navigation and responsive reflow. Schedule at most one read per frame.
+    const sections = [...nav.querySelectorAll('a[href^="#"]')].map(link => ({
+        link, section: document.getElementById(link.hash.slice(1))
+    })).filter(item => item.section);
+    let activeLink = null;
+    let sectionFrame = 0;
+    const updateCurrentSection = () => {
+        sectionFrame = 0;
+        const readingLine = headerRow.getBoundingClientRect().bottom + 32;
+        let current = sections[0];
+        for (const item of sections) {
+            if (item.section.getBoundingClientRect().top <= readingLine) current = item;
+        }
+        if (Math.ceil(scrollY + innerHeight) >= document.documentElement.scrollHeight - 2) {
+            current = sections[sections.length - 1];
+        }
+        if (current && current.link !== activeLink) {
+            activeLink?.removeAttribute('aria-current');
+            activeLink = current.link;
+            activeLink.setAttribute('aria-current', 'location');
+        }
+    };
+    const scheduleSectionUpdate = () => {
+        if (!sectionFrame) sectionFrame = requestAnimationFrame(updateCurrentSection);
+    };
+    addEventListener('scroll', scheduleSectionUpdate, { passive: true });
+    addEventListener('resize', scheduleSectionUpdate, { passive: true });
+    addEventListener('hashchange', scheduleSectionUpdate);
+    document.querySelectorAll('.collection-disclosure').forEach(disclosure => {
+        disclosure.addEventListener('toggle', scheduleSectionUpdate);
+    });
+    updateCurrentSection();
+
     if ('ResizeObserver' in window) {
         const observer = new ResizeObserver(([entry]) => {
             const height = Math.ceil(entry.borderBoxSize?.[0]?.blockSize || entry.contentRect.height);
             document.documentElement.style.setProperty('--header-row-height', `${height}px`);
         });
         observer.observe(headerRow);
+        new ResizeObserver(scheduleSectionUpdate).observe(document.querySelector('main'));
     }
 }

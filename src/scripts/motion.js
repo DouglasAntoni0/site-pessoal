@@ -40,12 +40,12 @@ function syncMotionPreference() {
 
 function initHeroMotion() {
     const sequence = [
-        [document.querySelector('.hero-eyebrow'), 0, 380, 8],
-        [document.querySelector('.hero-title'), 70, 560, 14],
-        [document.querySelector('.hero-subtitle'), 180, 430, 10],
-        [document.querySelector('.hero-paragraph'), 260, 430, 10],
-        [document.querySelector('.hero-actions'), 340, 420, 8],
-        [document.querySelector('.hero-proof'), 420, 430, 8]
+        [document.querySelector('.hero-eyebrow'), 0, 260, 8],
+        [document.querySelector('.hero-title'), 40, 340, 10],
+        [document.querySelector('.hero-subtitle'), 80, 280, 8],
+        [document.querySelector('.hero-paragraph'), 120, 280, 8],
+        [document.querySelector('.hero-actions'), 160, 280, 8],
+        [document.querySelector('.hero-proof'), 200, 300, 8]
     ];
 
     for (const [element, delay, duration, offset] of sequence) {
@@ -58,7 +58,7 @@ function initHeroMotion() {
     animateElement(document.querySelector('.qa-command-center'), [
         { opacity: 0.76, transform: 'translateY(16px) scale(.985)' },
         { opacity: 1, transform: 'translateY(0) scale(1)' }
-    ], { duration: 680, delay: 210, easing: 'cubic-bezier(.16,1,.3,1)' });
+    ], { duration: 350, delay: 120, easing: 'cubic-bezier(.16,1,.3,1)' });
 
     // Touch devices keep the final values and avoid a layout update on every frame.
     if (window.matchMedia(DESKTOP_POINTER_QUERY).matches) {
@@ -66,7 +66,7 @@ function initHeroMotion() {
             element,
             target: Number(element.dataset.counter),
             start: 0,
-            duration: 650 + index * 90
+            duration: 300 + index * 20
         }));
         scheduleFrame();
     }
@@ -80,7 +80,7 @@ function revealElement(element) {
         { opacity: 0.76, transform: 'translateY(26px) scale(.985)' },
         { opacity: 1, transform: 'translateY(0) scale(1)' }
     ];
-    animateElement(element, keyframes, { duration: 580, easing: 'cubic-bezier(.16,1,.3,1)' });
+    animateElement(element, keyframes, { duration: 300, easing: 'cubic-bezier(.16,1,.3,1)' });
 
     // Skills fade as one group, without creating an animation for every icon.
 }
@@ -228,6 +228,13 @@ export function initMotion() {
     const reduced = syncMotionPreference();
 
     initFrameScheduler();
+    document.querySelectorAll('.collection-disclosure').forEach(disclosure => {
+        disclosure.addEventListener('toggle', () => {
+            if (!disclosure.open) return;
+            animateElement(disclosure.querySelector('.projects-timeline, .certifications-grid'),
+                [{ opacity: 0.8 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+        });
+    });
     if (!reduced) {
         initHeroMotion();
         initSectionReveals();

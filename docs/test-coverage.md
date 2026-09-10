@@ -9,7 +9,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Carregamento | Título, conteúdo, quantidade de cards/ícones, ausência de erro de execução e recursos inesperados | `portfolio.spec.js`, Cypress, Selenium, Robot |
 | Responsividade | 11 dimensões de 280 a 1920 px; título abaixo do cabeçalho, sem overflow; rotação sem reload | `portfolio.spec.js`; Selenium/Cypress em dimensões adicionais |
 | Coleções | Abrir/fechar projetos e certificados por teclado e ponteiro, preservar itens ocultos | `experience.spec.js` |
-| Projetos | Todos os 10 projetos, textos, código, repositório e três estudos de caso; imagens sob demanda | `audit.spec.js`, `experience.spec.js` |
+| Projetos | Todos os 10 projetos, textos, código, repositório e dez estudos de caso (três com execuções históricas); imagens sob demanda | `audit.spec.js`, `experience.spec.js` |
 | Certificados | Todos os 16 certificados, prévias carregadas, originais HTTP 200, PDF Maestro reconhecido | `audit.spec.js` |
 | Ícones | Todos os 62 SVGs pintados; bloqueio de arquivos de ícones, sem JavaScript, rotação e histórico | `icons.spec.js` |
 | Currículo | Download pelo botão, conteúdo PDF, tipo HTTP, nome e SHA-256 iguais ao documento versionado | REG-01 |
@@ -23,6 +23,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Preview lento ou ausente | Estado de carregamento, imagem real ao liberar rede, mensagem de erro e link original; recuperação | REG-10, `audit.spec.js` |
 | Fontes ausentes | Texto e vetores permanecem utilizáveis sem fontes web; menu funcional; sem overflow | REG-11 |
 | APIs opcionais | Sem IntersectionObserver, ResizeObserver e Element.animate, conteúdo, modais e menu funcionam | REG-12 |
+| Apresentação e navegação ativa | Seção atual ao rolar, histórico, âncora inicial, redimensionamento, pressionamento/cancelamento e abertura de coleções com movimento reduzido | `presentation.spec.js` |
 | Movimento | Touch sem tilt; movimento reduzido e troca durante a sessão; economia de dados; contadores finais | REG-13, `portfolio.spec.js`, `audit.spec.js` |
 | Histórico e cache | Voltar, avançar e recarregar em âncora preservam conteúdo e funções; módulo dos projetos solicitado só uma vez por sessão | REG-14, REG-15, `experience.spec.js` |
 | Uso repetido | 20 ciclos alternando projeto/certificado; sem crescimento do DOM, duplicação de modal, foco preso ou erro de execução | REG-15 |
@@ -34,7 +35,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Android físico | Chrome do aparelho, toques, hero, menu, projetos, certificado, contatos e erros; modelo/versão/capturas registrados | `tests/android/site.android.mjs` |
 | Android virtual | Appium/UiAutomator2 e Chrome em Android API 35: sete jornadas; todos os projetos e certificados, navegação, currículo, recarga e texto ampliado | `tests/appium/site.appium.mjs`, job Appium no Actions |
 
-Os 45 testes funcionais Playwright são executados integralmente nos três motores: **135 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
+Os 49 testes funcionais Playwright são executados integralmente nos três motores: **147 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
 
 ## Casos manuais complementares
 
@@ -57,4 +58,4 @@ Todos usam a mesma URL pública. Preencher dispositivo, navegador/versão, data,
 
 O CI registra o SHA publicado antes dos testes da main. Não se deve usar um resultado da versão anterior como aprovação de uma alteração ainda não publicada. Os artefatos do Actions documentam ambiente, falhas e medições; casos físicos/manuais só são considerados executados quando têm evidência própria.
 
-Cobertura de código mede trechos executados, não todas as combinações de entrada. Da mesma forma, 135 execuções em três motores não representam todos os navegadores, sistemas, redes e dispositivos existentes. Novos recursos e defeitos encontrados devem ampliar esta matriz.
+Cobertura de código mede trechos executados, não todas as combinações de entrada. Da mesma forma, 147 execuções em três motores não representam todos os navegadores, sistemas, redes e dispositivos existentes. Novos recursos e defeitos encontrados devem ampliar esta matriz.

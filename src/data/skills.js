@@ -89,7 +89,7 @@ const rawGroups = [
     ]),
     group('quality', 'Qualidade, Métodos & Segurança', 'Práticas para antecipar riscos, documentar evidências e proteger cada release.', 'magenta', [
         ['ai', 'Inteligência Artificial (IA)', 'brain', 'violet'],
-        ['cybersecurity', 'Cybersecurity', 'shield-check', 'emerald'],
+        ['cybersecurity', 'Cibersegurança', 'shield-check', 'emerald'],
         ['agile', 'Agile / Scrum / Kanban', 'cycle', 'cyan'],
         ['bdd', 'BDD / Cucumber / Gherkin', 'brand-cucumber', 'emerald'],
         ['jira', 'Jira', 'brand-jira', 'blue'],

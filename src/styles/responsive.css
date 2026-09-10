@@ -1,3 +1,9 @@
+@media (min-width: 961px) and (max-width: 1100px) {
+  .header-container { gap: 1rem; }
+  .primary-nav ul { gap: 0.75rem; }
+  .primary-nav a { font-size: 0.85rem; }
+}
+
 @media (max-width: 960px) {
   .aurora-wrapper {
     display: none;
@@ -45,6 +51,12 @@
 
   .primary-nav a::after {
     display: none;
+  }
+
+  .primary-nav a[aria-current="location"] {
+    border-color: rgba(103, 232, 249, 0.55);
+    background: rgba(34, 211, 238, 0.08);
+    box-shadow: inset 3px 0 #67e8f9;
   }
 
   .hero-section {

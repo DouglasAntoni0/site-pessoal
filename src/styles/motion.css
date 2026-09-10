@@ -5,7 +5,7 @@
   left: 0;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--blue), var(--emerald));
+  background: var(--cyan);
   content: "";
   transform: scaleX(0);
   transform-origin: right;
@@ -13,12 +13,21 @@
 }
 
 .primary-nav a:hover::after,
+.primary-nav a[aria-current="location"]::after,
 .primary-nav a:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
+.primary-nav a[aria-current="location"] {
+  color: #a5f3fc;
+}
+
 .btn,
+.btn-text-link,
+.menu-toggle,
+.close-modal,
+.collection-disclosure > summary,
 .tech-tag,
 .certification-view-btn,
 .contact-link,
@@ -41,7 +50,7 @@
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  box-shadow: 0 1rem 2.5rem rgba(52, 211, 153, 0.22);
+  box-shadow: 0 0.75rem 2rem rgba(34, 211, 238, 0.18);
 }
 
 .tech-tag:hover {
@@ -55,6 +64,23 @@
   border-color: rgba(52, 211, 153, 0.38);
   background: rgba(52, 211, 153, 0.06);
   transform: translateY(-3px);
+}
+
+.btn:active,
+.btn-text-link:active,
+.certification-view-btn:active,
+.contact-link:active,
+.menu-toggle:active,
+.collection-disclosure > summary:active {
+  transform: scale(0.98);
+}
+
+/* Feedback remains visible when motion is disabled. */
+.btn:active,
+.certification-view-btn:active,
+.menu-toggle:active,
+.collection-disclosure > summary:active {
+  border-color: #a5f3fc;
 }
 
 .project-content::after {
@@ -151,7 +177,17 @@
   }
 
   .project-content,
-  .project-visual {
+  .project-visual,
+  .btn:active,
+  .btn-text-link:active,
+  .certification-view-btn:active,
+  .contact-link:active,
+  .menu-toggle:active,
+  .collection-disclosure > summary:active {
     transform: none !important;
   }
+}
+
+html.motion-reduced :is(.btn, .btn-text-link, .certification-view-btn, .contact-link, .menu-toggle, .collection-disclosure > summary):active {
+  transform: none !important;
 }

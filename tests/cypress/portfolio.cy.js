@@ -64,7 +64,7 @@ describe('Portfolio Douglas QA', () => {
 
     cy.contains('#certifications .certification-card', 'Playwright Além da Interface').within(() => {
       cy.contains('15/08/2026');
-      cy.contains('6.5 horas');
+      cy.contains('6,5 horas');
     });
   });
 
@@ -120,7 +120,7 @@ describe('Portfolio Douglas QA', () => {
     cy.get('#certifications')
       .should('contain.text', 'Formação avançada')
       .and('contain.text', 'Leitura: intermediária')
-      .and('contain.text', 'Conversação: básico-intermediária')
+      .and('contain.text', 'Conversação: do nível básico ao intermediário')
       .and('not.contain.text', 'Expira');
     cy.get('.contact-link').should('have.length', 3).each(link => {
       cy.wrap(link).should('have.attr', 'rel').and('include', 'noopener');

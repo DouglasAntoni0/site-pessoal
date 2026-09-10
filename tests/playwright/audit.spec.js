@@ -17,6 +17,7 @@ test('@smoke todos os certificados carregam sob demanda e Maestro preserva o PDF
   await expect(cards).toHaveCount(16);
   for (const card of await cards.all()) {
     const title = await card.locator('h3').textContent();
+    await expect(card.locator('.certification-meta span').last()).toHaveText(/^\d+(,\d+)? horas$/);
     const trigger = card.getByRole('button', { name: 'Ver certificado' });
     await trigger.click();
     const modal = page.getByRole('dialog', { name: title, exact: true });
@@ -56,6 +57,14 @@ test('@smoke todos os projetos abrem e os modais isolam o foco do conteúdo de f
     const modal = page.locator('#project-modal');
     await expect(modal, await trigger.getAttribute('data-project-id')).toBeVisible();
     await expect(page.locator('main')).toHaveAttribute('inert', '');
+    const study = modal.locator('#project-modal-case');
+    await expect(study.getByRole('heading', { name: 'Problema', exact: true })).toBeVisible();
+    await expect(study.getByRole('heading', { name: 'Minha contribuição', exact: true })).toHaveCount(1);
+    const id = await trigger.getAttribute('data-project-id');
+    const measured = ['modal-1', 'modal-3', 'modal-4'].includes(id);
+    await expect(study.getByRole('heading', { name: measured ? 'Resultado verificado' : 'Evidência disponível' })).toHaveCount(1);
+    await expect(study.getByRole('link', { name: measured ? 'Consultar teste de origem' : 'Consultar documentação do projeto' })).toHaveAttribute('href', /\/blob\/[a-f0-9]{40}\//);
+    await expect(study.locator('img')).toHaveCount(measured ? 1 : 0);
     const close = modal.getByRole('button', { name: 'Fechar detalhes do projeto' });
     const link = modal.getByRole('link', { name: 'Acessar repositório' });
     await expect(close).toBeFocused();

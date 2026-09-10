@@ -98,24 +98,29 @@ export function initModals(loadProjects) {
         projectCase.hidden = !project.caseStudy;
         if (project.caseStudy) {
             const study = project.caseStudy;
-            for (const [label, content] of [['Problema', study.problem], ['Minha contribuição', study.contribution], ['Resultado verificado', study.result]]) {
+            for (const [label, content] of [['Problema', study.problem], ['Minha contribuição', study.contribution], [study.runUrl ? 'Resultado verificado' : 'Evidência disponível', study.result]]) {
                 const heading = document.createElement('h3');
                 heading.textContent = label;
                 const paragraph = document.createElement('p');
                 paragraph.textContent = content;
                 projectCase.append(heading, paragraph);
             }
-            const figure = document.createElement('figure');
-            const img = document.createElement('img');
-            img.src = study.image;
-            img.alt = study.imageAlt;
-            img.width = 720;
-            img.height = 280;
-            const caption = document.createElement('figcaption');
-            caption.textContent = 'Resumo visual dos dados da execução indicada. ' + study.scope;
-            figure.append(img, caption);
-            projectCase.append(figure);
-            for (const [label, href] of [['Ver execução no GitHub', study.runUrl], ['Consultar teste de origem', study.sourceUrl]]) {
+            if (study.image) {
+                const figure = document.createElement('figure');
+                const img = document.createElement('img');
+                img.src = study.image;
+                img.alt = study.imageAlt;
+                img.width = 720;
+                img.height = 280;
+                const caption = document.createElement('figcaption');
+                caption.textContent = 'Resumo visual dos dados da execução indicada. ' + study.scope;
+                figure.append(img, caption);
+                projectCase.append(figure);
+            }
+            const evidenceLinks = study.runUrl
+                ? [['Ver execução no GitHub', study.runUrl], ['Consultar teste de origem', study.sourceUrl]]
+                : [['Consultar documentação do projeto', study.sourceUrl]];
+            for (const [label, href] of evidenceLinks) {
                 const link = document.createElement('a');
                 link.textContent = label;
                 link.href = href;

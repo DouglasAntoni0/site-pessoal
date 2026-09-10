@@ -2,7 +2,7 @@ export const certificates = [
     {
         "title": "Profissão: Engenheiro de Qualidade de Software",
         "school": "EBAC",
-        "description": "Formação voltada a estratégia de testes, automação, documentação, análise de risco e práticas para acompanhar o ciclo de desenvolvimento com mentalidade de qualidade.",
+        "description": "Formação voltada à estratégia de testes, à automação, à documentação, à análise de riscos e a práticas para acompanhar o ciclo de desenvolvimento com mentalidade de qualidade.",
         "date": "26/11/2025",
         "hours": "40 horas",
         "image": "assets/certificates/ebac-engenheiro-qualidade-software.png",
@@ -62,7 +62,7 @@ export const certificates = [
     {
         "title": "Projetos de Sistemas de TI",
         "school": "Fundação Bradesco",
-        "description": "Conteúdo voltado a organização e entendimento de projetos de sistemas, apoiando visão de requisitos, etapas de entrega e comunicação técnica em iniciativas de tecnologia.",
+        "description": "Conteúdo voltado à organização e ao entendimento de projetos de sistemas, apoiando visão de requisitos, etapas de entrega e comunicação técnica em iniciativas de tecnologia.",
         "date": "02/05/2025",
         "hours": "15 horas",
         "image": "assets/certificates/fundacao-bradesco-projetos-sistemas-ti.png",
@@ -74,7 +74,7 @@ export const certificates = [
         "school": "Udemy",
         "description": "Automação E2E com Cypress, cobrindo escrita de cenários, comandos reutilizáveis, asserções confiáveis e práticas para validar fluxos web críticos.",
         "date": "01/02/2026",
-        "hours": "15.5 horas",
+        "hours": "15,5 horas",
         "image": "assets/certificates/udemy-ninja-cypress.png",
         "preview": "assets/certificates/previews/udemy-ninja-cypress.webp",
         "featured": true
@@ -82,9 +82,9 @@ export const certificates = [
     {
         "title": "Teste de performance com K6",
         "school": "Udemy",
-        "description": "Criação de scripts de carga e validações de performance com K6, apoiando análise de latência, estabilidade e comportamento de APIs sob demanda.",
+        "description": "Criação de scripts de carga e validações de desempenho com K6, apoiando análise de latência, estabilidade e comportamento de APIs sob demanda.",
         "date": "16/02/2026",
-        "hours": "4.5 horas",
+        "hours": "4,5 horas",
         "image": "assets/certificates/udemy-k6-performance.png",
         "preview": "assets/certificates/previews/udemy-k6-performance.webp",
         "featured": true
@@ -92,9 +92,9 @@ export const certificates = [
     {
         "title": "Playwright Zombie Edition",
         "school": "Udemy",
-        "description": "Automação web moderna com Playwright, explorando execução confiável, testes cross-browser e recursos úteis para pipelines de validação contínua.",
+        "description": "Automação web com Playwright, explorando execução confiável, testes em diferentes navegadores e recursos úteis para pipelines de validação contínua.",
         "date": "29/03/2026",
-        "hours": "14.5 horas",
+        "hours": "14,5 horas",
         "image": "assets/certificates/udemy-playwright-zombie-edition.png",
         "preview": "assets/certificates/previews/udemy-playwright-zombie-edition.webp",
         "featured": true
@@ -102,7 +102,7 @@ export const certificates = [
     {
         "title": "Robot Framework e Appium para Android e iOS",
         "school": "Udemy",
-        "description": "Testes mobile com Robot Framework e Appium, incluindo interação com apps, organização de cenários e validações para Android e iOS.",
+        "description": "Testes de aplicativos móveis com Robot Framework e Appium, incluindo interação com apps, organização de cenários e validações para Android e iOS.",
         "date": "30/04/2026",
         "hours": "8 horas",
         "image": "assets/certificates/udemy-robot-appium-mobile.png",
@@ -112,7 +112,7 @@ export const certificates = [
     {
         "title": "Dominando Postman do Teste Manual a Performance APIs",
         "school": "Udemy",
-        "description": "Validação de APIs com Postman, saindo de testes manuais para coleções estruturadas, automações, massa de dados e apoio a cenários de performance.",
+        "description": "Do teste manual aos testes de desempenho de APIs com Postman, usando coleções estruturadas, automação e massa de dados.",
         "date": "08/06/2026",
         "hours": "15 horas",
         "image": "assets/certificates/udemy-postman-api-performance.png",
@@ -142,9 +142,9 @@ export const certificates = [
     {
         "title": "Playwright Além da Interface",
         "school": "Udemy",
-        "description": "Automação além da interface com Playwright, cobrindo testes de API, validações em banco de dados e cenários de performance para ampliar a confiança em serviços e integrações.",
+        "description": "Automação além da interface com Playwright, cobrindo testes de API, validações em banco de dados e cenários de desempenho para ampliar a confiança em serviços e integrações.",
         "date": "15/08/2026",
-        "hours": "6.5 horas",
+        "hours": "6,5 horas",
         "image": "assets/certificates/udemy-playwright-alem-da-interface.png",
         "preview": "assets/certificates/previews/udemy-playwright-alem-da-interface.webp",
         "featured": true
@@ -152,7 +152,7 @@ export const certificates = [
     {
         "title": "Maestro: Testes Mobile do Zero ao Pipeline",
         "school": "Udemy",
-        "description": "Formação em testes mobile com Maestro, dos primeiros cenários de automação à integração com pipelines de validação contínua.",
+        "description": "Formação em testes de aplicativos móveis com Maestro, dos primeiros cenários de automação à integração com pipelines de validação contínua.",
         "date": "30/08/2026",
         "hours": "3 horas",
         "image": "assets/certificates/udemy-maestro-mobile-pipeline.png",
