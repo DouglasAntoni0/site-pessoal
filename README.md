@@ -75,6 +75,8 @@ python -m pip install -r requirements-robot.txt
 
 No Linux, use `npx playwright install --with-deps chromium firefox webkit` para incluir as bibliotecas do sistema exigidas pelos navegadores, como no CI. Caso o executável do Cypress não tenha sido baixado durante a instalação, execute `npx cypress install`.
 
+O Playwright está fixado em 1.63.0 para manter seus navegadores compatíveis com o Lighthouse 13.4.1. No Firefox, a configuração declara um mouse de desktop no runner Linux sem periféricos; os contextos de toque continuam usando `hasTouch`. Os cenários de movimento verificam essas capacidades antes de validar os efeitos.
+
 ### Comandos
 
 | Comando | Verificação |

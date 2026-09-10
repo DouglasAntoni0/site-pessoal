@@ -95,9 +95,12 @@ test('reduzir movimento durante a sessão interrompe tilt e novas animações de
   });
   await page.goto('/');
   const first = page.locator('.project-row').first();
+  expect(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches),
+    'Desktop motion requires the browser to emulate a mouse').toBe(true);
   await first.hover();
   await expect(first).toHaveClass(/pointer-active/);
   await page.emulateMedia({ reducedMotion: 'reduce' });
+  expect(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true);
   await expect(page.locator('html')).toHaveClass(/motion-reduced/);
   const entries = await page.evaluate(() => window.__entries);
   const last = page.locator('.project-row').last();

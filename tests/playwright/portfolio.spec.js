@@ -285,6 +285,8 @@ test('competências têm ícones locais válidos e projetos refletem o currícul
 
 test('desktop executa movimento progressivo e spotlight sem alterar layout', async ({ page }, testInfo) => {
   await page.goto('/');
+  expect(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches),
+    'Desktop motion requires the browser to emulate a mouse').toBe(true);
   expect(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running'))).toBe(true);
 
   const project = page.locator('.project-row').first();

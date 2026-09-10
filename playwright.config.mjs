@@ -26,7 +26,15 @@ export default defineConfig({
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'], viewport: { width: 1366, height: 768 } }
+      use: {
+        ...devices['Desktop Firefox'], viewport: { width: 1366, height: 768 },
+        // A headless Linux runner has no physical mouse. Declare the desktop
+        // input device; contexts with hasTouch still emulate a coarse pointer.
+        launchOptions: { firefoxUserPrefs: {
+          'ui.primaryPointerCapabilities': 6,
+          'ui.allPointerCapabilities': 6
+        } }
+      }
     },
     {
       name: 'webkit',
