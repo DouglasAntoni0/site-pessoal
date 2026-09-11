@@ -6,6 +6,17 @@ async function expectCurrent(page, id) {
     await expect(currentLink(page)).toHaveAttribute('href', `#${id}`);
 }
 
+async function clickVisibleHeaderControl(page, locator) {
+    await expect(locator).toBeVisible();
+    const box = await locator.boundingBox();
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize().height);
+    // These sticky controls are already in the viewport. locator.click() may
+    // scroll them into view again, shifting the document before the click and
+    // changing the position saved in browser history (notably in WebKit).
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+}
+
 test('seção atual acompanha rolagem nos dois sentidos e coleções expandidas', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
@@ -27,7 +38,7 @@ test('navegação ativa preserva âncora, histórico e mudança para menu móvel
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/#vision');
     await expectCurrent(page, 'vision');
-    await page.locator('#primary-nav a[href="#contact"]').click();
+    await clickVisibleHeaderControl(page, page.locator('#primary-nav a[href="#contact"]'));
     await expectCurrent(page, 'contact');
     await page.goBack();
     await expectCurrent(page, 'vision');
@@ -35,11 +46,12 @@ test('navegação ativa preserva âncora, histórico e mudança para menu móvel
     await expectCurrent(page, 'vision');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator('#vision').evaluate(el => el.scrollIntoView({ block: 'start' }));
-    await page.locator('#menu-toggle').click();
+    await expectCurrent(page, 'vision');
+    await clickVisibleHeaderControl(page, page.locator('#menu-toggle'));
     await expectCurrent(page, 'vision');
     await expect(currentLink(page)).toBeVisible();
     expect(await currentLink(page).evaluate(el => getComputedStyle(el).boxShadow)).not.toBe('none');
-    await page.locator('#primary-nav a[href="#quality"]').click();
+    await clickVisibleHeaderControl(page, page.locator('#primary-nav a[href="#quality"]'));
     await expect(page.locator('#primary-nav')).toBeHidden();
     await expectCurrent(page, 'quality');
 });
