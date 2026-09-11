@@ -211,6 +211,14 @@ body {
   line-height: 1.35;
 }
 
+.hero-projects-link {
+  margin-top: 0.75rem;
+  color: #a5f3fc;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-underline-offset: 0.2em;
+}
+
 .qa-command-center {
   position: relative;
   min-width: 0;
