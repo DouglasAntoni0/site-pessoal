@@ -38,6 +38,8 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 
 Os 51 testes funcionais Playwright são executados integralmente nos três motores: **153 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
 
+A medição de posições intermediárias da rolagem usa DPR 1 e executa seus dois cenários sequencialmente por motor, para reduzir interferência da renderização no tempo da animação. Os demais testes mantêm a escala original de cada dispositivo. O Appium aguarda a chegada à âncora antes de capturar a tela ou iniciar outra ação.
+
 ## Casos manuais complementares
 
 Todos usam a mesma URL pública. Preencher dispositivo, navegador/versão, data, resultado e evidência ao executar; a presença nesta matriz não significa aprovação.

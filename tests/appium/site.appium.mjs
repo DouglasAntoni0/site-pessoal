@@ -52,8 +52,22 @@ try {
     .then(element => driver.wait(until.elementIsVisible(element), 20000));
   const click = async selector => {
     const element = await find(selector);
+    const href = await element.getAttribute('href');
     await driver.executeScript('arguments[0].scrollIntoView({block:"center",behavior:"instant"});', element);
     await element.click();
+    if (href?.startsWith(url + '#')) {
+      // Updating the URL starts the journey; wait for the actual destination
+      // before capturing the screen or issuing another scroll command.
+      await driver.wait(() => driver.executeScript(`
+        const target = document.querySelector(arguments[0]);
+        const root = document.documentElement;
+        const padding = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+        const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        const expected = Math.max(0, Math.min(root.scrollHeight - innerHeight,
+          scrollY + target.getBoundingClientRect().top - padding - margin));
+        return Math.abs(scrollY - expected) <= 2;
+      `, new URL(href).hash), 10000, 'Anchor scrolling did not reach its destination.');
+    }
   };
   const check = async (name, run) => {
     await run();
