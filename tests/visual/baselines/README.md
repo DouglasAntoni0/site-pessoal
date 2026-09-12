@@ -14,6 +14,11 @@ A revisão de texto, cores e navegação foi capturada em 11/09/2026, com a publ
 a partir do Actions [34642486157](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/34642486157),
 e as referências Windows foram capturadas da mesma publicação.
 
+A identificação dos projetos como uma seleção do site foi revisada na publicação
+`4473fb28562f9071823d49dbabc942470e5eec3b`. Apenas a referência desktop da seção
+inicial mudou: Linux no Actions [34645173431](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/34645173431)
+e Windows na mesma publicação.
+
 A execução normal compara os pixels e não atualiza os arquivos. Mudanças
 intencionais precisam de nova captura e revisão antes de substituir a referência.
 O cabeçalho fixo é ocultado apenas nas capturas das seções longas; ele é
