@@ -43,6 +43,7 @@
 
 html {
   background: var(--bg);
+  scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-row-height) + 1rem);
 }
 

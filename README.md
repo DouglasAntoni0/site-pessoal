@@ -44,6 +44,8 @@ Fontes, ícones e código da interface são locais. As animações usam Web Anim
 
 A navegação destaca a seção atual com `aria-current="location"`, inclusive após rolagem, navegação pelo histórico e mudança de tamanho da tela. Botões respondem ao pressionamento; as coleções usam abertura nativa com uma transição curta de opacidade. Movimento reduzido e economia de dados preservam o conteúdo e desativam os movimentos opcionais.
 
+Links internos usam rolagem suave nativa nos dois sentidos, com espaço para o cabeçalho e preservação das âncoras e do histórico. A preferência `prefers-reduced-motion` mantém a navegação sem animação. Os links gerais do GitHub apontam para o perfil; links de projetos e evidências continuam levando ao conteúdo correspondente.
+
 A apresentação usa ciano nas ações principais, títulos claros e cores de categoria nos ícones. Cargas horárias usam vírgula decimal. Todos os projetos apresentam problema, contribuição e evidência; os três destaques incluem resultados históricos de execução, e os demais apontam para documentação em commits identificados. Títulos oficiais dos certificados são preservados.
 
 ### Ícones das competências

@@ -14,6 +14,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Ícones | Todos os 62 SVGs pintados; bloqueio de arquivos de ícones, sem JavaScript, rotação e histórico | `icons.spec.js` |
 | Currículo | Download pelo botão, conteúdo PDF, tipo HTTP, nome e SHA-256 iguais ao documento versionado | REG-01 |
 | Links internos e metadados | IDs únicos, âncoras existentes, URL canônica, idioma, descrição, contatos e proteção de nova aba | REG-02 |
+| Rolagem suave | Menu completo, logo e ações da apresentação percorrem posições intermediárias nos dois sentidos, por clique ou teclado; destino abaixo do cabeçalho em desktop e celular | `navigation.spec.js` |
 | Hospedagem | HTTPS público, CSP, anti-sniffing, proteção contra frames, revalidação do HTML, cache imutável e recurso inexistente 404 | REG-03 |
 | Teclado | Link de salto transfere a navegação para o conteúdo; Espaço, Enter, Tab, Shift+Tab e Escape | REG-04, REG-06, `audit.spec.js` |
 | Menu | Clique, Escape, fora do menu, link; foco inicial; breakpoint 960/961 px; último link em tela baixa com texto ampliado | REG-05, `portfolio.spec.js`, `audit.spec.js` |
@@ -35,7 +36,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Android físico | Chrome do aparelho, toques, hero, menu, projetos, certificado, contatos e erros; modelo/versão/capturas registrados | `tests/android/site.android.mjs` |
 | Android virtual | Appium/UiAutomator2 e Chrome em Android API 35: sete jornadas; todos os projetos e certificados, navegação, currículo, recarga e texto ampliado | `tests/appium/site.appium.mjs`, job Appium no Actions |
 
-Os 49 testes funcionais Playwright são executados integralmente nos três motores: **147 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
+Os 51 testes funcionais Playwright são executados integralmente nos três motores: **153 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
 
 ## Casos manuais complementares
 
@@ -58,4 +59,4 @@ Todos usam a mesma URL pública. Preencher dispositivo, navegador/versão, data,
 
 O CI registra o SHA publicado antes dos testes da main. Não se deve usar um resultado da versão anterior como aprovação de uma alteração ainda não publicada. Os artefatos do Actions documentam ambiente, falhas e medições; casos físicos/manuais só são considerados executados quando têm evidência própria.
 
-Cobertura de código mede trechos executados, não todas as combinações de entrada. Da mesma forma, 147 execuções em três motores não representam todos os navegadores, sistemas, redes e dispositivos existentes. Novos recursos e defeitos encontrados devem ampliar esta matriz.
+Cobertura de código mede trechos executados, não todas as combinações de entrada. Da mesma forma, 153 execuções em três motores não representam todos os navegadores, sistemas, redes e dispositivos existentes. Novos recursos e defeitos encontrados devem ampliar esta matriz.

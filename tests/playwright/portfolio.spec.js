@@ -69,7 +69,8 @@ test('@smoke carrega a experiência sem recursos externos inesperados ou erros',
   await expect(page.locator('#volunteer-container article')).toHaveCount(1);
   await expect(page.locator('.hero-proof > div').first()).toContainText('projetos selecionados para este site');
   await expect(page.getByRole('link', { name: 'Veja outros projetos no GitHub' }))
-    .toHaveAttribute('href', 'https://github.com/DouglasAntoni0?tab=repositories');
+    .toHaveAttribute('href', 'https://github.com/DouglasAntoni0');
+  await expect(page.locator('a[href*="github.com/DouglasAntoni0?tab=repositories"]')).toHaveCount(0);
   await expect(page.locator('#project-modal')).toHaveCount(1);
   await expect(page.locator('#certifications .certification-card')).toHaveCount(16);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
