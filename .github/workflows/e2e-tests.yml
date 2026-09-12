@@ -64,7 +64,8 @@ jobs:
       fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
-    runs-on: ubuntu-24.04
+    # Exercise WebKit with macOS compositing, representative of Safari.
+    runs-on: ${{ matrix.browser == 'webkit' && 'macos-15' || 'ubuntu-24.04' }}
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4

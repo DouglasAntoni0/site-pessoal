@@ -40,6 +40,8 @@ Os 51 testes funcionais Playwright são executados integralmente nos três motor
 
 A medição de posições intermediárias da rolagem usa DPR 1 e executa seus dois cenários sequencialmente por motor, para reduzir interferência da renderização no tempo da animação. Os demais testes mantêm a escala original de cada dispositivo. O Appium aguarda a chegada à âncora antes de capturar a tela ou iniciar outra ação.
 
+No CI, a suíte WebKit inteira roda em macOS 15; Chromium e Firefox rodam em Ubuntu 24.04. WebKit no macOS representa a composição gráfica da plataforma do Safari, enquanto a versão para Linux apresentou amostras insuficientes durante as animações nativas de rolagem.
+
 ## Casos manuais complementares
 
 Todos usam a mesma URL pública. Preencher dispositivo, navegador/versão, data, resultado e evidência ao executar; a presença nesta matriz não significa aprovação.

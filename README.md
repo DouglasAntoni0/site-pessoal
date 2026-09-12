@@ -85,6 +85,8 @@ No Linux, use `npx playwright install --with-deps chromium firefox webkit` para 
 
 O Playwright está fixado em 1.63.0 para manter seus navegadores compatíveis com o Lighthouse 13.4.1. No Firefox, a configuração declara um mouse de desktop no runner Linux sem periféricos; os contextos de toque continuam usando `hasTouch`. Os cenários de movimento verificam essas capacidades antes de validar os efeitos.
 
+No Actions, Chromium e Firefox usam Ubuntu 24.04; WebKit executa a suíte completa no macOS 15, incluindo a medição da rolagem suave com a composição gráfica dessa plataforma. A emulação de viewport móvel permanece incluída nos três motores.
+
 ### Comandos
 
 | Comando | Verificação |
