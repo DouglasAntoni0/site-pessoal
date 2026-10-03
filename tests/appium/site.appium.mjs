@@ -114,7 +114,7 @@ try {
   await check('04-all-certificates', async () => {
     await click('#certificates-more > summary');
     const triggers = await driver.findElements(By.css('.certification-view-btn'));
-    assert.equal(triggers.length, 16);
+    assert.equal(triggers.length, 18);
     for (const trigger of triggers) {
       await driver.executeScript('arguments[0].scrollIntoView({block:"center",behavior:"instant"});', trigger);
       await trigger.click();

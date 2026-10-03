@@ -41,6 +41,7 @@ function certificateCard(certificate) {
     return `<article class="certification-card glass-panel reveal">
       <div class="certification-topline"><span class="certification-school">${e(certificate.school)}</span></div>
       <h3>${e(certificate.title)}</h3><p>${e(certificate.description)}</p>
+      ${certificate.instructor ? `<p class="certification-instructor">Instrutor: ${e(certificate.instructor)}</p>` : ''}
       <div class="certification-meta"><span>${e(certificate.date)}</span><span>${e(certificate.hours)}</span></div>
       <a class="certification-view-btn" href="${e(certificate.pdf || certificate.image)}" target="_blank" rel="noopener noreferrer"
         data-certificate-title="${e(certificate.title)}" data-certificate-school="${e(certificate.school)}"

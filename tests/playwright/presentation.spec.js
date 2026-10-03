@@ -1,5 +1,23 @@
 import { test, expect } from '../support/fixtures.js';
 
+test('efeitos contínuos usam transform ou opacidade e pausam fora da área visível', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/');
+    const continuousProperties = () => page.evaluate(() => document.getAnimations()
+        .filter(animation => animation.playState === 'running' && animation.effect?.getTiming().iterations === Infinity)
+        .map(animation => [...new Set(animation.effect.getKeyframes().flatMap(frame => Object.keys(frame)
+            .filter(key => !['offset', 'computedOffset', 'easing', 'composite'].includes(key))))]));
+    await expect.poll(async () => (await continuousProperties()).length).toBeGreaterThan(0);
+    for (const properties of await continuousProperties()) {
+        expect(properties.length).toBeGreaterThan(0);
+        expect(properties.every(property => ['transform', 'opacity'].includes(property)), properties.join(', ')).toBe(true);
+    }
+    await page.locator('#contact').evaluate(element => element.scrollIntoView({ behavior: 'instant', block: 'start' }));
+    await expect.poll(async () => (await continuousProperties()).length).toBe(0);
+    await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+    await expect.poll(async () => (await continuousProperties()).length).toBeGreaterThan(0);
+});
+
 const currentLink = page => page.locator('#primary-nav a[aria-current="location"]');
 async function expectCurrent(page, id) {
     await expect(currentLink(page)).toHaveCount(1);

@@ -72,7 +72,7 @@ test('@smoke carrega a experiência sem recursos externos inesperados ou erros',
     .toHaveAttribute('href', 'https://github.com/DouglasAntoni0');
   await expect(page.locator('a[href*="github.com/DouglasAntoni0?tab=repositories"]')).toHaveCount(0);
   await expect(page.locator('#project-modal')).toHaveCount(1);
-  await expect(page.locator('#certifications .certification-card')).toHaveCount(16);
+  await expect(page.locator('#certifications .certification-card')).toHaveCount(18);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('.skill-chip .skill-icon')).toHaveCount(62);

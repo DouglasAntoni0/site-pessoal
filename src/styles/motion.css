@@ -131,29 +131,18 @@
     height: 52vw;
     border-radius: 50%;
     opacity: 0.18;
-    will-change: transform;
   }
 
   .orb-1 {
     top: -20%;
     left: -12%;
     background: radial-gradient(circle, #2563eb, transparent 68%);
-    animation: aurora-drift-a 28s ease-in-out infinite alternate;
   }
 
   .orb-2 {
     right: -14%;
     bottom: -24%;
     background: radial-gradient(circle, #10b981, transparent 68%);
-    animation: aurora-drift-b 34s ease-in-out infinite alternate;
-  }
-
-  @keyframes aurora-drift-a {
-    to { transform: translate3d(7vw, 5vh, 0) scale(1.06); }
-  }
-
-  @keyframes aurora-drift-b {
-    to { transform: translate3d(-6vw, -5vh, 0) scale(1.08); }
   }
 }
 

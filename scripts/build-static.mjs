@@ -33,11 +33,11 @@ async function buildCertificatePreviews() {
     await fs.mkdir(targetDir, { recursive: true });
     const entries = await fs.readdir(sourceDir, { withFileTypes: true });
     await Promise.all(entries
-        .filter((entry) => entry.isFile() && entry.name.endsWith('.png'))
+        .filter((entry) => entry.isFile() && /\.(?:png|jpe?g)$/i.test(entry.name))
         .map((entry) => sharp(path.join(sourceDir, entry.name))
             .resize({ width: 1600, height: 1000, fit: 'inside', withoutEnlargement: true })
             .webp({ quality: 82, smartSubsample: true })
-            .toFile(path.join(targetDir, entry.name.replace(/\.png$/i, '.webp')))));
+            .toFile(path.join(targetDir, entry.name.replace(/\.(?:png|jpe?g)$/i, '.webp')))));
 }
 
 function outputUrl(outputPath) {

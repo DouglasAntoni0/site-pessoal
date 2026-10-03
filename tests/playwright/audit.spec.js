@@ -1,10 +1,22 @@
 import { expect, test } from '../support/fixtures.js';
+import { createHash } from 'node:crypto';
+
+const newCertificates = {
+  'Postman do Zero: Teste de APIs na Prática': {
+    instructor: 'Jeferson Fabiano Caye', date: '14/09/2026', hours: '2,5 horas',
+    sha256: '429b7f1588882f8e9f34622ee4a81a2a89f0dc38944dd9ef03cc35b01eb09a25'
+  },
+  'Javascript para QAs': {
+    instructor: 'Fernando Papito', date: '02/10/2026', hours: '4 horas',
+    sha256: '41ffc8d08bd9718ff5c9d6ecca33af5394fcacb45169b860db59f40479eccac9'
+  }
+};
 
 // Keep the functional journeys deterministic; motion has its own tests below and in portfolio.spec.js.
 test.beforeEach(async ({page}) => { await page.emulateMedia({reducedMotion:'reduce'}); });
 
 test('@smoke todos os certificados carregam sob demanda e Maestro preserva o PDF original', async ({ page, request }) => {
-  test.setTimeout(120_000); // Sixteen complete image/document journeys, including WebKit on Windows.
+  test.setTimeout(120_000); // Eighteen complete image/document journeys, including WebKit on Windows.
   const certificateRequests = [];
   page.on('request', request => {
     if (request.url().includes('/certificates/')) certificateRequests.push(request.url());
@@ -14,7 +26,7 @@ test('@smoke todos os certificados carregam sob demanda e Maestro preserva o PDF
 
   await page.locator('#certificates-more > summary').click();
   const cards = page.locator('.certification-card');
-  await expect(cards).toHaveCount(16);
+  await expect(cards).toHaveCount(18);
   for (const card of await cards.all()) {
     const title = await card.locator('h3').textContent();
     await expect(card.locator('.certification-meta span').last()).toHaveText(/^\d+(,\d+)? horas$/);
@@ -33,6 +45,15 @@ test('@smoke todos os certificados carregam sob demanda e Maestro preserva o PDF
     const original = await modal.locator('#certificate-modal-open').getAttribute('href');
     const response = await request.get(original);
     expect(response.ok(), original).toBe(true);
+    const expected = newCertificates[title];
+    if (expected) {
+      await expect(card).toContainText('Udemy');
+      await expect(card.locator('.certification-instructor')).toHaveText(`Instrutor: ${expected.instructor}`);
+      await expect(card).toContainText(expected.date);
+      await expect(card).toContainText(expected.hours);
+      expect(response.headers()['content-type']).toContain('image/jpeg');
+      expect(createHash('sha256').update(await response.body()).digest('hex')).toBe(expected.sha256);
+    }
     if (title.startsWith('Maestro:')) {
       await expect(card).toContainText('30/08/2026');
       await expect(card).toContainText('3 horas');

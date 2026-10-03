@@ -177,6 +177,13 @@
   flex: 1;
 }
 
+.certification-card .certification-instructor {
+  flex: none;
+  margin-block: 0.75rem 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
 .certification-meta,
 .card-tags,
 .modal-stack {

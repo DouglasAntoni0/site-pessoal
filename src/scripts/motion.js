@@ -100,6 +100,18 @@ function initSectionReveals() {
     elements.forEach((element) => observer.observe(element));
 }
 
+function initVisibleMotion() {
+    // Leave decorations static when this optional API is unavailable.
+    if (!('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+            entry.target.classList.toggle('motion-in-view', entry.isIntersecting);
+        }
+    });
+    document.querySelectorAll('.qa-command-center, .project-visual')
+        .forEach(element => observer.observe(element));
+}
+
 function resetCard(row) {
     if (!row) return;
     row.classList.remove('pointer-active');
@@ -199,6 +211,7 @@ function initFrameScheduler() {
     }, { passive: true });
 
     document.addEventListener('pointermove', (event) => {
+        if (!window.matchMedia(DESKTOP_POINTER_QUERY).matches || motionShouldBeReduced()) return;
         pointerEvent = event;
         pointerDirty = true;
         scheduleFrame();
@@ -228,6 +241,7 @@ export function initMotion() {
     const reduced = syncMotionPreference();
 
     initFrameScheduler();
+    initVisibleMotion();
     document.querySelectorAll('.collection-disclosure').forEach(disclosure => {
         disclosure.addEventListener('toggle', () => {
             if (!disclosure.open) return;

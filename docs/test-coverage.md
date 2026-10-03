@@ -10,7 +10,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Responsividade | 11 dimensões de 280 a 1920 px; título abaixo do cabeçalho, sem overflow; rotação sem reload | `portfolio.spec.js`; Selenium/Cypress em dimensões adicionais |
 | Coleções | Abrir/fechar projetos e certificados por teclado e ponteiro, preservar itens ocultos | `experience.spec.js` |
 | Projetos | Todos os 10 projetos, textos, código, repositório e dez estudos de caso (três com execuções históricas); imagens sob demanda | `audit.spec.js`, `experience.spec.js` |
-| Certificados | Todos os 16 certificados, prévias carregadas, originais HTTP 200, PDF Maestro reconhecido | `audit.spec.js` |
+| Certificados | Todos os 18 certificados, prévias carregadas, originais HTTP 200, PDF Maestro reconhecido, metadados e SHA-256 dos dois novos certificados Udemy | `audit.spec.js` |
 | Ícones | Todos os 62 SVGs pintados; bloqueio de arquivos de ícones, sem JavaScript, rotação e histórico | `icons.spec.js` |
 | Currículo | Download pelo botão, conteúdo PDF, tipo HTTP, nome e SHA-256 iguais ao documento versionado | REG-01 |
 | Links internos e metadados | IDs únicos, âncoras existentes, URL canônica, idioma, descrição, contatos e proteção de nova aba | REG-02 |
@@ -26,6 +26,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | APIs opcionais | Sem IntersectionObserver, ResizeObserver e Element.animate, conteúdo, modais e menu funcionam | REG-12 |
 | Apresentação e navegação ativa | Seção atual ao rolar, histórico, âncora inicial, redimensionamento, pressionamento/cancelamento e abertura de coleções com movimento reduzido | `presentation.spec.js` |
 | Movimento | Touch sem tilt; movimento reduzido e troca durante a sessão; economia de dados; contadores finais | REG-13, `portfolio.spec.js`, `audit.spec.js` |
+| Custo dos efeitos | Animações contínuas usam apenas transformação/opacidade, pausam fora da viewport e retomam ao voltar | `presentation.spec.js` |
 | Histórico e cache | Voltar, avançar e recarregar em âncora preservam conteúdo e funções; módulo dos projetos solicitado só uma vez por sessão | REG-14, REG-15, `experience.spec.js` |
 | Uso repetido | 20 ciclos alternando projeto/certificado; sem crescimento do DOM, duplicação de modal, foco preso ou erro de execução | REG-15 |
 | Acessibilidade automatizada | axe WCAG 2.2 AA: página, coleções expandidas, ambos os modais, menu aberto e mensagem de falha | REG-16, `experience.spec.js` |
@@ -36,7 +37,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Android físico | Chrome do aparelho, toques, hero, menu, projetos, certificado, contatos e erros; modelo/versão/capturas registrados | `tests/android/site.android.mjs` |
 | Android virtual | Appium/UiAutomator2 e Chrome em Android API 35: sete jornadas; todos os projetos e certificados, navegação, currículo, recarga e texto ampliado | `tests/appium/site.appium.mjs`, job Appium no Actions |
 
-Os 51 testes funcionais Playwright são executados integralmente nos três motores: **153 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
+Os 52 testes funcionais Playwright são executados integralmente nos três motores: **156 execuções**, sem reduzir Firefox/WebKit a smoke tests. Os 12 casos visuais são comparações separadas. Cypress, Selenium e Robot preservam suas suítes existentes. Os testes de falha abortam ou atrasam requisições reais da publicação; não fornecem respostas falsas de sucesso.
 
 A medição de posições intermediárias da rolagem usa DPR 1 e executa seus dois cenários sequencialmente por motor, para reduzir interferência da renderização no tempo da animação. Os demais testes mantêm a escala original de cada dispositivo. O Appium aguarda a chegada à âncora antes de capturar a tela ou iniciar outra ação.
 
@@ -63,4 +64,4 @@ Todos usam a mesma URL pública. Preencher dispositivo, navegador/versão, data,
 
 O CI registra o SHA publicado antes dos testes da main. Não se deve usar um resultado da versão anterior como aprovação de uma alteração ainda não publicada. Os artefatos do Actions documentam ambiente, falhas e medições; casos físicos/manuais só são considerados executados quando têm evidência própria.
 
-Cobertura de código mede trechos executados, não todas as combinações de entrada. Da mesma forma, 153 execuções em três motores não representam todos os navegadores, sistemas, redes e dispositivos existentes. Novos recursos e defeitos encontrados devem ampliar esta matriz.
+Cobertura de código mede trechos executados, não todas as combinações de entrada. Da mesma forma, 156 execuções em três motores não representam todos os navegadores, sistemas, redes e dispositivos existentes. Novos recursos e defeitos encontrados devem ampliar esta matriz.

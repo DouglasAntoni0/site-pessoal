@@ -40,6 +40,8 @@ O [build](scripts/build-static.mjs) minifica o HTML, agrupa CSS e JavaScript com
 
 Fontes, ícones e código da interface são locais. As animações usam Web Animations API, um `IntersectionObserver` para as entradas de seção e um agendador de `requestAnimationFrame` para atualizações de rolagem e interação.
 
+Gradientes, fundo e sombras decorativas permanecem estáticos para evitar repinturas contínuas. Radar, indicadores e ornamentos usam apenas `transform` ou `opacity` e pausam ao sair da área visível. A rolagem suave e as respostas curtas aos cliques permanecem ativas, respeitando as preferências de movimento.
+
 ### Texto e interações
 
 A navegação destaca a seção atual com `aria-current="location"`, inclusive após rolagem, navegação pelo histórico e mudança de tamanho da tela. Botões respondem ao pressionamento; as coleções usam abertura nativa com uma transição curta de opacidade. Movimento reduzido e economia de dados preservam o conteúdo e desativam os movimentos opcionais.
@@ -66,7 +68,7 @@ O [catálogo de ícones](src/assets/icons/skills/README.md) documenta os vetores
 | Ícones das competências | `src/assets/icons/skills/` e seu registro de origens em `sources.json` |
 | Currículo | [`assets/Douglas_Antonio_QA_Engineer.pdf`](assets/Douglas_Antonio_QA_Engineer.pdf) |
 
-Para trocar o currículo, substitua o PDF mantendo o caminho acima. Isso preserva o botão de download e os links já compartilhados. Para adicionar um certificado, inclua o original em `assets/certificates/` e cadastre seus dados; as prévias WebP de imagens PNG são geradas automaticamente.
+Para trocar o currículo, substitua o PDF mantendo o caminho acima. Isso preserva o botão de download e os links já compartilhados. Para adicionar um certificado, inclua o original em `assets/certificates/` e cadastre seus dados; as prévias WebP de imagens PNG/JPEG são geradas automaticamente.
 
 Depois de atualizar conteúdo, gere `dist/`, confira os links e execute as verificações correspondentes à alteração. As evidências dos estudos de caso devem manter data, escopo e referência à execução ou ao commit original: são registros históricos, não indicadores do estado atual dos projetos.
 

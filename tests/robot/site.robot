@@ -61,9 +61,9 @@ Certifications Section Renders
     Execute Javascript    document.querySelector('#certifications').scrollIntoView({ block: 'center', inline: 'center' })
     Page Should Contain    Certificações que sustentam
     ${cert_count}=    Get Element Count    css:#certifications .certification-card
-    Should Be Equal As Integers    ${cert_count}    16
+    Should Be Equal As Integers    ${cert_count}    18
     ${cert_button_count}=    Get Element Count    css:#certifications .certification-view-btn
-    Should Be Equal As Integers    ${cert_button_count}    16
+    Should Be Equal As Integers    ${cert_button_count}    18
     ${support_count}=    Get Element Count    css:#certifications .certification-support-card
     Should Be Equal As Integers    ${support_count}    2
     Page Should Contain    Segurança em Tecnologia da Informação

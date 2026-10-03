@@ -1,8 +1,3 @@
-@property --beam-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
 :root {
   --bg: #030712;
   --surface: #09111f;
@@ -239,7 +234,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(from var(--beam-angle, 0deg), transparent 0 72%, rgba(34, 211, 238, 0.6), rgba(139, 92, 246, 0.55), transparent 86%);
+  background: conic-gradient(from 0deg, transparent 0 72%, rgba(34, 211, 238, 0.6), rgba(139, 92, 246, 0.55), transparent 86%);
   content: "";
   opacity: 0.4;
   pointer-events: none;
@@ -899,37 +894,29 @@ body {
 
 .hero-title span {
   background-size: 180% 100%;
-  animation: gradient-drift 8s ease-in-out infinite alternate;
 }
 
-.qa-command-center::before { animation: beam-spin 10s linear infinite; }
-.qa-radar-sweep { animation: radar-spin 4s linear infinite; }
-.qa-console-status span { animation: status-pulse 2s ease-out infinite; }
-.qa-stage.is-active i { animation: stage-pulse 1.9s ease-in-out infinite; }
-.project-visual::after { animation: visual-orbit 28s linear infinite; }
+.qa-radar-sweep { animation: radar-spin 4s linear infinite paused; }
+.qa-console-status span { animation: status-pulse 2s ease-out infinite paused; }
+.qa-stage.is-active i { animation: stage-pulse 1.9s ease-in-out infinite paused; }
+.project-visual::after { animation: visual-orbit 28s linear infinite paused; }
 
-@keyframes beam-spin { to { --beam-angle: 360deg; } }
+/* Animate only compositor-friendly properties on visible decorations. */
+.qa-command-center.motion-in-view :is(.qa-radar-sweep, .qa-console-status span, .qa-stage.is-active i),
+.project-visual.motion-in-view::after {
+  animation-play-state: running;
+}
+
 @keyframes radar-spin { to { transform: rotate(360deg); } }
 @keyframes visual-orbit { to { transform: rotate(360deg); } }
-@keyframes gradient-drift { to { background-position: 100% 50%; } }
 @keyframes status-pulse {
-  50% { box-shadow: 0 0 0 0.35rem rgba(52, 211, 153, 0.08), 0 0 1rem rgba(52, 211, 153, 0.85); }
+  50% { opacity: 0.6; }
 }
 @keyframes stage-pulse {
-  50% { box-shadow: 0 0 0 0.35rem rgba(34, 211, 238, 0.06), 0 0 1.4rem rgba(34, 211, 238, 0.38); }
+  50% { opacity: 0.7; }
 }
-@keyframes grid-drift { to { transform: translate3d(56px, 56px, 0); } }
 
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {
-  .orb-1 { animation: aurora-drift-a 20s ease-in-out infinite alternate; }
-  .orb-2 { animation: aurora-drift-b 24s ease-in-out infinite alternate; }
-  .orb-3 { animation: aurora-drift-c 18s ease-in-out infinite alternate; }
-  .qa-grid-background { animation: grid-drift 18s linear infinite; }
-
-  @keyframes aurora-drift-c {
-    to { transform: translate3d(-8vw, 7vh, 0) scale(1.12); }
-  }
-
   .skill-chip:hover,
   .skill-chip:focus-within {
     border-color: color-mix(in srgb, var(--chip-color) 40%, transparent);
@@ -975,6 +962,8 @@ html.motion-reduced .hero-title span {
 }
 
 html.motion-paused *,
+html.motion-paused *::before,
+html.motion-paused *::after,
 body.modal-open main *,
 body.modal-open main *::before,
 body.modal-open main *::after,

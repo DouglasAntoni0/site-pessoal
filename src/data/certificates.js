@@ -159,5 +159,27 @@ export const certificates = [
         "preview": "assets/certificates/previews/udemy-maestro-mobile-pipeline.webp",
         "featured": true,
         "pdf": "assets/certificates/udemy-maestro-mobile-pipeline.pdf"
+    },
+    {
+        "title": "Postman do Zero: Teste de APIs na Prática",
+        "school": "Udemy",
+        "instructor": "Jeferson Fabiano Caye",
+        "description": "Testes de APIs na prática com Postman, reforçando a base para validar requisições e respostas de serviços.",
+        "date": "14/09/2026",
+        "hours": "2,5 horas",
+        "image": "assets/certificates/udemy-postman-do-zero.jpg",
+        "preview": "assets/certificates/previews/udemy-postman-do-zero.webp",
+        "featured": false
+    },
+    {
+        "title": "Javascript para QAs",
+        "school": "Udemy",
+        "instructor": "Fernando Papito",
+        "description": "Fundamentos de JavaScript voltados à rotina de QA, fortalecendo a base de programação utilizada na automação de testes.",
+        "date": "02/10/2026",
+        "hours": "4 horas",
+        "image": "assets/certificates/udemy-javascript-para-qas.jpg",
+        "preview": "assets/certificates/previews/udemy-javascript-para-qas.webp",
+        "featured": false
     }
 ];

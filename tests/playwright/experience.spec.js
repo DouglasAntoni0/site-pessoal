@@ -12,7 +12,7 @@ test('@smoke coleções destacam três projetos e seis certificados, sem perder 
     await page.keyboard.press('Enter');
     await expect(page.locator('#projects-container .project-row:visible')).toHaveCount(3);
     await page.locator('#certificates-more > summary').click();
-    await expect(page.locator('.certification-card:visible')).toHaveCount(16);
+    await expect(page.locator('.certification-card:visible')).toHaveCount(18);
     await page.locator('#certificates-more > summary').click();
     await expect(page.locator('.certification-card:visible')).toHaveCount(6);
 });
@@ -30,7 +30,7 @@ test('@smoke conteúdo e links funcionam sem JavaScript em celular e desktop', a
         await page.locator('#projects-more > summary').click();
         await expect(page.locator('#projects-container .project-row:visible')).toHaveCount(9);
         await page.locator('#certificates-more > summary').click();
-        await expect(page.locator('.certification-card:visible')).toHaveCount(16);
+        await expect(page.locator('.certification-card:visible')).toHaveCount(18);
         await expect(page.locator('[data-certificate-pdf]')).toHaveAttribute('href', /maestro.+\.pdf$/);
         expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
     }
