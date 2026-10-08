@@ -42,6 +42,8 @@ Fontes, ícones e código da interface são locais. As animações usam Web Anim
 
 Gradientes, fundo e sombras decorativas permanecem estáticos para evitar repinturas contínuas. Radar, indicadores e ornamentos usam apenas `transform` ou `opacity` e pausam ao sair da área visível. A rolagem suave e as respostas curtas aos cliques permanecem ativas, respeitando as preferências de movimento.
 
+A [comparação de renderização de outubro de 2026](docs/performance-2026-10-08.md) registra a causa investigada, a correção publicada e os limites das medições antes/depois.
+
 ### Texto e interações
 
 A navegação destaca a seção atual com `aria-current="location"`, inclusive após rolagem, navegação pelo histórico e mudança de tamanho da tela. Botões respondem ao pressionamento; as coleções usam abertura nativa com uma transição curta de opacidade. Movimento reduzido e economia de dados preservam o conteúdo e desativam os movimentos opcionais.

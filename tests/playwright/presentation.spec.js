@@ -3,19 +3,31 @@ import { test, expect } from '../support/fixtures.js';
 test('efeitos contínuos usam transform ou opacidade e pausam fora da área visível', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.goto('/');
-    const continuousProperties = () => page.evaluate(() => document.getAnimations()
+    const continuousAnimations = () => page.evaluate(() => document.getAnimations()
         .filter(animation => animation.playState === 'running' && animation.effect?.getTiming().iterations === Infinity)
-        .map(animation => [...new Set(animation.effect.getKeyframes().flatMap(frame => Object.keys(frame)
-            .filter(key => !['offset', 'computedOffset', 'easing', 'composite'].includes(key))))]));
-    await expect.poll(async () => (await continuousProperties()).length).toBeGreaterThan(0);
-    for (const properties of await continuousProperties()) {
+        .map(animation => {
+            const target = animation.effect.target;
+            const bounds = target.getBoundingClientRect();
+            return {
+                properties: [...new Set(animation.effect.getKeyframes().flatMap(frame => Object.keys(frame)
+                    .filter(key => !['offset', 'computedOffset', 'easing', 'composite'].includes(key))))],
+                inViewport: bounds.bottom > 0 && bounds.top < innerHeight && bounds.right > 0 && bounds.left < innerWidth,
+                inHero: Boolean(target.closest('.qa-command-center'))
+            };
+        }));
+    await expect.poll(async () => (await continuousAnimations()).some(animation => animation.inHero)).toBe(true);
+    for (const { properties, inViewport } of await continuousAnimations()) {
+        expect(inViewport).toBe(true);
         expect(properties.length).toBeGreaterThan(0);
         expect(properties.every(property => ['transform', 'opacity'].includes(property)), properties.join(', ')).toBe(true);
     }
     await page.locator('#contact').evaluate(element => element.scrollIntoView({ behavior: 'instant', block: 'start' }));
-    await expect.poll(async () => (await continuousProperties()).length).toBe(0);
+    // The previous section can remain partly visible above this short section.
+    // Its decoration may keep moving; every fully offscreen effect must pause.
+    await expect.poll(async () => (await continuousAnimations())
+        .every(animation => animation.inViewport && !animation.inHero)).toBe(true);
     await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
-    await expect.poll(async () => (await continuousProperties()).length).toBeGreaterThan(0);
+    await expect.poll(async () => (await continuousAnimations()).some(animation => animation.inHero)).toBe(true);
 });
 
 const currentLink = page => page.locator('#primary-nav a[aria-current="location"]');

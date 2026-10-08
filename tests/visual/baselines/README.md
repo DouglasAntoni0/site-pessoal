@@ -19,6 +19,12 @@ A identificação dos projetos como uma seleção do site foi revisada na public
 inicial mudou: Linux no Actions [34645173431](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/34645173431)
 e Windows na mesma publicação.
 
+Os certificados Postman e Javascript para QAs foram revisados em 08/10/2026,
+na publicação `75b9d9c86bf4ffc1d24a917e6fe1a9c0e4f64b64`. Apenas as referências
+de certificados expandidos em desktop/celular mudaram: Linux no Actions
+[37848508380](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/37848508380)
+e Windows na mesma publicação. As outras dez capturas permaneceram compatíveis.
+
 A execução normal compara os pixels e não atualiza os arquivos. Mudanças
 intencionais precisam de nova captura e revisão antes de substituir a referência.
 O cabeçalho fixo é ocultado apenas nas capturas das seções longas; ele é
