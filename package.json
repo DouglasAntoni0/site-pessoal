@@ -34,7 +34,7 @@
     "istanbul-reports": "^3.2.0",
     "lighthouse": "^13.4.1",
     "selenium-webdriver": "^4.43.0",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "v8-to-istanbul": "^9.3.0"
   }
 }
