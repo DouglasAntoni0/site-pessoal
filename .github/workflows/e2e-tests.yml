@@ -274,7 +274,9 @@ jobs:
       - run: npm ci
       - run: npm ci --prefix tests/appium
       - run: npm run prepare:appium
-      - run: npm audit --prefix tests/appium --audit-level=moderate
+      # The vendor bundle in the outer lock describes the pre-repair tree.
+      # Audit the installed tree after exact-version assertions in prepare:appium.
+      - run: npm audit --prefix tests/appium --no-package-lock --audit-level=moderate
       - run: npm audit --prefix tests/appium/node_modules/appium-uiautomator2-driver --omit=dev --audit-level=moderate
       - name: Enable hardware acceleration for the disposable CI emulator
         run: |
@@ -296,3 +298,4 @@ jobs:
           name: appium-android
           path: artifacts/appium/
           retention-days: 7
+
