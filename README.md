@@ -150,7 +150,7 @@ O verificador de links não envia mensagens nem preenche formulários. Respostas
 | Requisições críticas identificadas no build | Até 8 |
 | JavaScript e CSS | Até 20 KiB Brotli cada |
 | HTML, bundles, fontes e ícones críticos | Até 250 KiB Brotli no total |
-| Elementos do DOM no carregamento inicial | Até 900 |
+| Elementos do DOM no carregamento inicial | Até 920 (incluindo os 20 elementos dos dois novos certificados) |
 | Lighthouse Performance | Mediana ≥ 95 |
 | Lighthouse Accessibility, Best Practices e SEO | 100 em cada execução |
 | LCP | Mediana ≤ 2,5 s |
@@ -161,9 +161,9 @@ Os limites são definidos em [`scripts/check-budgets.mjs`](scripts/check-budgets
 
 ### Android virtual e físico
 
-O CI também executa Appium 3.7.0 com UiAutomator2 8.6.1 em um emulador Android API 35 com Chrome. As dependências ficam isoladas em `tests/appium/`, com lockfile próprio. Os sete fluxos verificam conteúdo, ícones, menu, todos os projetos e certificados, disponibilidade do currículo, recarregamento/contatos e texto ampliado. O relatório registra `physical: false`. A conexão local do Appium controla o emulador; a aplicação continua sendo carregada do Netlify. A suíte exige emulador e não faz parte do comando genérico `test:all`.
+O CI também executa Appium 3.8.0 com UiAutomator2 8.7.0 em um emulador Android API 35 com Chrome. As dependências ficam isoladas em `tests/appium/`, com lockfile próprio. Os sete fluxos verificam conteúdo, ícones, menu, todos os projetos e certificados, disponibilidade do currículo, recarregamento/contatos e texto ampliado. O relatório registra `physical: false`. A conexão local do Appium controla o emulador; a aplicação continua sendo carregada do Netlify. A suíte exige emulador e não faz parte do comando genérico `test:all`.
 
-Após `npm ci --prefix tests/appium`, execute `npm run prepare:appium`. O UiAutomator2 8.6.1 inclui um shrinkwrap que fixa Morgan 1.11.0; a preparação aplica Morgan 1.12.0 dentro desse pacote e confere as versões realmente instaladas. O Actions executa a preparação e as auditorias de dependências antes de abrir o emulador.
+Após `npm ci --prefix tests/appium`, execute `npm run prepare:appium`. O UiAutomator2 inclui dependências no próprio pacote; a preparação aplica as versões de segurança fixadas em `tests/appium/package.json` também dentro do driver e confere todas as cópias realmente instaladas. O lockfile externo descreve o pacote original do fornecedor, anterior a essa preparação. Por isso, o Actions audita a árvore preparada com `npm audit --prefix tests/appium --no-package-lock --audit-level=moderate` e audita separadamente o lockfile gerado dentro do driver, antes de abrir o emulador. A auditoria continua bloqueando vulnerabilidades moderadas, altas ou críticas.
 
 Com ADB instalado, conecte o aparelho, autorize a depuração USB, desbloqueie a tela e mantenha o Chrome visível:
 

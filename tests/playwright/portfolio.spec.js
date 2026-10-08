@@ -76,7 +76,9 @@ test('@smoke carrega a experiência sem recursos externos inesperados ou erros',
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('.skill-chip .skill-icon')).toHaveCount(62);
-  expect(await page.locator('*').count()).toBeLessThanOrEqual(900);
+  // The two added certificate cards contribute exactly 20 elements.
+  // Preserve the previous headroom while keeping a fixed page-size budget.
+  expect(await page.locator('*').count()).toBeLessThanOrEqual(920);
   expect(thirdParty).toEqual([]);
   expect(errors).toEqual([]);
 });
