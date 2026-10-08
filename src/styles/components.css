@@ -406,7 +406,7 @@
   max-height: calc(100dvh - 2rem);
   border: 1px solid var(--border-strong);
   border-radius: 1.25rem;
-  background: #0b1220;
+  background: var(--surface);
   box-shadow: var(--shadow);
   opacity: 0;
   overflow: hidden;
@@ -433,7 +433,7 @@
   place-items: center;
   border: 1px solid var(--border);
   border-radius: 50%;
-  background: #172033;
+  background: var(--surface-raised);
   color: #fff;
   cursor: pointer;
   font-size: 1.5rem;
@@ -470,7 +470,7 @@
   min-width: 0;
   border: 1px solid var(--border);
   border-radius: 0.8rem;
-  background: #060b15;
+  background: var(--code-bg);
   overflow: hidden;
 }
 

@@ -50,7 +50,7 @@ A navegação destaca a seção atual com `aria-current="location"`, inclusive a
 
 Links internos usam rolagem suave nativa nos dois sentidos, com espaço para o cabeçalho e preservação das âncoras e do histórico. A preferência `prefers-reduced-motion` mantém a navegação sem animação. Os links gerais do GitHub apontam para o perfil; links de projetos e evidências continuam levando ao conteúdo correspondente.
 
-A apresentação usa ciano nas ações principais, títulos claros e cores de categoria nos ícones. Cargas horárias usam vírgula decimal. Todos os projetos apresentam problema, contribuição e evidência; os três destaques incluem resultados históricos de execução, e os demais apontam para documentação em commits identificados. Títulos oficiais dos certificados são preservados.
+A apresentação usa fundo azul-marinho `#0F172A`, cartões mais claros e gradientes estáticos discretos. A paleta compartilhada em `src/styles/base.css` também atende menus, modais e dispositivos touch. Ciano destaca as ações principais; títulos e textos secundários têm contraste com as superfícies. As cores de categoria permanecem nos ícones. Cargas horárias usam vírgula decimal. Todos os projetos apresentam problema, contribuição e evidência; os três destaques incluem resultados históricos de execução, e os demais apontam para documentação em commits identificados. Títulos oficiais dos certificados são preservados.
 
 ### Ícones das competências
 

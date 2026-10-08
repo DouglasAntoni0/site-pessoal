@@ -16,18 +16,25 @@
 
 :root {
   color-scheme: dark;
-  --bg: #040914;
-  --surface: #0b1220;
-  --surface-soft: rgba(15, 23, 42, 0.86);
-  --surface-card: rgba(15, 23, 42, 0.72);
+  --bg: #0f172a;
+  --surface: #18253b;
+  --surface-soft: rgba(24, 37, 59, 0.94);
+  --surface-card: #1b2940;
+  --surface-raised: #24354f;
+  --panel-bg: linear-gradient(145deg, #22324b, #18253b);
+  --header-bg: rgba(15, 23, 42, 0.97);
+  --code-bg: #122036;
   --text: #f8fafc;
-  --muted: #a8b4c6;
-  --blue: #3b82f6;
-  --emerald: #34d399;
-  --purple: #a78bfa;
-  --border: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.2);
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  --muted: #bbc8da;
+  --blue: #60a5fa;
+  --cyan: #67e8f9;
+  --emerald: #5ee0b5;
+  --purple: #b4a0f7;
+  --magenta: #f08abf;
+  --amber: #fbbf24;
+  --border: rgba(163, 184, 213, 0.22);
+  --border-strong: rgba(163, 184, 213, 0.36);
+  --shadow: 0 24px 70px rgba(2, 6, 23, 0.26);
   --font-heading: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --header-row-height: 5rem;
@@ -52,8 +59,9 @@ body {
   min-height: 100%;
   margin: 0;
   background:
-    radial-gradient(circle at 12% 8%, rgba(37, 99, 235, 0.18), transparent 34rem),
-    radial-gradient(circle at 88% 22%, rgba(16, 185, 129, 0.13), transparent 32rem),
+    radial-gradient(circle at 10% 8%, rgba(96, 165, 250, 0.08), transparent 32rem),
+    radial-gradient(circle at 92% 32%, rgba(103, 232, 249, 0.04), transparent 32rem),
+    linear-gradient(180deg, var(--bg), #14233b 32%, var(--bg) 56%, #142138 82%, var(--bg)),
     var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -170,7 +178,7 @@ a {
 .glass-panel {
   border: 1px solid var(--border);
   border-radius: 1.5rem;
-  background: linear-gradient(145deg, rgba(15, 23, 42, 0.86), rgba(4, 9, 20, 0.9));
+  background: var(--panel-bg);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset;
 }
 
