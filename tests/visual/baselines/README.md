@@ -25,6 +25,15 @@ de certificados expandidos em desktop/celular mudaram: Linux no Actions
 [37848508380](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/37848508380)
 e Windows na mesma publicação. As outras dez capturas permaneceram compatíveis.
 
+A paleta azul-marinho e os cartões mais claros foram revisados em 08/10/2026,
+a partir da alteração `23330320b53770ba985db94dd59cfe48c20be180`.
+As doze referências de cada plataforma foram recapturadas e revisadas:
+Windows no site público e Linux no Actions
+[37854871266](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/37854871266),
+com a publicação `30f715af64204d4f1516f817fd359a6320506e49` confirmada.
+O gerador manual usa `--update-snapshots=all` para renovar todas as imagens,
+inclusive alterações de cores que permaneçam dentro da tolerância de comparação.
+
 A execução normal compara os pixels e não atualiza os arquivos. Mudanças
 intencionais precisam de nova captura e revisão antes de substituir a referência.
 O cabeçalho fixo é ocultado apenas nas capturas das seções longas; ele é
