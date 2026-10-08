@@ -44,8 +44,10 @@ test('halos preservam os controles e pausam em modais, aba oculta e movimento re
     await expect.poll(runningHalos).toBe(2);
     expect((await haloStates()).map(state => state.duration).sort((a, b) => a - b)).toEqual([18_000, 24_000]);
     for (const bounds of await halos.evaluateAll(elements => elements.map(element => {
-        const rect = element.getBoundingClientRect();
-        return { width: rect.width, height: rect.height, filter: getComputedStyle(element).filter };
+        const style = getComputedStyle(element);
+        // Translation can add fractional rounding to the visual bounding box.
+        // Check the rendered CSS dimensions independently of the drifting position.
+        return { width: parseFloat(style.width), height: parseFloat(style.height), filter: style.filter };
     }))) {
         expect(bounds.width).toBeLessThanOrEqual(480);
         expect(bounds.height).toBeLessThanOrEqual(480);

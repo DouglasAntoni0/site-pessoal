@@ -1,7 +1,9 @@
 # Referências visuais
 
 As imagens foram capturadas exclusivamente em https://douglasqa.netlify.app/,
-com movimento reduzido e fontes carregadas. Desktop: 1440 × 900; mobile:
+com fontes carregadas. A apresentação inicial usa movimento normal, congelado
+na captura, para incluir os halos; os demais estados usam movimento reduzido.
+Desktop: 1440 × 900; mobile:
 390 × 844; DPR 1. O diretório separa a renderização por sistema operacional.
 
 As primeiras referências Linux foram revisadas a partir do Actions
@@ -33,6 +35,14 @@ Windows no site público e Linux no Actions
 com a publicação `30f715af64204d4f1516f817fd359a6320506e49` confirmada.
 O gerador manual usa `--update-snapshots=all` para renovar todas as imagens,
 inclusive alterações de cores que permaneçam dentro da tolerância de comparação.
+
+A recuperação do contraste, dos gradientes por categoria e da iluminação da
+apresentação inicial foi revisada em 08/10/2026, na publicação
+`60e52de9005a751cdcbdf13c10d6385210f7c8e3`. As doze referências Windows foram
+capturadas no site público e as doze Linux no Actions
+[37857475818](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/37857475818),
+com o mesmo commit publicado confirmado. A revisão inclui desktop, celular,
+menu, os dois modais, competências e certificados expandidos.
 
 A execução normal compara os pixels e não atualiza os arquivos. Mudanças
 intencionais precisam de nova captura e revisão antes de substituir a referência.
