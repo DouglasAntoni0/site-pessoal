@@ -211,7 +211,13 @@ test('REG-12 APIs opcionais ausentes preservam as funções essenciais', async (
   await page.goto('/');
   await expect(page.locator('h1')).toBeVisible();
   await expect(page.locator('#hero .aurora-wrapper')).toBeVisible();
-  expect(await page.evaluate(() => document.getAnimations().filter(animation => animation.playState === 'running').length)).toBe(0);
+  // Short CSS transitions are allowed; without the visibility API, ambient loops
+  // must remain paused even while the page finishes its initial presentation.
+  expect(await page.evaluate(() => document.getAnimations().filter(animation =>
+    animation.playState === 'running' && animation.effect?.getTiming().iterations === Infinity).length)).toBe(0);
+  for (const halo of await page.locator('#hero .aurora-orb').all()) {
+    await expect(halo).toHaveCSS('animation-play-state', 'paused');
+  }
   await page.locator('.trigger-modal').first().click();
   await expect(page.locator('#project-modal')).toBeVisible();
   await page.keyboard.press('Escape');
