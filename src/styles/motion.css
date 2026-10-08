@@ -50,7 +50,7 @@
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  box-shadow: 0 0.75rem 2rem rgba(34, 211, 238, 0.18);
+  box-shadow: 0 0.75rem 2rem rgba(34, 211, 238, 0.3);
 }
 
 .tech-tag:hover {
@@ -112,36 +112,8 @@
 
 @media (min-width: 961px) and (hover: hover) and (pointer: fine) {
   .glass-header {
-    /* A translucent fill avoids repainting the animated page through live blur. */
+    /* Keep the fill independent of live backdrop blur. */
     background: var(--header-bg);
-  }
-
-  .aurora-wrapper {
-    position: fixed;
-    inset: -12%;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .aurora-orb {
-    position: absolute;
-    width: 52vw;
-    height: 52vw;
-    border-radius: 50%;
-    opacity: 0.18;
-  }
-
-  .orb-1 {
-    top: -20%;
-    left: -12%;
-    background: radial-gradient(circle, #2563eb, transparent 68%);
-  }
-
-  .orb-2 {
-    right: -14%;
-    bottom: -24%;
-    background: radial-gradient(circle, #10b981, transparent 68%);
   }
 }
 

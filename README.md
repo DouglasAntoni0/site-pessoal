@@ -40,7 +40,7 @@ O [build](scripts/build-static.mjs) minifica o HTML, agrupa CSS e JavaScript com
 
 Fontes, ícones e código da interface são locais. As animações usam Web Animations API, um `IntersectionObserver` para as entradas de seção e um agendador de `requestAnimationFrame` para atualizações de rolagem e interação.
 
-Gradientes, fundo e sombras decorativas permanecem estáticos para evitar repinturas contínuas. Radar, indicadores e ornamentos usam apenas `transform` ou `opacity` e pausam ao sair da área visível. A rolagem suave e as respostas curtas aos cliques permanecem ativas, respeitando as preferências de movimento.
+Gradientes e sombras são desenhados como superfícies estáticas. A apresentação inicial tem dois halos de até 480 pixels, com ciclos de 18 e 24 segundos no desktop; apenas deslocamento e opacidade são animados. Halos, radar, indicadores e ornamentos pausam ao sair da área visível, com a aba oculta ou durante a abertura de modais. No celular, os halos permanecem estáticos; movimento reduzido e economia de dados desativam a iluminação ambiente. A rolagem suave e as respostas curtas aos cliques respeitam as preferências de movimento.
 
 A [comparação de renderização de outubro de 2026](docs/performance-2026-10-08.md) registra a causa investigada, a correção publicada e os limites das medições antes/depois.
 
@@ -50,7 +50,7 @@ A navegação destaca a seção atual com `aria-current="location"`, inclusive a
 
 Links internos usam rolagem suave nativa nos dois sentidos, com espaço para o cabeçalho e preservação das âncoras e do histórico. A preferência `prefers-reduced-motion` mantém a navegação sem animação. Os links gerais do GitHub apontam para o perfil; links de projetos e evidências continuam levando ao conteúdo correspondente.
 
-A apresentação usa fundo azul-marinho `#0F172A`, cartões mais claros e gradientes estáticos discretos. A paleta compartilhada em `src/styles/base.css` também atende menus, modais e dispositivos touch. Ciano destaca as ações principais; títulos e textos secundários têm contraste com as superfícies. As cores de categoria permanecem nos ícones. Cargas horárias usam vírgula decimal. Todos os projetos apresentam problema, contribuição e evidência; os três destaques incluem resultados históricos de execução, e os demais apontam para documentação em commits identificados. Títulos oficiais dos certificados são preservados.
+A apresentação usa azul profundo `#07101F`, cartões escuros com iluminação por categoria e destaques em ciano, azul e roxo. A paleta compartilhada em `src/styles/base.css` também atende menus, modais e dispositivos touch. Detalhes usam cores saturadas; números de categoria e textos usam tons mais claros para preservar o contraste. Cargas horárias usam vírgula decimal. Todos os projetos apresentam problema, contribuição e evidência; os três destaques incluem resultados históricos de execução, e os demais apontam para documentação em commits identificados. Títulos oficiais dos certificados são preservados.
 
 ### Ícones das competências
 

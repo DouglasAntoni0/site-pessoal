@@ -13,6 +13,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('hero', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await expect(page.locator('html')).not.toHaveClass(/motion-reduced/);
+  await expect(page.locator('#hero .aurora-wrapper')).toBeVisible();
   await expect(page).toHaveScreenshot('hero.png');
 });
 

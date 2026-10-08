@@ -328,10 +328,6 @@
 }
 
 @media (hover: none), (pointer: coarse) {
-  .aurora-wrapper {
-    display: none;
-  }
-
   .glass-panel {
     background: var(--panel-bg);
   }

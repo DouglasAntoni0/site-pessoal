@@ -12,7 +12,7 @@ test('efeitos contínuos usam transform ou opacidade e pausam fora da área vis�
                 properties: [...new Set(animation.effect.getKeyframes().flatMap(frame => Object.keys(frame)
                     .filter(key => !['offset', 'computedOffset', 'easing', 'composite'].includes(key))))],
                 inViewport: bounds.bottom > 0 && bounds.top < innerHeight && bounds.right > 0 && bounds.left < innerWidth,
-                inHero: Boolean(target.closest('.qa-command-center'))
+                inHero: Boolean(target.closest('#hero'))
             };
         }));
     await expect.poll(async () => (await continuousAnimations()).some(animation => animation.inHero)).toBe(true);
@@ -28,6 +28,66 @@ test('efeitos contínuos usam transform ou opacidade e pausam fora da área vis�
         .every(animation => animation.inViewport && !animation.inHero)).toBe(true);
     await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
     await expect.poll(async () => (await continuousAnimations()).some(animation => animation.inHero)).toBe(true);
+});
+
+test('halos preservam os controles e pausam em modais, aba oculta e movimento reduzido', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/');
+    const halos = page.locator('#hero .aurora-orb');
+    const runningHalos = () => page.evaluate(() => document.getAnimations()
+        .filter(animation => animation.effect?.target.matches('.aurora-orb') && animation.playState === 'running').length);
+    const haloStates = () => page.evaluate(() => document.getAnimations()
+        .filter(animation => animation.effect?.target.matches('.aurora-orb'))
+        .map(animation => ({ state: animation.playState, time: animation.currentTime, duration: animation.effect.getTiming().duration })));
+    await expect(halos).toHaveCount(2);
+    await expect(page.locator('#hero .aurora-wrapper')).toHaveAttribute('aria-hidden', 'true');
+    await expect.poll(runningHalos).toBe(2);
+    expect((await haloStates()).map(state => state.duration).sort((a, b) => a - b)).toEqual([18_000, 24_000]);
+    for (const bounds of await halos.evaluateAll(elements => elements.map(element => {
+        const rect = element.getBoundingClientRect();
+        return { width: rect.width, height: rect.height, filter: getComputedStyle(element).filter };
+    }))) {
+        expect(bounds.width).toBeLessThanOrEqual(480);
+        expect(bounds.height).toBeLessThanOrEqual(480);
+        expect(bounds.filter).toBe('none');
+    }
+    const action = page.locator('.hero-actions .btn').first();
+    await action.scrollIntoViewIfNeeded();
+    expect(await action.evaluate(element => {
+        const rect = element.getBoundingClientRect();
+        return element.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
+    })).toBe(true);
+    await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+    await expect.poll(runningHalos).toBe(2);
+
+    // Open through the real production handler while keeping the hero in view,
+    // so this checks modal suspension independently of offscreen suspension.
+    await page.locator('.trigger-modal').first().evaluate(element => element.click());
+    await expect(page.locator('#project-modal')).toBeVisible();
+    await expect.poll(async () => (await haloStates()).every(state => state.state === 'paused')).toBe(true);
+    const pausedTimes = (await haloStates()).map(state => state.time);
+    expect(pausedTimes).toHaveLength(2);
+    await page.waitForTimeout(120);
+    expect((await haloStates()).map(state => state.time)).toEqual(pausedTimes);
+    await page.keyboard.press('Escape');
+    await expect.poll(runningHalos).toBe(2);
+
+    // Simulate the browser notification to verify the production visibility handler.
+    await page.evaluate(() => {
+        Object.defineProperty(document, 'hidden', { configurable: true, value: true });
+        document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect.poll(runningHalos).toBe(0);
+    await page.evaluate(() => {
+        delete document.hidden;
+        document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect.poll(runningHalos).toBe(2);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(page.locator('#hero .aurora-wrapper')).toBeHidden();
+    await expect.poll(runningHalos).toBe(0);
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await expect.poll(runningHalos).toBe(2);
 });
 
 const currentLink = page => page.locator('#primary-nav a[aria-current="location"]');

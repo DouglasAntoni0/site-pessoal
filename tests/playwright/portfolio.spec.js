@@ -209,6 +209,11 @@ test('touch recebe entradas pontuais sem tilt ou loops contínuos', async ({ bro
   await page.goto(testInfo.project.use.baseURL);
 
   expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
+  await expect(page.locator('#hero .aurora-wrapper')).toBeVisible();
+  await expect(page.locator('#hero .aurora-orb')).toHaveCount(2);
+  for (const halo of await page.locator('#hero .aurora-orb').all()) {
+    await expect(halo).toHaveCSS('animation-name', 'none');
+  }
   expect(await page.locator('[data-counter]').allTextContents()).toEqual(['10', '4', '62']);
   const entryAnimations = await page.evaluate(() => window.__qaAnimationCalls);
   expect(entryAnimations.length).toBeGreaterThan(0);

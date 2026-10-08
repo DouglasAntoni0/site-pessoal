@@ -210,6 +210,8 @@ test('REG-12 APIs opcionais ausentes preservam as funções essenciais', async (
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('#hero .aurora-wrapper')).toBeVisible();
+  expect(await page.evaluate(() => document.getAnimations().filter(animation => animation.playState === 'running').length)).toBe(0);
   await page.locator('.trigger-modal').first().click();
   await expect(page.locator('#project-modal')).toBeVisible();
   await page.keyboard.press('Escape');
@@ -232,6 +234,8 @@ test('REG-13 economia de dados mantém contadores finais e suspende animações'
   expect(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running').length)).toBe(0);
   await page.evaluate(() => { navigator.connection.saveData = false; navigator.connection.dispatchEvent(new Event('change')); });
   await expect(page.locator('html')).not.toHaveClass(/motion-reduced/);
+  await expect.poll(() => page.evaluate(() => document.getAnimations()
+    .filter(animation => animation.effect?.target.matches('.aurora-orb') && animation.playState === 'running').length)).toBe(2);
   await page.locator('.trigger-modal').first().click();
   await expect(page.locator('#project-modal')).toBeVisible();
 });

@@ -108,7 +108,7 @@ function initVisibleMotion() {
             entry.target.classList.toggle('motion-in-view', entry.isIntersecting);
         }
     });
-    document.querySelectorAll('.qa-command-center, .project-visual')
+    document.querySelectorAll('.aurora-orb, .qa-command-center, .project-visual')
         .forEach(element => observer.observe(element));
 }
 
