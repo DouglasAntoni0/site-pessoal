@@ -243,7 +243,9 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:deployment
-      - run: npm run test:visual -- --update-snapshots
+        env:
+          EXPECTED_COMMIT: ${{ github.ref == 'refs/heads/main' && github.sha || '' }}
+      - run: npm run test:visual -- --update-snapshots=all
       - uses: actions/upload-artifact@v4
         if: always()
         with:
