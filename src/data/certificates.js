@@ -181,5 +181,17 @@ export const certificates = [
         "image": "assets/certificates/udemy-javascript-para-qas.jpg",
         "preview": "assets/certificates/previews/udemy-javascript-para-qas.webp",
         "featured": false
+    },
+    {
+        "title": "Playwright eXpress",
+        "school": "Udemy",
+        "instructor": "Fernando Papito",
+        "description": "Automação E2E de aplicações web com Playwright e TypeScript, usando Page Objects, fixtures, testes em diferentes navegadores e integração contínua com GitHub Actions.",
+        "date": "01/11/2026",
+        "hours": "6,5 horas",
+        "image": "assets/certificates/udemy-playwright-express.png",
+        "preview": "assets/certificates/previews/udemy-playwright-express.webp",
+        "featured": false,
+        "pdf": "assets/certificates/udemy-playwright-express.pdf"
     }
 ];

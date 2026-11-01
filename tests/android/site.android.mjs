@@ -75,14 +75,14 @@ try {
     await tap(page.locator('#project-modal .close-modal'));
     await expect(page.locator('#project-modal')).toBeHidden();
     report.checks.push('Project collection and case-study modal respond to touch');
-    await tap(page.locator('[data-certificate-pdf]'));
+    await tap(page.locator('[data-certificate-pdf]').first());
     await expect(page.locator('#certificate-modal-image')).toBeVisible();
     await expect.poll(() => page.locator('#certificate-modal-image').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
     await expect(page.locator('#certificate-modal-open')).toHaveAttribute('href', /\.pdf$/);
     await screenshot('maestro');
     await tap(page.locator('#certificate-viewer-modal .close-modal'));
     await tap(page.locator('#certificates-more > summary'));
-    await expect(page.locator('.certification-card:visible')).toHaveCount(18);
+    await expect(page.locator('.certification-card:visible')).toHaveCount(19);
     await geometry();
     report.checks.push('Maestro preview, PDF link and complete certificate collection');
     await page.locator('#contact').scrollIntoViewIfNeeded();

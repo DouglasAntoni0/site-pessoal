@@ -12,7 +12,7 @@ test('@smoke coleções destacam três projetos e seis certificados, sem perder 
     await page.keyboard.press('Enter');
     await expect(page.locator('#projects-container .project-row:visible')).toHaveCount(3);
     await page.locator('#certificates-more > summary').click();
-    await expect(page.locator('.certification-card:visible')).toHaveCount(18);
+    await expect(page.locator('.certification-card:visible')).toHaveCount(19);
     await page.locator('#certificates-more > summary').click();
     await expect(page.locator('.certification-card:visible')).toHaveCount(6);
 });
@@ -30,8 +30,11 @@ test('@smoke conteúdo e links funcionam sem JavaScript em celular e desktop', a
         await page.locator('#projects-more > summary').click();
         await expect(page.locator('#projects-container .project-row:visible')).toHaveCount(9);
         await page.locator('#certificates-more > summary').click();
-        await expect(page.locator('.certification-card:visible')).toHaveCount(18);
-        await expect(page.locator('[data-certificate-pdf]')).toHaveAttribute('href', /maestro.+\.pdf$/);
+        await expect(page.locator('.certification-card:visible')).toHaveCount(19);
+        for (const name of ['udemy-maestro-mobile-pipeline', 'udemy-playwright-express']) {
+            await expect(page.locator(`[data-certificate-pdf="assets/certificates/${name}.pdf"]`))
+                .toHaveAttribute('href', `assets/certificates/${name}.pdf`);
+        }
         expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
     }
     await context.close();
@@ -89,7 +92,7 @@ test('@smoke modais preservam o foco com movimento reduzido', async ({page}) => 
     await page.goto('/', {waitUntil:'networkidle'});
     for (const [trigger, dialog, lastLink] of [
         [page.locator('.trigger-modal').first(), '#project-modal', '#project-modal-link'],
-        [page.locator('[data-certificate-pdf]'), '#certificate-viewer-modal', '#certificate-modal-open']
+        [page.locator('[data-certificate-pdf]').first(), '#certificate-viewer-modal', '#certificate-modal-open']
     ]) {
         await trigger.click();
         await expect(page.locator(`${dialog} .close-modal`)).toBeFocused();
@@ -132,7 +135,7 @@ test('acessibilidade automatizada cobre página, coleções e os dois modais', a
     await page.locator('.trigger-modal').first().click();
     await audit();
     await page.keyboard.press('Escape');
-    await page.locator('[data-certificate-pdf]').click();
+    await page.locator('[data-certificate-pdf]').first().click();
     await expect(page.locator('#certificate-modal-image')).toBeVisible();
     await audit();
 });

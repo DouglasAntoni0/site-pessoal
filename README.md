@@ -72,6 +72,8 @@ O [catálogo de ícones](src/assets/icons/skills/README.md) documenta os vetores
 
 Para trocar o currículo, substitua o PDF mantendo o caminho acima. Isso preserva o botão de download e os links já compartilhados. Para adicionar um certificado, inclua o original em `assets/certificates/` e cadastre seus dados; as prévias WebP de imagens PNG/JPEG são geradas automaticamente.
 
+Para certificados em PDF, preserve o arquivo original, inclua uma imagem PNG renderizada para a prévia e cadastre o caminho `pdf`. O botão “Ver certificado” abre a prévia no modal, com acesso ao PDF original; ambos os PDFs também ficam acessíveis sem JavaScript. O certificado [Playwright eXpress](https://www.udemy.com/course/playwright-express/) segue esse padrão, com data e carga horária conferidas no documento fornecido.
+
 Depois de atualizar conteúdo, gere `dist/`, confira os links e execute as verificações correspondentes à alteração. As evidências dos estudos de caso devem manter data, escopo e referência à execução ou ao commit original: são registros históricos, não indicadores do estado atual dos projetos.
 
 ## Testes e qualidade
@@ -150,7 +152,7 @@ O verificador de links não envia mensagens nem preenche formulários. Respostas
 | Requisições críticas identificadas no build | Até 8 |
 | JavaScript e CSS | Até 20 KiB Brotli cada |
 | HTML, bundles, fontes e ícones críticos | Até 250 KiB Brotli no total |
-| Elementos do DOM no carregamento inicial | Até 920 (incluindo os 20 elementos dos dois novos certificados) |
+| Elementos do DOM no carregamento inicial | Até 930 (incluindo os 30 elementos dos certificados Postman do Zero, Javascript para QAs e Playwright eXpress) |
 | Lighthouse Performance | Mediana ≥ 95 |
 | Lighthouse Accessibility, Best Practices e SEO | 100 em cada execução |
 | LCP | Mediana ≤ 2,5 s |

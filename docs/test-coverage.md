@@ -10,7 +10,7 @@ Alvo único: **https://douglasqa.netlify.app/**. As suítes antigas e novas não
 | Responsividade | 11 dimensões de 280 a 1920 px; título abaixo do cabeçalho, sem overflow; rotação sem reload | `portfolio.spec.js`; Selenium/Cypress em dimensões adicionais |
 | Coleções | Abrir/fechar projetos e certificados por teclado e ponteiro, preservar itens ocultos | `experience.spec.js` |
 | Projetos | Todos os 10 projetos, textos, código, repositório e dez estudos de caso (três com execuções históricas); imagens sob demanda | `audit.spec.js`, `experience.spec.js` |
-| Certificados | Todos os 18 certificados, prévias carregadas, originais HTTP 200, PDF Maestro reconhecido, metadados e SHA-256 dos dois novos certificados Udemy | `audit.spec.js` |
+| Certificados | Todos os 19 certificados, prévias carregadas, originais HTTP 200, PDFs Maestro e Playwright eXpress reconhecidos, metadados e SHA-256 de Postman do Zero, Javascript para QAs e Playwright eXpress | `audit.spec.js` |
 | Ícones | Todos os 62 SVGs pintados; bloqueio de arquivos de ícones, sem JavaScript, rotação e histórico | `icons.spec.js` |
 | Currículo | Download pelo botão, conteúdo PDF, tipo HTTP, nome e SHA-256 iguais ao documento versionado | REG-01 |
 | Links internos e metadados | IDs únicos, âncoras existentes, URL canônica, idioma, descrição, contatos e proteção de nova aba | REG-02 |
