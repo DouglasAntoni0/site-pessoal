@@ -44,6 +44,14 @@ capturadas no site público e as doze Linux no Actions
 com o mesmo commit publicado confirmado. A revisão inclui desktop, celular,
 menu, os dois modais, competências e certificados expandidos.
 
+A inclusão do certificado Playwright eXpress foi revisada em 01/11/2026, na
+publicação `44374846c82824ac39b10b72dc89fa7357a3d9f6`. Apenas as referências
+de certificados expandidos em desktop e celular mudaram: Windows no site
+público e Linux no Actions
+[41344401260](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/41344401260),
+com o mesmo commit publicado confirmado. As outras dez referências de cada
+plataforma foram preservadas.
+
 A execução normal compara os pixels e não atualiza os arquivos. Mudanças
 intencionais precisam de nova captura e revisão antes de substituir a referência.
 O cabeçalho fixo é ocultado apenas nas capturas das seções longas; ele é
