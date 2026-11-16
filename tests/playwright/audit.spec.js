@@ -14,6 +14,11 @@ const newCertificates = {
     instructor: 'Fernando Papito', date: '01/11/2026', hours: '6,5 horas',
     contentType: 'application/pdf',
     sha256: '33b76c6b8b24223d90c109bbf2f499255d3d38ad02d2c76e94c2b0b116a839ec'
+  },
+  'Automação de Testes de IA: Chatbots e LLMs com promptfoo': {
+    instructor: 'Jeferson Fabiano Caye', date: '16/11/2026', hours: '3,5 horas',
+    contentType: 'application/pdf',
+    sha256: '5a44e2516d2bd19bd49bfcddd947a1bf4ee1cf36f3b9c2119f807ecabd993ba5'
   }
 };
 
@@ -21,7 +26,7 @@ const newCertificates = {
 test.beforeEach(async ({page}) => { await page.emulateMedia({reducedMotion:'reduce'}); });
 
 test('@smoke todos os certificados carregam sob demanda e preservam os documentos originais', async ({ page, request }) => {
-  test.setTimeout(120_000); // Nineteen complete image/document journeys, including WebKit on Windows.
+  test.setTimeout(120_000); // The full collection opens a modal and fetches the original for each card.
   const certificateRequests = [];
   page.on('request', request => {
     if (request.url().includes('/certificates/')) certificateRequests.push(request.url());
@@ -31,7 +36,7 @@ test('@smoke todos os certificados carregam sob demanda e preservam os documento
 
   await page.locator('#certificates-more > summary').click();
   const cards = page.locator('.certification-card');
-  await expect(cards).toHaveCount(19);
+  await expect(cards).toHaveCount(20);
   for (const card of await cards.all()) {
     const title = await card.locator('h3').textContent();
     await expect(card.locator('.certification-meta span').last()).toHaveText(/^\d+(,\d+)? horas$/);

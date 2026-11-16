@@ -193,5 +193,17 @@ export const certificates = [
         "preview": "assets/certificates/previews/udemy-playwright-express.webp",
         "featured": false,
         "pdf": "assets/certificates/udemy-playwright-express.pdf"
+    },
+    {
+        "title": "Automação de Testes de IA: Chatbots e LLMs com promptfoo",
+        "school": "Udemy",
+        "instructor": "Jeferson Fabiano Caye",
+        "description": "Testes automatizados de chatbots e aplicações com IA generativa usando promptfoo, com validação de respostas, avaliação de sistemas RAG, conversas de vários turnos e execução no GitHub Actions.",
+        "date": "16/11/2026",
+        "hours": "3,5 horas",
+        "image": "assets/certificates/udemy-testes-ia-promptfoo.png",
+        "preview": "assets/certificates/previews/udemy-testes-ia-promptfoo.webp",
+        "featured": false,
+        "pdf": "assets/certificates/udemy-testes-ia-promptfoo.pdf"
     }
 ];

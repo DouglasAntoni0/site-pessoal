@@ -12,7 +12,7 @@ test('@smoke coleções destacam três projetos e seis certificados, sem perder 
     await page.keyboard.press('Enter');
     await expect(page.locator('#projects-container .project-row:visible')).toHaveCount(3);
     await page.locator('#certificates-more > summary').click();
-    await expect(page.locator('.certification-card:visible')).toHaveCount(19);
+    await expect(page.locator('.certification-card:visible')).toHaveCount(20);
     await page.locator('#certificates-more > summary').click();
     await expect(page.locator('.certification-card:visible')).toHaveCount(6);
 });
@@ -30,8 +30,8 @@ test('@smoke conteúdo e links funcionam sem JavaScript em celular e desktop', a
         await page.locator('#projects-more > summary').click();
         await expect(page.locator('#projects-container .project-row:visible')).toHaveCount(9);
         await page.locator('#certificates-more > summary').click();
-        await expect(page.locator('.certification-card:visible')).toHaveCount(19);
-        for (const name of ['udemy-maestro-mobile-pipeline', 'udemy-playwright-express']) {
+        await expect(page.locator('.certification-card:visible')).toHaveCount(20);
+        for (const name of ['udemy-maestro-mobile-pipeline', 'udemy-playwright-express', 'udemy-testes-ia-promptfoo']) {
             await expect(page.locator(`[data-certificate-pdf="assets/certificates/${name}.pdf"]`))
                 .toHaveAttribute('href', `assets/certificates/${name}.pdf`);
         }

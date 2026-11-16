@@ -72,13 +72,12 @@ test('@smoke carrega a experiência sem recursos externos inesperados ou erros',
     .toHaveAttribute('href', 'https://github.com/DouglasAntoni0');
   await expect(page.locator('a[href*="github.com/DouglasAntoni0?tab=repositories"]')).toHaveCount(0);
   await expect(page.locator('#project-modal')).toHaveCount(1);
-  await expect(page.locator('#certifications .certification-card')).toHaveCount(19);
+  await expect(page.locator('#certifications .certification-card')).toHaveCount(20);
   await expect(page.locator('[data-skill-group]')).toHaveCount(6);
   await expect(page.locator('.skill-chip')).toHaveCount(62);
   await expect(page.locator('.skill-chip .skill-icon')).toHaveCount(62);
-  // The three added certificate cards contribute exactly 30 elements.
-  // Preserve the previous headroom while keeping a fixed page-size budget.
-  expect(await page.locator('*').count()).toBeLessThanOrEqual(930);
+  // The certificate card adds 10 elements; preserve the existing headroom.
+  expect(await page.locator('*').count()).toBeLessThanOrEqual(940);
   expect(thirdParty).toEqual([]);
   expect(errors).toEqual([]);
 });

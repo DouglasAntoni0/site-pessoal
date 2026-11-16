@@ -82,7 +82,7 @@ try {
     await screenshot('maestro');
     await tap(page.locator('#certificate-viewer-modal .close-modal'));
     await tap(page.locator('#certificates-more > summary'));
-    await expect(page.locator('.certification-card:visible')).toHaveCount(19);
+    await expect(page.locator('.certification-card:visible')).toHaveCount(20);
     await geometry();
     report.checks.push('Maestro preview, PDF link and complete certificate collection');
     await page.locator('#contact').scrollIntoViewIfNeeded();
