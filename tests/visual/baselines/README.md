@@ -52,6 +52,12 @@ público e Linux no Actions
 com o mesmo commit publicado confirmado. As outras dez referências de cada
 plataforma foram preservadas.
 
+A inclusão do certificado de Automação de Testes de IA com promptfoo foi
+revisada em 16/11/2026, na publicação `fdb8e927224b1177d4cc6375e4fb793ce985070d`.
+As referências da coleção expandida foram atualizadas para desktop e celular
+no Windows e no Linux, capturadas no site público; a captura do Linux veio do
+Actions [43950348968](https://github.com/DouglasAntoni0/site-pessoal/actions/runs/43950348968).
+
 A execução normal compara os pixels e não atualiza os arquivos. Mudanças
 intencionais precisam de nova captura e revisão antes de substituir a referência.
 O cabeçalho fixo é ocultado apenas nas capturas das seções longas; ele é
